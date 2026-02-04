@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="components/Header/header.css">
+    <link rel="stylesheet" href="assest/css/global.css">
+</head>
+<body>
+    <!-- في ال HTML template -->
+<header id="header" class="header">
+  <div class="container">
+    <div class="header-content flex flex-between">
+      <!-- Logo -->
+      <div class="header-logo">
+        <a href="/" class="logo-link">
+          <span class="logo-icon">⚕️</span>
+          <span class="logo-text">MedCheck</span>
+        </a>
+      </div>
+
+      <!-- Hamburger Menu -->
+      <button id="hamburger-btn" class="hamburger-btn hide-desktop">
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
+
+      <!-- Navigation -->
+      <nav id="nav-menu" class="nav-menu">
+        <ul class="nav-list flex">
+          <li><a href="/" class="nav-link active">Home</a></li>
+          <li><a href="/about" class="nav-link">About</a></li>
+          <li><a href="/diseases" class="nav-link">Diseases</a></li>
+          <li><a href="/doctors" class="nav-link">Doctors</a></li>
+          <li><a href="/contact" class="nav-link">Contact</a></li>
+        </ul>
+      </nav>
+
+      <!-- Header Actions -->
+      <div class="header-actions flex flex-center">
+        <!-- Search -->
+        <div class="search-wrapper hide-mobile">
+          <input type="search" id="search-input" class="search-input" placeholder="Search...">
+          <button class="search-btn">🔍</button>
+        </div>
+
+        <!-- User Account -->
+        <div id="user-account" class="user-account hidden">
+          <button id="user-btn" class="user-btn">
+            <span class="user-icon">👤</span>
+            <span class="user-name hide-mobile">Account</span>
+          </button>
+          <div id="user-dropdown" class="user-dropdown hidden">
+            <a href="/profile" class="dropdown-item">Profile</a>
+            <a href="/my-tests" class="dropdown-item">My Tests</a>
+            <a href="/bookings" class="dropdown-item">My Bookings</a>
+            <hr class="dropdown-divider">
+            <button id="logout-btn" class="dropdown-item logout-item">Logout</button>
+          </div>
+        </div>
+
+        <!-- Auth Buttons -->
+        <div id="auth-buttons" class="auth-buttons flex flex-center">
+          <a href="/signin" class="btn btn-ghost">Sign In</a>
+          <a href="/signup" class="btn btn-primary">Sign Up</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Scripts -->
+<link rel="stylesheet" href="components/Header/header.css">
+<script src="components/Header/header.js"></script>
+</body>
+</html>
