@@ -32,16 +32,16 @@ export default function loadHeader() {
   logoLink.className = 'logo-link';
   logoLink.onclick = function (e) {
     e.preventDefault();
-    window.location.href = '/pages/home/home.html';
+    window.location.href = '/Pages/Home/home.html';
   };
 
-  const logoIcon = document.createElement('span');
+  const logoIcon = document.createElement('img');
   logoIcon.className = 'logo-icon';
-  logoIcon.textContent = '⚕️';
+  logoIcon.src = '/imgs/logo.png';
 
   const logoText = document.createElement('span');
   logoText.className = 'logo-text';
-  logoText.textContent = 'MedCheck';
+  logoText.textContent = 'MedMind';
 
   logoLink.appendChild(logoIcon);
   logoLink.appendChild(logoText);
@@ -64,11 +64,12 @@ export default function loadHeader() {
   navList.className = 'nav-list flex';
 
   const navItems = [
-    { label: 'Home', href: '/pages/home/home.html' },
-    { label: 'About', href: '/pages/about/about.html' },
-    { label: 'Diseases', href: '/pages/diseases/diseases.html' },
-    { label: 'Doctors', href: '/pages/doctors/doctors.html' },
-    { label: 'Contact', href: '/pages/contact/contact.html' }
+    { label: 'Home', href: '/Pages/Home/home.html' },
+    { label: 'About', href: '/Pages/About us/About.html' },
+    { label: 'Get Started', href: '/Pages/Get Started/Get Started.html' },
+    { label: 'Diseases', href: '/Pages/Disease/Disease.html' },
+    { label: 'Doctors', href: '/Pages/Doctors/Doctors.html' },
+    { label: 'Contact', href: '/Pages/contact_us/Contact.html' }
   ];
 
   navItems.forEach(item => {
@@ -95,7 +96,7 @@ export default function loadHeader() {
   signBtn.className = 'btn btn-primary';
   signBtn.textContent = 'Sign Up';
   signBtn.onclick = function () {
-    window.location.href = '/pages/signup/signup.html';
+    window.location.href = '/Pages/Sign up/Sign up.html';
   };
 
   headerContent.appendChild(logoDiv);
