@@ -52,10 +52,9 @@ export default function loadFooter() {
 
   const footerLinks = [
     { label: 'Home', href: '/Pages/Home/home.html' },
-    { label: 'About', href: '/Pages/About us/About.html' },
     { label: 'Diseases', href: '/Pages/Disease/Disease.html' },
     { label: 'Doctors', href: '/Pages/Doctors/Doctors.html' },
-    { label : 'Contact Us', href: '/Pages/contact_us/Contact.html' }
+    { label: 'About', href: '/Pages/About us/About.html' },
   ];
 
   footerLinks.forEach(item => {

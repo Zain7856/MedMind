@@ -2,7 +2,7 @@ export default function loadHeader() {
   if (!document.querySelector('link[href*="global.css"]')) {
     const link = document.createElement('link');
     link.rel = 'stylesheet';
-    link.href = '/assest/css/global.css';
+    link.href = '/assets/css/global.css';
     document.head.appendChild(link);
   }
 
@@ -65,11 +65,10 @@ export default function loadHeader() {
 
   const navItems = [
     { label: 'Home', href: '/Pages/Home/home.html' },
-    { label: 'About', href: '/Pages/About us/About.html' },
     { label: 'Get Started', href: '/Pages/Get Started/Get Started.html' },
     { label: 'Diseases', href: '/Pages/Disease/Disease.html' },
     { label: 'Doctors', href: '/Pages/Doctors/Doctors.html' },
-    { label: 'Contact', href: '/Pages/contact_us/Contact.html' }
+    { label: 'About', href: '/Pages/About us/About.html' },
   ];
 
   navItems.forEach(item => {
