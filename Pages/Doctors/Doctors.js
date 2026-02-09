@@ -24,7 +24,7 @@ function createDoctorCard(doctor) {
   const img = document.createElement('img');
   img.className = 'doctor-img';
   img.alt = doctor.name;
-  img.src = doctor.image || '/imgs/logo.png';
+  img.src = doctor.img || '/imgs/logo.png';
 
   const info = document.createElement('div');
   info.className = 'doctor-info';
@@ -38,9 +38,20 @@ function createDoctorCard(doctor) {
   const specialization = doctor.specialization || doctor.specialty || 'General';
   spec.textContent = 'Specialization: ' + specialization;
 
+  const phone = document.createElement('p');
+  phone.className = 'doctor-phone';
+  phone.textContent = 'Phone: ' + (doctor.phone || 'Not provided');
+
+  const location = document.createElement('p');
+  location.className = 'doctor-location';
+  location.textContent = 'Location: ' + (doctor.location || 'Not provided');
+
   const about = document.createElement('p');
   about.className = 'doctor-about';
   about.textContent = doctor.about;
+
+  const btnContainer = document.createElement('div');
+  btnContainer.className = 'doctor-btn-container';
 
   const btn = document.createElement('button');
   btn.className = 'doctor-btn';
@@ -50,80 +61,50 @@ function createDoctorCard(doctor) {
     window.location.href = '/Pages/Appointment/Appointment.html?doctorId=' + encodeURIComponent(doctorId);
   };
 
+  const cost = document.createElement('span');
+  cost.className = 'doctor-cost';
+  cost.textContent = doctor.cost ? `$${doctor.cost}` : 'Price not set';
+
+  btnContainer.appendChild(btn);
+  btnContainer.appendChild(cost);
+
   info.appendChild(name);
   info.appendChild(spec);
+  info.appendChild(phone);
+  info.appendChild(location);
   info.appendChild(about);
 
   card.appendChild(img);
   card.appendChild(info);
-  card.appendChild(btn);
+  card.appendChild(btnContainer);
 
   return card;
 }
 
-let doctors = getDoctors();
+async function init() {
+  let doctors = await getDoctors();
 
-if (!Array.isArray(doctors) || doctors.length === 0) {
-  doctors = [
-    {
-      name: 'Dr. Sara Ahmed',
-      specialty: 'Cardiology',
-      about: 'Helping patients with heart health and prevention.'
-    },
-    {
-      name: 'Dr. Omar Hassan',
-      specialty: 'Dermatology',
-      about: 'Skin care, acne treatment, and modern dermatology.'
-    },
-    {
-      name: 'Dr. Mariam Ali',
-      specialty: 'Pediatrics',
-      about: 'Caring for children and supporting healthy growth.'
-    },
-    {
-      name: 'Dr. Youssef Nabil',
-      specialty: 'Neurology',
-      about: 'Diagnosis and care for brain and nerve conditions.'
-    },
-        {
-      name: 'Dr. Youssef Nabil',
-      specialty: 'Neurology',
-      about: 'Diagnosis and care for brain and nerve conditions.'
-    },
-        {
-      name: 'Dr. Youssef Nabil',
-      specialty: 'Neurology',
-      about: 'Diagnosis and care for brain and nerve conditions.'
-    },
-        {
-      name: 'Dr. Youssef Nabil',
-      specialty: 'Neurology',
-      about: 'Diagnosis and care for brain and nerve conditions.'
-    },
-        {
-      name: 'Dr. Youssef Nabil',
-      specialty: 'Neurology',
-      about: 'Diagnosis and care for brain and nerve conditions.'
-    },
-        {
-      name: 'Dr. Youssef Nabil',
-      specialty: 'Neurology',
-      about: 'Diagnosis and care for brain and nerve conditions.'
-    },    {
-      name: 'Dr. Youssef Nabil',
-      specialty: 'Neurology',
-      about: 'Diagnosis and care for brain and nerve conditions.'
-    }
-  ];
+  if (!Array.isArray(doctors) || doctors.length === 0) {
+    doctors = [
+      {
+        name: 'Dr. Sara Ahmed',
+        specialty: 'Cardiology',
+        about: 'Helping patients with heart health and prevention.'
+      }
+    ];
+  }
+
+  doctors.forEach(function (doctor) {
+    grid.appendChild(createDoctorCard(doctor));
+  });
+
+  
+  container.appendChild(title);
+  container.appendChild(grid);
+  page.appendChild(container);
+  document.body.appendChild(page);
+
+  loadFooter();
 }
 
-doctors.forEach(function (doctor) {
-  grid.appendChild(createDoctorCard(doctor));
-});
-
-container.appendChild(title);
-container.appendChild(grid);
-page.appendChild(container);
-document.body.appendChild(page);
-
-loadFooter();
+init();

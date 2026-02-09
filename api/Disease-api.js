@@ -13,7 +13,8 @@ export async function getDiseases(){
             name: disease.name || disease.Name,
             description: disease.description,
             symptoms: disease.symptoms,
-            treatment: disease.treatment
+            treatment: disease.treatment,
+            img: disease.img
         }));
 
     } catch (error) {

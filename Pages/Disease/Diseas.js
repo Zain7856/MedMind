@@ -26,7 +26,7 @@ function createDiseaseCard(disease) {
   const img = document.createElement('img');
   img.className = 'disease-img';
   img.alt = diseaseName;
-  img.src = disease.image || '/imgs/logo.png';
+  img.src = disease.img || '/imgs/logo.png';
 
   const info = document.createElement('div');
   info.className = 'disease-info';
@@ -59,7 +59,7 @@ function createDiseaseCard(disease) {
 }
 
 async function init() {
-  let Diseases  = await getDiseases();
+  let Diseases = await getDiseases();
 
   if (!Array.isArray(Diseases) || Diseases.length === 0) {
     Diseases = [

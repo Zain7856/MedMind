@@ -38,12 +38,6 @@ if (exploreHospitals) {
   };
 }
 
-const exploreGovernment = document.getElementById('explore-government');
-if (exploreGovernment) {
-  exploreGovernment.onclick = function () {
-    window.location.href = '/Pages/Government/Government.html';
-  };
-}
 
 const exploreDoctors = document.getElementById('explore-doctors');
 if (exploreDoctors) {

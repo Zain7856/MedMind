@@ -66,9 +66,27 @@
     line-height: 1.5;
 }
 
-.doctor-btn {
+.doctor-phone {
+    margin: 6px 0 0;
+    font-size: 13px;
+    color: #374151;
+}
+
+.doctor-location {
+    margin: 6px 0 0;
+    font-size: 13px;
+    color: #374151;
+}
+
+.doctor-btn-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin: 14px;
     margin-top: 16px;
+}
+
+.doctor-btn {
     border: none;
     border-radius: 12px;
     padding: 12px 14px;
@@ -78,6 +96,12 @@
     background: #4f46e5;
     color: #ffffff;
     transition: background 120ms ease, transform 120ms ease;
+}
+
+.doctor-cost {
+    font-size: 14px;
+    font-weight: 700;
+    color: #4f46e5;
 }
 
 .doctor-btn:hover {

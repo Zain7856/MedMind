@@ -54,7 +54,8 @@ export default function loadFooter() {
     { label: 'Home', href: '/Pages/Home/home.html' },
     { label: 'Diseases', href: '/Pages/Disease/Disease.html' },
     { label: 'Doctors', href: '/Pages/Doctors/Doctors.html' },
-    { label: 'About', href: '/Pages/About us/About.html' },
+    { label: 'Hospitals', href: '/Pages/Hospitals/Hospitals.html' },
+    { label: 'About', href: '/Pages/About us/About.html'},
   ];
 
   footerLinks.forEach(item => {
@@ -63,7 +64,7 @@ export default function loadFooter() {
 
     const a = document.createElement('a');
     a.href = item.href;
-    a.className = 'footer-link';
+    a.className = 'footer-link';  
     a.textContent = item.label;
 
     a.onclick = function (e) {

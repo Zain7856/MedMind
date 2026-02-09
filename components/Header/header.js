@@ -66,8 +66,9 @@ export default function loadHeader() {
   const navItems = [
     { label: 'Home', href: '/Pages/Home/home.html' },
     { label: 'Get Started', href: '/Pages/Get Started/Get Started.html' },
-    { label: 'Diseases', href: '/Pages/Disease/Disease.html' },
+    { label: 'Hospitals', href: '/Pages/Hospitals/Hospitals.html' },
     { label: 'Doctors', href: '/Pages/Doctors/Doctors.html' },
+    { label: 'Diseases', href: '/Pages/Disease/Disease.html' },
     { label: 'About', href: '/Pages/About us/About.html' },
   ];
 
