@@ -1,6 +1,8 @@
 
 import loadHeader from "../../components/Header/header.js";
 import loadFooter from "../../components/Footer/footer.js";
+import { createAppointment } from "../../api/Appointment-api.js";
+import { getDoctorsByid } from "../../api/doctors-api.js";
 
 loadHeader();
 
@@ -49,10 +51,22 @@ userIdInput.required = true;
 
 const doctorIdInput = document.createElement('input');
 doctorIdInput.className = 'appointment-input';
-doctorIdInput.type = 'text';
-doctorIdInput.placeholder = 'Doctor';
+doctorIdInput.type = 'hidden';
 doctorIdInput.value = doctorIdFromUrl;
-doctorIdInput.required = true;
+
+const doctorNameDisplay = document.createElement('input');
+doctorNameDisplay.className = 'appointment-input';
+doctorNameDisplay.type = 'text';
+doctorNameDisplay.value = 'Loading doctor...';
+doctorNameDisplay.readOnly = true;
+
+const backBtn = document.createElement('button');
+backBtn.type = 'button';
+backBtn.className = 'appointment-back-btn';
+backBtn.textContent = '← Back to Doctors';
+backBtn.onclick = function () {
+  window.location.href = '/Pages/Doctors/Doctors.html';
+};
 
 const appointmentDateInput = document.createElement('input');
 appointmentDateInput.className = 'appointment-input';
@@ -78,12 +92,18 @@ submitBtn.className = 'appointment-btn';
 submitBtn.textContent = 'Confirm Appointment';
 
 form.appendChild(createField('Email', userIdInput));
-form.appendChild(createField('Doctor', doctorIdInput));
+form.appendChild(doctorIdInput);
+form.appendChild(createField('Doctor', doctorNameDisplay));
 form.appendChild(createField('Appointment Date', appointmentDateInput));
 form.appendChild(createField('Status', statusSelect));
 form.appendChild(submitBtn);
 
-form.onsubmit = function (e) {
+const topBar = document.createElement('div');
+topBar.className = 'appointment-top-bar';
+topBar.appendChild(backBtn);
+card.appendChild(topBar);
+
+form.onsubmit = async function (e) {
   e.preventDefault();
 
   const payload = {
@@ -93,8 +113,14 @@ form.onsubmit = function (e) {
     Status: statusSelect.value
   };
 
-  console.log('Appointment Payload:', payload);
-  alert('Appointment created successfully!');
+  try {
+    const result = await createAppointment(payload.UserID, payload.DoctorID, payload.AppointmentDate, payload.Status);
+    console.log('Appointment created:', result);
+    alert('Appointment created successfully!');
+  } catch (error) {
+    console.error('Failed to create appointment:', error);
+    alert('Failed to create appointment. Please try again.');
+  }
 };
 
 card.appendChild(title);
@@ -106,3 +132,23 @@ page.appendChild(container);
 document.body.appendChild(page);
 
 loadFooter();
+
+async function init() {
+  if (doctorIdFromUrl) {
+    try {
+      const doctor = await getDoctorsByid(doctorIdFromUrl);
+      if (doctor && doctor.Name) {
+        doctorNameDisplay.value = doctor.Name;
+      } else {
+        doctorNameDisplay.value = 'Doctor not found';
+      }
+    } catch (error) {
+      console.error('Error fetching doctor:', error);
+      doctorNameDisplay.value = 'Error loading doctor';
+    }
+  } else {
+    doctorNameDisplay.value = 'No doctor selected';
+  }
+}
+
+init();

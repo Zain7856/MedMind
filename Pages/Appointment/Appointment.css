@@ -30,6 +30,27 @@
     text-align: center;
 }
 
+.appointment-top-bar {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.appointment-back-btn {
+    background: #e5e7eb;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #374151;
+    cursor: pointer;
+    transition: background 120ms ease;
+}
+
+.appointment-back-btn:hover {
+    background: #d1d5db;
+}
+
 .appointment-form {
     display: grid;
     grid-template-columns: 1fr 1fr;

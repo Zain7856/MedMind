@@ -27,7 +27,7 @@ const doctorsArray = doctors_list.value || doctors_list;
 
 export async function getDoctorsByid(id){
     try {
-        const response = await fetch(`${baseUrl}/doctor/${id}`);
+        const response = await fetch(`${baseUrl}/doctors/${id}`);
         if(!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         const doctor_details = await response.json();
         
