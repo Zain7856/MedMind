@@ -1,0 +1,112 @@
+.disease-info-page {
+    background-color: var(--bg-secondary);
+    min-height: 100vh;
+    padding-bottom: var(--spacing-xl);
+}
+
+.info-hero {
+    background-color: var(--bg-primary);
+    border-bottom: 2px solid var(--bg-tertiary);
+    padding: var(--spacing-xl) 0;
+    margin-bottom: var(--spacing-lg);
+}
+
+.info-hero .back-btn {
+    display: inline-flex;
+    align-items: center;
+    color: var(--primary-color);
+    font-weight: 600;
+    margin-bottom: var(--spacing-md);
+    text-decoration: none;
+    font-size: var(--font-size-sm);
+    transition: transform var(--transition-fast);
+}
+
+.info-hero .back-btn:hover {
+    transform: translateX(-4px);
+    color: var(--primary-dark);
+}
+
+.info-title {
+    font-size: var(--font-size-4xl);
+    color: var(--text-primary);
+    margin: 0;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+}
+
+.info-main {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+.info-card {
+    background: var(--bg-primary);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-xl);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
+}
+
+.info-card h2 {
+    font-size: var(--font-size-2xl);
+    color: var(--primary-color);
+    margin-bottom: var(--spacing-md);
+    display: flex;
+    align-items: center;
+}
+
+.info-card p {
+    font-size: var(--font-size-base);
+    color: var(--text-secondary);
+    line-height: 1.8;
+}
+
+.overview-section {
+    border-top: 4px solid var(--primary-color);
+}
+
+.info-details-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-lg);
+}
+
+.symptoms-card {
+    border-top: 4px solid var(--secondary-color);
+}
+
+.treatment-card {
+    border-top: 4px solid var(--primary-light);
+}
+
+
+.loading-state, .error-state {
+    text-align: center;
+    padding: 100px 20px;
+    background: var(--bg-primary);
+    border-radius: var(--radius-md);
+    margin-top: 40px;
+}
+
+.error-state p {
+    color: var(--danger-color);
+    font-weight: 600;
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--spacing-lg);
+}
+
+@media (max-width: 768px) {
+    .info-details-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .info-title {
+        font-size: var(--font-size-3xl);
+    }
+    
+    .info-hero {
+        padding: var(--spacing-lg) 0;
+    }
+}

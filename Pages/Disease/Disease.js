@@ -23,11 +23,6 @@ function createDiseaseCard(disease) {
 
   const diseaseName = disease.name || disease.Name || 'Disease';
 
-  const img = document.createElement('img');
-  img.className = 'disease-img';
-  img.alt = diseaseName;
-  img.src = disease.img || '/imgs/logo.png';
-
   const info = document.createElement('div');
   info.className = 'disease-info';
 
@@ -43,15 +38,13 @@ function createDiseaseCard(disease) {
   btn.className = 'disease-btn';
   btn.textContent = 'Learn More';
   btn.onclick = function () {
-    const symptomsText = disease.symptoms || 'Not provided';
-    const treatmentText = disease.treatment || 'Not provided';
-    alert('Symptoms: ' + symptomsText + '\n\nTreatment: ' + treatmentText);
+    const diseaseId = disease.id || disease.ID || diseaseName;
+    window.location.href = `Disease-info.html?id=${encodeURIComponent(diseaseId)}`;
   };
 
   info.appendChild(name);
   info.appendChild(desc);
 
-  card.appendChild(img);
   card.appendChild(info);
   card.appendChild(btn);
 

@@ -2,7 +2,7 @@ export default function loadFooter() {
   if (!document.querySelector('link[href*="global.css"]')) {
     const link = document.createElement('link');
     link.rel = 'stylesheet';
-    link.href = '/assest/css/global.css';
+    link.href = '/assets/css/global.css';
     document.head.appendChild(link);
   }
 
@@ -55,7 +55,7 @@ export default function loadFooter() {
     { label: 'Diseases', href: '/Pages/Disease/Disease.html' },
     { label: 'Doctors', href: '/Pages/Doctors/Doctors.html' },
     { label: 'Hospitals', href: '/Pages/Hospitals/Hospitals.html' },
-    { label: 'About', href: '/Pages/About us/About.html'},
+    { label: 'About', href: '/Pages/About us/About.html' },
   ];
 
   footerLinks.forEach(item => {
@@ -64,7 +64,7 @@ export default function loadFooter() {
 
     const a = document.createElement('a');
     a.href = item.href;
-    a.className = 'footer-link';  
+    a.className = 'footer-link';
     a.textContent = item.label;
 
     a.onclick = function (e) {
