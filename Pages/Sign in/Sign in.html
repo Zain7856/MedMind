@@ -3,12 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In - MedMind</title>
     <link rel="stylesheet" href="Sign in.css">
     <link rel="stylesheet" href="../../assets/css/global.css">
-    <title>Document</title>
 </head>
 <body>
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <img src="../../imgs/logo.png" alt="MedMind Logo" class="auth-logo">
+                <h1>Welcome Back</h1>
+                <p>Sign in to your MedMind account</p>
+            </div>
+            
+            <form id="loginForm" class="auth-form">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                
+                <button type="submit" class="auth-btn">Sign In</button>
+                
+                <div class="auth-footer">
+                    <p>Don't have an account? <a href="../Sign up/Sign up.html">Sign up</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
     
+    <script type="module" src="Sign in.js"></script>
 </body>
-<script type="module" src="Sign in.js"></script>
 </html>

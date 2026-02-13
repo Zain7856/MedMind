@@ -1,6 +1,13 @@
-
 import loadHeader from "../../components/Header/header.js";
 import loadFooter from "../../components/Footer/footer.js";
+import { createAppointment } from "../../api/Appointment-api.js";
+import { getHospitalById } from "../../api/Hospitals-api.js";
+import { requireAuth } from "../../api/auth-api.js";
+
+// Check if user is logged in
+if (!requireAuth()) {
+    throw new Error('Authentication required');
+}
 
 loadHeader();
 
@@ -24,6 +31,18 @@ const subtitle = document.createElement('p');
 subtitle.className = 'appointment-subtitle';
 subtitle.textContent = 'Fill the form to confirm your hospital appointment.';
 
+const backBtn = document.createElement('button');
+backBtn.type = 'button';
+backBtn.className = 'appointment-back-btn';
+backBtn.textContent = '← Back to Hospitals';
+backBtn.onclick = function () {
+  window.location.href = '/Pages/Hospitals/Hospitals.html';
+};
+
+const topBar = document.createElement('div');
+topBar.className = 'appointment-top-bar';
+topBar.appendChild(backBtn);
+
 const form = document.createElement('form');
 form.className = 'appointment-form';
 
@@ -43,16 +62,21 @@ function createField(labelText, inputEl) {
 
 const userIdInput = document.createElement('input');
 userIdInput.className = 'appointment-input';
-userIdInput.type = 'text';
-userIdInput.placeholder = 'UserID';
+userIdInput.type = 'email';
+userIdInput.placeholder = 'Email';
 userIdInput.required = true;
+
 
 const hospitalIdInput = document.createElement('input');
 hospitalIdInput.className = 'appointment-input';
-hospitalIdInput.type = 'text';
-hospitalIdInput.placeholder = 'HospitalID';
+hospitalIdInput.type = 'hidden';
 hospitalIdInput.value = hospitalIdFromUrl;
-hospitalIdInput.required = true;
+
+const hospitalNameDisplay = document.createElement('input');
+hospitalNameDisplay.className = 'appointment-input';
+hospitalNameDisplay.type = 'text';
+hospitalNameDisplay.value = 'Loading hospital...';
+hospitalNameDisplay.readOnly = true;
 
 const appointmentDateInput = document.createElement('input');
 appointmentDateInput.className = 'appointment-input';
@@ -77,26 +101,48 @@ submitBtn.type = 'submit';
 submitBtn.className = 'appointment-btn';
 submitBtn.textContent = 'Confirm Appointment';
 
-form.appendChild(createField('UserID', userIdInput));
-form.appendChild(createField('HospitalID', hospitalIdInput));
-form.appendChild(createField('AppointmentDate', appointmentDateInput));
+form.appendChild(createField('Email', userIdInput));
+form.appendChild(hospitalIdInput);
+form.appendChild(createField('Hospital', hospitalNameDisplay));
+form.appendChild(createField('Appointment Date', appointmentDateInput));
 form.appendChild(createField('Status', statusSelect));
 form.appendChild(submitBtn);
 
-form.onsubmit = function (e) {
-  e.preventDefault();
+form.onsubmit = async function (e) {
+    e.preventDefault();
 
-  const payload = {
-    UserID: userIdInput.value.trim(),
-    HospitalID: hospitalIdInput.value.trim(),
-    AppointmentDate: appointmentDateInput.value,
-    Status: statusSelect.value
-  };
+    try {
+        // Get form values
+        const email = userIdInput.value.trim();
+        const hospitalId = hospitalIdInput.value.trim();
+        const dateTime = appointmentDateInput.value; // Format: YYYY-MM-DDTHH:MM
+        const status = statusSelect.value;
 
-  console.log('Hospital Appointment Payload:', payload);
-  alert('Appointment created successfully!');
+        // Basic validation
+        if (!email || !hospitalId || !dateTime) {
+            alert('Please fill in all required fields');
+            return;
+        }
+
+        // Create appointment
+        const result = await createAppointment(
+            email,          // UserID
+            null,           // DoctorID (null for hospital appointments)
+            hospitalId,     // HospitalID
+            dateTime + ":00", // Add seconds
+            status
+        );
+        
+        alert('Appointment created successfully!');
+        console.log('Appointment created:', result);
+        
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Error: ' + (error.message || 'Failed to create appointment'));
+    }
 };
 
+card.appendChild(topBar);
 card.appendChild(title);
 card.appendChild(subtitle);
 card.appendChild(form);
@@ -106,3 +152,20 @@ page.appendChild(container);
 document.body.appendChild(page);
 
 loadFooter();
+
+async function init() {
+    if (!hospitalIdFromUrl) {
+        hospitalNameDisplay.value = 'No hospital selected';
+        return;
+    }
+
+    try {
+        const hospital = await getHospitalById(hospitalIdFromUrl);
+        hospitalNameDisplay.value = hospital?.name || hospital?.Name || hospitalIdFromUrl;
+    } catch (error) {
+        console.error('Error loading hospital:', error);
+        hospitalNameDisplay.value = hospitalIdFromUrl;
+    }
+}
+
+init();

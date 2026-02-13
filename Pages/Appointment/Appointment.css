@@ -106,6 +106,23 @@
     transform: scale(0.99);
 }
 
+.appointment-back-btn {
+    margin: 0 0 16px 0;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    padding: 8px 12px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    background: #ffffff;
+    color: #374151;
+    transition: background 0.2s ease;
+}
+
+.appointment-back-btn:hover {
+    background: #f9fafb;
+}
+
 @media (max-width: 700px) {
     .appointment-card {
         padding: 18px;

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - MedMind</title>
+    <link rel="stylesheet" href="profile.css">
+    <link rel="stylesheet" href="../../assets/css/global.css">
+</head>
+<body>
+    <div class="profile-container">
+        <div class="profile-card">
+            <div class="profile-header">
+                <img src="../../imgs/logo.png" alt="MedMind Logo" class="profile-logo">
+                <h1>My Profile</h1>
+                <p>Manage your personal information and appointments</p>
+            </div>
+            
+            <div class="profile-content">
+                <div class="profile-section">
+                    <h2>Personal Information</h2>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <label>Name:</label>
+                            <span id="userName">Loading...</span>
+                        </div>
+                        <div class="info-item">
+                            <label>Email:</label>
+                            <span id="userEmail">Loading...</span>
+                        </div>
+                        <div class="info-item">
+                            <label>Role:</label>
+                            <span id="userRole">Loading...</span>
+                        </div>
+                        <div class="info-item">
+                            <label>Age:</label>
+                            <span id="userAge">Loading...</span>
+                        </div>
+                        <div class="info-item">
+                            <label>Phone:</label>
+                            <span id="userPhone">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="profile-section">
+                    <h2>My Appointments</h2>
+                    <div id="appointmentsList" class="appointments-list">
+                        <p class="loading-text">Loading appointments...</p>
+                    </div>
+                </div>
+                
+                <div class="profile-actions">
+                    <button id="editProfileBtn" class="profile-btn">Edit Profile</button>
+                    <button id="logoutBtn" class="profile-btn logout-btn">Logout</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script type="module" src="profile.js"></script>
+</body>
+</html>

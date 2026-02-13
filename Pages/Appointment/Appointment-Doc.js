@@ -3,6 +3,12 @@ import loadHeader from "../../components/Header/header.js";
 import loadFooter from "../../components/Footer/footer.js";
 import { createAppointment } from "../../api/Appointment-api.js";
 import { getDoctorsByid } from "../../api/doctors-api.js";
+import { requireAuth } from "../../api/auth-api.js";
+
+// Check if user is logged in
+if (!requireAuth()) {
+    throw new Error('Authentication required');
+}
 
 loadHeader();
 
@@ -104,23 +110,37 @@ topBar.appendChild(backBtn);
 card.appendChild(topBar);
 
 form.onsubmit = async function (e) {
-  e.preventDefault();
+    e.preventDefault();
 
-  const payload = {
-    UserID: userIdInput.value.trim(),
-    DoctorID: doctorIdInput.value.trim(),
-    AppointmentDate: appointmentDateInput.value,
-    Status: statusSelect.value
-  };
+    try {
+        // Get form values
+        const email = userIdInput.value.trim();
+        const doctorId = doctorIdInput.value.trim();
+        const dateTime = appointmentDateInput.value; // Format: YYYY-MM-DDTHH:MM
+        const status = statusSelect.value;
 
-  try {
-    const result = await createAppointment(payload.UserID, payload.DoctorID, payload.AppointmentDate, payload.Status);
-    console.log('Appointment created:', result);
-    alert('Appointment created successfully!');
-  } catch (error) {
-    console.error('Failed to create appointment:', error);
-    alert('Failed to create appointment. Please try again.');
-  }
+        // Basic validation
+        if (!email || !doctorId || !dateTime) {
+            alert('Please fill in all required fields');
+            return;
+        }
+
+        // Create appointment
+        const result = await createAppointment(
+            email,          // UserID
+            doctorId,       // DoctorID
+            null,           // HospitalID (null for doctor appointments)
+            dateTime + ":00", // Add seconds
+            status
+        );
+        
+        alert('Appointment created successfully!');
+        console.log('Appointment created:', result);
+        
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Error: ' + (error.message || 'Failed to create appointment'));
+    }
 };
 
 card.appendChild(title);

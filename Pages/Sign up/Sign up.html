@@ -3,13 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - MedMind</title>
     <link rel="stylesheet" href="Sign up.css">
     <link rel="stylesheet" href="../../assets/css/global.css">
-
-    <title>Document</title>
 </head>
 <body>
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <img src="../../imgs/logo.png" alt="MedMind Logo" class="auth-logo">
+                <h1>Create Account</h1>
+                <p>Sign up to join MedMind</p>
+            </div>
+            
+            <form id="signupForm" class="auth-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="age">Age</label>
+                        <input type="number" id="age" name="age" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">Phone</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="role">Role</label>
+                    <select id="role" name="role" required>
+                        <option value="Patient">Patient</option>
+                        <option value="Doctor">Doctor</option>
+                    </select>
+                </div>
+                
+                <button type="submit" class="auth-btn">Sign Up</button>
+                
+                <div class="auth-footer">
+                    <p>Already have an account? <a href="../Sign in/Sign in.html">Sign in</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
     
+    <script type="module" src="Sign up.js"></script>
 </body>
-<script type="module" src="Sign ip.js"></script>
 </html>

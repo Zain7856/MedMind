@@ -3,16 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disease Information - MedMind</title>
     <link rel="stylesheet" href="Disease-info.css">
     <link rel="stylesheet" href="../../assets/css/global.css">
-    <title>Disease Information - MedMind</title>
 </head>
 <body>
-    <main class="disease-info-page" id="disease-info-container">
-        <div class="loading-state">
-            <p>Loading disease details...</p>
+    <div class="disease-info-page">
+        <div class="disease-info-container">
+            <div class="disease-info-card">
+                <div class="disease-info-header">
+                    <h1 class="disease-info-title">Loading...</h1>
+                </div>
+                <div class="disease-info-content" id="disease-info-content">
+                    <p>Loading disease information...</p>
+                </div>
+            </div>
         </div>
-    </main>
+    </div>
+    
+    <script type="module" src="Disease-info.js"></script>
 </body>
-<script type="module" src="Disease-info.js"></script>
 </html>

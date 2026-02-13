@@ -1,6 +1,12 @@
 import loadHeader from "../../components/Header/header.js";
 import loadFooter from "../../components/Footer/footer.js";
 import { getDiseases } from "../../api/Disease-api.js";
+import { requireAuth } from "../../api/auth-api.js";
+
+// Check if user is logged in
+if (!requireAuth()) {
+    throw new Error('Authentication required');
+}
 
 loadHeader();
 
@@ -38,7 +44,10 @@ function createDiseaseCard(disease) {
   btn.className = 'disease-btn';
   btn.textContent = 'Learn More';
   btn.onclick = function () {
-    const diseaseId = disease.id || disease.ID || diseaseName;
+    const diseaseId = disease.id || disease.ID;
+    console.log('Disease ID:', diseaseId); // Debug log
+    console.log('Disease object:', disease); // Debug log
+    console.log('URL being constructed:', `Disease-info.html?id=${encodeURIComponent(diseaseId)}`); // Debug log
     window.location.href = `Disease-info.html?id=${encodeURIComponent(diseaseId)}`;
   };
 
@@ -55,14 +64,7 @@ async function init() {
   let Diseases = await getDiseases();
 
   if (!Array.isArray(Diseases) || Diseases.length === 0) {
-    Diseases = [
-      {
-        name: 'Heart Disease',
-        description: 'Heart disease refers to a range of conditions that affect the heart and blood vessels, including coronary artery disease, heart failure, and arrhythmias.',
-        symptoms: 'Chest pain, shortness of breath, fatigue.',
-        treatment: 'Lifestyle changes, medicines, and sometimes surgery.'
-      }
-    ];
+    Diseases = [];
   }
 
   Diseases.forEach(function (disease) {

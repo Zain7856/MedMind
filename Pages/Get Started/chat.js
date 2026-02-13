@@ -1,6 +1,12 @@
 import loadHeader from "../../components/Header/header.js";
 import loadFooter from "../../components/Footer/footer.js";
 import { sendMessageToAssistant } from "../../api/chat-api.js";
+import { requireAuth } from "../../api/auth-api.js";
+
+// Check if user is logged in
+if (!requireAuth()) {
+    throw new Error('Authentication required');
+}
 
 async function init() {
     loadHeader();

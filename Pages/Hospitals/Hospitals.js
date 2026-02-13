@@ -1,5 +1,12 @@
 import loadHeader from "../../components/Header/header.js";
 import loadFooter from "../../components/Footer/footer.js";
+import { getHospitals } from "../../api/Hospitals-api.js";
+import { requireAuth } from "../../api/auth-api.js";
+
+// Check if user is logged in
+if (!requireAuth()) {
+    throw new Error('Authentication required');
+}
 
 loadHeader();
 
@@ -59,40 +66,44 @@ function createHospitalCard(hospital) {
   return card;
 }
 
-let hospitals = [];
+async function init() {
+  let hospitals = await getHospitals();
 
-if (!Array.isArray(hospitals) || hospitals.length === 0) {
-  hospitals = [
-    {
-      name: 'MedMind General Hospital',
-      location: 'KFS, Egypt',
-      services: 'Emergency, Surgery, Internal Medicine'
-    },
-    {
-      name: 'City Care Hospital',
-      location: 'Cairo, Egypt',
-      services: 'Cardiology, ICU, Radiology'
-    },
-    {
-      name: 'Green Life Clinic',
-      location: 'Alexandria, Egypt',
-      services: 'Dermatology, Pediatrics, Lab tests'
-    },
-    {
-      name: 'Future Health Center',
-      location: 'Giza, Egypt',
-      services: 'Orthopedics, Physiotherapy, Pharmacy'
-    }
-  ];
+  if (!Array.isArray(hospitals) || hospitals.length === 0) {
+    hospitals = [
+      {
+        name: 'MedMind General Hospital',
+        location: 'KFS, Egypt',
+        services: 'Emergency, Surgery, Internal Medicine'
+      },
+      {
+        name: 'City Care Hospital',
+        location: 'Cairo, Egypt',
+        services: 'Cardiology, ICU, Radiology'
+      },
+      {
+        name: 'Green Life Clinic',
+        location: 'Alexandria, Egypt',
+        services: 'Dermatology, Pediatrics, Lab tests'
+      },
+      {
+        name: 'Future Health Center',
+        location: 'Giza, Egypt',
+        services: 'Orthopedics, Physiotherapy, Pharmacy'
+      }
+    ];
+  }
+
+  hospitals.forEach(function (hospital) {
+    grid.appendChild(createHospitalCard(hospital));
+  });
+
+  container.appendChild(title);
+  container.appendChild(grid);
+  page.appendChild(container);
+  document.body.appendChild(page);
+
+  loadFooter();
 }
 
-hospitals.forEach(function (hospital) {
-  grid.appendChild(createHospitalCard(hospital));
-});
-
-container.appendChild(title);
-container.appendChild(grid);
-page.appendChild(container);
-document.body.appendChild(page);
-
-loadFooter();
+init();

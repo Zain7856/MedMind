@@ -1,116 +1,144 @@
 export default function loadHeader() {
-  if (!document.querySelector('link[href*="global.css"]')) {
-    const link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.href = '/assets/css/global.css';
-    document.head.appendChild(link);
-  }
+    // Check if user is logged in
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    
+    if (!document.querySelector('link[href*="global.css"]')) {
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = '/assets/css/global.css';
+        document.head.appendChild(link);
+    }
 
-  if (!document.querySelector('link[href*="header.css"]')) {
-    const link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.href = '/components/Header/header.css';
-    document.head.appendChild(link);
-  }
+    if (!document.querySelector('link[href*="header.css"]')) {
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = '/components/Header/header.css';
+        document.head.appendChild(link);
+    }
 
-  const header = document.createElement('header');
-  header.id = 'header';
-  header.className = 'header';
+    const header = document.createElement('header');
+    header.id = 'header';
+    header.className = 'header';
 
-  const container = document.createElement('div');
-  container.className = 'container';
+    const container = document.createElement('div');
+    container.className = 'container';
 
-  const headerContent = document.createElement('div');
-  headerContent.className = 'header-content flex flex-between';
+    const headerContent = document.createElement('div');
+    headerContent.className = 'header-content flex-between';
 
+    const logoDiv = document.createElement('div');
+    logoDiv.className = 'header-logo';
 
-  const logoDiv = document.createElement('div');
-  logoDiv.className = 'header-logo';
+    // Show different logo/link based on login status
+    if (currentUser) {
+        // User is logged in - show profile link
+        const profileLink = document.createElement('a');
+        profileLink.href = '/Pages/Profile/profile.html';
+        profileLink.className = 'profile-link';
+        profileLink.textContent = 'My Profile';
+        
+        const logoIcon = document.createElement('img');
+        logoIcon.className = 'logo-icon';
+        logoIcon.src = '/imgs/logo.png';
+        
+        profileLink.appendChild(logoIcon);
+        logoDiv.appendChild(profileLink);
+    } else {
+        // User is not logged in - show regular logo
+        const logoLink = document.createElement('a');
+        logoLink.href = '/';
+        logoLink.className = 'logo-link';
+        logoLink.onclick = function (e) {
+            e.preventDefault();
+            window.location.href = '/Pages/Home/home.html';
+        };
 
-  const logoLink = document.createElement('a');
-  logoLink.href = '/';
-  logoLink.className = 'logo-link';
-  logoLink.onclick = function (e) {
-    e.preventDefault();
-    window.location.href = '/Pages/Home/home.html';
-  };
+        const logoIcon = document.createElement('img');
+        logoIcon.className = 'logo-icon';
+        logoIcon.src = '/imgs/logo.png';
 
-  const logoIcon = document.createElement('img');
-  logoIcon.className = 'logo-icon';
-  logoIcon.src = '/imgs/logo.png';
+        const logoText = document.createElement('span');
+        logoText.className = 'logo-text';
+        logoText.textContent = 'MedMind';
 
-  const logoText = document.createElement('span');
-  logoText.className = 'logo-text';
-  logoText.textContent = 'MedMind';
+        logoLink.appendChild(logoIcon);
+        logoLink.appendChild(logoText);
+        logoDiv.appendChild(logoLink);
+    }
 
-  logoLink.appendChild(logoIcon);
-  logoLink.appendChild(logoText);
-  logoDiv.appendChild(logoLink);
-  const hamburgerBtn = document.createElement('button');
-  hamburgerBtn.id = 'hamburger-btn';
-  hamburgerBtn.className = 'hamburger-btn hide-desktop';
+    const hamburgerBtn = document.createElement('button');
+    hamburgerBtn.id = 'hamburger-btn';
+    hamburgerBtn.className = 'hamburger-btn hide-desktop';
 
-  for (let i = 0; i < 3; i++) {
-    const line = document.createElement('span');
-    line.className = 'hamburger-line';
-    hamburgerBtn.appendChild(line);
-  }
+    for (let i = 0; i < 3; i++) {
+        const line = document.createElement('span');
+        line.className = 'hamburger-line';
+        hamburgerBtn.appendChild(line);
+    }
 
-  const navMenu = document.createElement('nav');
-  navMenu.id = 'nav-menu';
-  navMenu.className = 'nav-menu';
+    const navMenu = document.createElement('nav');
+    navMenu.id = 'nav-menu';
+    navMenu.className = 'nav-menu';
 
-  const navList = document.createElement('ul');
-  navList.className = 'nav-list flex';
+    const navList = document.createElement('ul');
+    navList.className = 'nav-list flex';
 
-  const navItems = [
-    { label: 'Home', href: '/Pages/Home/home.html' },
-    { label: 'Get Started', href: '/Pages/Get Started/Get Started.html' },
-    { label: 'Hospitals', href: '/Pages/Hospitals/Hospitals.html' },
-    { label: 'Doctors', href: '/Pages/Doctors/Doctors.html' },
-    { label: 'Diseases', href: '/Pages/Disease/Disease.html' },
-    { label: 'About', href: '/Pages/About us/About.html' },
-  ];
+    const navItems = [
+        { label: 'Home', href: '/Pages/Home/home.html' },
+        { label: 'Get Started', href: '/Pages/Get Started/Get Started.html' },
+        { label: 'Hospitals', href: '/Pages/Hospitals/Hospitals.html' },
+        { label: 'Doctors', href: '/Pages/Doctors/Doctors.html' },
+        { label: 'Diseases', href: '/Pages/Disease/Disease.html' },
+        { label: 'About', href: '/Pages/About us/About.html' },
+    ];
 
-  navItems.forEach(item => {
-    const li = document.createElement('li');
-    li.className = 'nav-item';
+    navItems.forEach(item => {
+        const li = document.createElement('li');
+        li.className = 'nav-item';
 
-    const a = document.createElement('a');
-    a.href = item.href;
-    a.className = 'nav-link';
-    a.textContent = item.label;
+        const a = document.createElement('a');
+        a.href = item.href;
+        a.className = 'nav-link';
+        a.textContent = item.label;
 
-    a.onclick = function (e) {
-      e.preventDefault();
-      window.location.href = item.href;
+        a.onclick = function (e) {
+            e.preventDefault();
+            window.location.href = item.href;
+        };
+
+        li.appendChild(a);
+        navList.appendChild(li);
+    });
+
+    navMenu.appendChild(navList);
+
+    // Show Sign Up button when not logged in, Profile when logged in
+    const signBtn = document.createElement('button');
+    signBtn.className = 'btn btn-primary';
+    
+    if (currentUser) {
+        signBtn.textContent = 'My Profile';
+        signBtn.onclick = function () {
+            window.location.href = '/Pages/Profile/profile.html';
+        };
+    } else {
+        signBtn.textContent = 'Sign Up';
+        signBtn.onclick = function () {
+            window.location.href = '/Pages/Sign up/Sign up.html';
+        };
+    }
+
+    headerContent.appendChild(logoDiv);
+    headerContent.appendChild(hamburgerBtn);
+    headerContent.appendChild(navMenu);
+    headerContent.appendChild(signBtn);
+    container.appendChild(headerContent);
+    header.appendChild(container);
+
+    hamburgerBtn.onclick = function () {
+        hamburgerBtn.classList.toggle('active');
+        navMenu.classList.toggle('active');
     };
 
-    li.appendChild(a);
-    navList.appendChild(li);
-  });
-
-  navMenu.appendChild(navList);
-
-  const signBtn = document.createElement('button');
-  signBtn.className = 'btn btn-primary';
-  signBtn.textContent = 'Sign Up';
-  signBtn.onclick = function () {
-    window.location.href = '/Pages/Sign up/Sign up.html';
-  };
-
-  headerContent.appendChild(logoDiv);
-  headerContent.appendChild(hamburgerBtn);
-  headerContent.appendChild(navMenu);
-  headerContent.appendChild(signBtn);
-
-  container.appendChild(headerContent);
-  header.appendChild(container);
-
-  hamburgerBtn.onclick = function () {
-    hamburgerBtn.classList.toggle('active');
-    navMenu.classList.toggle('active');
-  };
-
-  document.body.prepend(header);
+    document.body.prepend(header);
 }
