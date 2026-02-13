@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MedMind - Medical Platform</title>
+    <link rel="stylesheet" href="assets/css/global.css">
+    <style>
+        /* Loading Screen Styles */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.3s ease;
+        }
+
+        .loading-content {
+            text-align: center;
+            color: white;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        .loading-text {
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .main-content {
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .visible {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loadingScreen" class="loading-screen">
+        <div class="loading-content">
+            <div class="loading-text">Loading MedMind...</div>
+            <div class="loading-spinner"></div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div id="mainContent" class="main-content">
+        <div style="text-align: center; padding: 50px;">
+            <h1>Welcome to MedMind</h1>
+            <p>Your medical platform is loading...</p>
+        </div>
+    </div>
+
+    <script>
+        // Loading timeout functionality
+        let loadingTimeout;
+        const LOADING_TIMEOUT = 3000; // 3 seconds
+        const MAX_TIMEOUT = 10000; // 10 seconds maximum
+
+        function showLoading() {
+            document.getElementById('loadingScreen').classList.remove('hidden');
+            document.getElementById('mainContent').classList.remove('visible');
+        }
+
+        function hideLoading() {
+            document.getElementById('loadingScreen').classList.add('hidden');
+            document.getElementById('mainContent').classList.add('visible');
+        }
+
+        function handleLoadingTimeout() {
+            console.log('Loading timeout reached - showing content');
+            hideLoading();
+        }
+
+        function handleMaxTimeout() {
+            console.log('Maximum loading time reached - forcing content display');
+            hideLoading();
+            // Optionally show error message
+            const errorDiv = document.createElement('div');
+            errorDiv.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #ef4444;
+                color: white;
+                padding: 10px 15px;
+                border-radius: 8px;
+                z-index: 10000;
+            `;
+            errorDiv.textContent = 'Loading took too long. Please refresh the page.';
+            document.body.appendChild(errorDiv);
+            
+            // Remove error after 5 seconds
+            setTimeout(() => {
+                if (errorDiv.parentNode) {
+                    errorDiv.parentNode.removeChild(errorDiv);
+                }
+            }, 5000);
+        }
+
+        // Initialize loading
+        showLoading();
+
+        // Set timeout for normal loading
+        loadingTimeout = setTimeout(handleLoadingTimeout, LOADING_TIMEOUT);
+
+        // Set maximum timeout
+        setTimeout(handleMaxTimeout, MAX_TIMEOUT);
+
+        // Clear timeout if page loads successfully
+        window.addEventListener('load', () => {
+            clearTimeout(loadingTimeout);
+            console.log('Page loaded successfully');
+            
+            // Simulate content loading
+            setTimeout(() => {
+                hideLoading();
+                
+                // Redirect to home page after loading
+                setTimeout(() => {
+                    window.location.href = '/Pages/Home/home.html';
+                }, 500);
+            }, 1000);
+        });
+
+        // Handle page visibility change
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden) {
+                // Page became visible again
+                console.log('Page became visible');
+            }
+        });
+
+        // Handle errors
+        window.addEventListener('error', (e) => {
+            console.error('Page loading error:', e);
+            clearTimeout(loadingTimeout);
+            hideLoading();
+        });
+    </script>
+</body>
+</html>
