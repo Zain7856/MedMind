@@ -2,7 +2,7 @@ import loadHeader from "../../components/Header/header.js";
 import loadFooter from "../../components/Footer/footer.js";
 import { createAppointment } from "../../api/Appointment-api.js";
 import { getHospitalById } from "../../api/Hospitals-api.js";
-import { requireAuth } from "../../api/auth-api.js";
+import { requireAuth, getCurrentUser } from "../../api/auth-api.js";
 
 // Check if user is logged in
 if (!requireAuth()) {
@@ -66,6 +66,13 @@ userIdInput.type = 'email';
 userIdInput.placeholder = 'Email';
 userIdInput.required = true;
 
+// Auto-populate with current user's email
+const currentUser = getCurrentUser();
+if (currentUser && currentUser.Email) {
+    userIdInput.value = currentUser.Email;
+    userIdInput.readOnly = true;
+}
+
 
 const hospitalIdInput = document.createElement('input');
 hospitalIdInput.className = 'appointment-input';
@@ -114,7 +121,7 @@ form.onsubmit = async function (e) {
     try {
         // Get form values
         const email = userIdInput.value.trim();
-        const hospitalId = hospitalIdInput.value.trim();
+        let hospitalId = hospitalIdInput.value.trim();
         const dateTime = appointmentDateInput.value; // Format: YYYY-MM-DDTHH:MM
         const status = statusSelect.value;
 
@@ -124,11 +131,21 @@ form.onsubmit = async function (e) {
             return;
         }
 
+        // Convert hospital name to ID if needed
+        if (isNaN(hospitalId)) {
+            const hospital = await getHospitalById(hospitalId);
+            if (!hospital || !hospital.ID) {
+                alert('Invalid hospital selected');
+                return;
+            }
+            hospitalId = hospital.ID.toString();
+        }
+
         // Create appointment
         const result = await createAppointment(
             email,          // UserID
             null,           // DoctorID (null for hospital appointments)
-            hospitalId,     // HospitalID
+            hospitalId,     // HospitalID (now numeric)
             dateTime + ":00", // Add seconds
             status
         );
@@ -161,7 +178,7 @@ async function init() {
 
     try {
         const hospital = await getHospitalById(hospitalIdFromUrl);
-        hospitalNameDisplay.value = hospital?.name || hospital?.Name || hospitalIdFromUrl;
+        hospitalNameDisplay.value = hospital?.Name || hospital?.name || hospitalIdFromUrl;
     } catch (error) {
         console.error('Error loading hospital:', error);
         hospitalNameDisplay.value = hospitalIdFromUrl;

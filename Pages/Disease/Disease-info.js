@@ -72,7 +72,7 @@ async function init() {
         }
         
         // Update title
-        title.textContent = disease.Name || 'Unknown Disease';
+        title.textContent = disease.Name || disease.name || 'Unknown Disease';
         
         // Clear content and add sections
         content.innerHTML = '';

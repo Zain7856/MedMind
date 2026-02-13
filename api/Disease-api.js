@@ -9,12 +9,13 @@ export async function getDiseases(){
         
         
         return diseases_list.map(disease => ({
-            id: disease.id,
+            id: disease.ID,
             name: disease.name || disease.Name,
             description: disease.description,
             symptoms: disease.symptoms,
             treatment: disease.treatment,
-            img: disease.img
+            img: disease.img,
+            INFO: disease.INFO
         }));
 
     } catch (error) {

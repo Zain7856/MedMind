@@ -9,10 +9,11 @@ export async function getHospitals(){
         
         
         return hospitals_list.map(hospital => ({
-            id: hospital.id,
-            name: hospital.name || hospital.Name,
-            location: hospital.location,
-            services: hospital.services
+            id: hospital.ID,
+            name: hospital.Name,
+            location: hospital.Location,
+            phone: hospital.Phone,
+            img: hospital.img
         }));
 
     } catch (error) {
@@ -23,7 +24,7 @@ export async function getHospitals(){
 
 export async function getHospitalById(id){
     try {
-        const response = await fetch(`${baseUrl}/hospital/${id}`);
+        const response = await fetch(`${baseUrl}/hospitals/${id}`);
         if(!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         const hospital_details = await response.json();
         
