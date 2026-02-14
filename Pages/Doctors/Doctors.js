@@ -3,11 +3,8 @@ import loadFooter from "../../components/Footer/footer.js";
 import { getDoctors } from "../../api/doctors-api.js";
 import { requireAuth, getCurrentUser } from "../../api/auth-api.js";
 
-// Check if user is logged in
 if (!requireAuth()) {
-    // If not logged in, requireAuth will redirect to login
-    // Exit early
-    throw new Error('Authentication required');
+  throw new Error('Authentication required');
 }
 
 loadHeader();
@@ -106,7 +103,7 @@ async function init() {
     grid.appendChild(createDoctorCard(doctor));
   });
 
-  
+
   container.appendChild(title);
   container.appendChild(grid);
   page.appendChild(container);

@@ -1,97 +1,106 @@
-// Disease Info Page - Created from scratch
+import loadHeader from "../../components/Header/header.js";
+import loadFooter from "../../components/Footer/footer.js";
+import { getDiseaseById } from "../../api/Disease-api.js";
 
-// DOM Elements
-const page = document.createElement('main');
-page.className = 'disease-info-page';
-
-const container = document.createElement('div');
-container.className = 'disease-info-container';
-
-const card = document.createElement('div');
-card.className = 'disease-info-card';
-
-const header = document.createElement('div');
-header.className = 'disease-info-header';
-
-const title = document.createElement('h1');
-title.className = 'disease-info-title';
-title.textContent = 'Loading...';
-
-const content = document.createElement('div');
-content.className = 'disease-info-content';
-content.id = 'disease-info-content';
-content.innerHTML = '<p>Loading disease information...</p>';
-
-// Build page structure
-header.appendChild(title);
-card.appendChild(header);
-card.appendChild(content);
-container.appendChild(card);
-page.appendChild(container);
-document.body.appendChild(page);
-
-// Get disease ID from URL
-const urlParams = new URLSearchParams(window.location.search);
-const diseaseId = urlParams.get('id');
-
-// Create sections function
-const createSection = (title, content, className) => {
-    const section = document.createElement('div');
-    section.className = `disease-section ${className}`;
-    
-    const sectionTitle = document.createElement('h2');
-    sectionTitle.className = 'disease-section-title';
-    sectionTitle.textContent = title;
-    
-    const sectionContent = document.createElement('div');
-    sectionContent.className = 'disease-section-content';
-    sectionContent.textContent = content;
-    
-    section.appendChild(sectionTitle);
-    section.appendChild(sectionContent);
-    return section;
-};
-
-// Load disease data
 async function init() {
+    loadHeader();
+
+    const container = document.getElementById('disease-info-container');
+    const urlParams = new URLSearchParams(window.location.search);
+    const diseaseId = urlParams.get('id');
+
     if (!diseaseId) {
-        title.textContent = 'No Disease Specified';
-        content.innerHTML = '<p class="error-message">No disease specified</p>';
+        renderError(container, 'No disease ID provided.');
+        loadFooter();
         return;
     }
-    
-    try {
-        // Import API function
-        const { getDiseaseById } = await import('../../api/Disease-api.js');
-        const disease = await getDiseaseById(diseaseId);
-        
-        if (!disease) {
-            title.textContent = 'Disease Not Found';
-            content.innerHTML = '<p class="error-message">Disease not found</p>';
-            return;
-        }
-        
-        // Update title
-        title.textContent = disease.Name || disease.name || 'Unknown Disease';
-        
-        // Clear content and add sections
-        content.innerHTML = '';
-        
-        const descriptionSection = createSection('Description', disease.description || 'No description available', 'description-section');
-        const infoSection = createSection('Info', disease.INFO || 'No information available', 'info-section');
-        const symptomsSection = createSection('Symptoms', disease.symptoms || 'No symptoms available', 'symptoms-section');
-        const treatmentSection = createSection('Treatment', disease.treatment || 'No treatment available', 'treatment-section');
-        
-        content.appendChild(descriptionSection);
-        content.appendChild(infoSection);
-        content.appendChild(symptomsSection);
-        content.appendChild(treatmentSection);
-        
-    } catch (error) {
-        console.error('Error loading disease:', error);
-        content.innerHTML = '<p class="error-message">Error loading disease information</p>';
+
+    const disease = await getDiseaseById(diseaseId);
+
+    if (!disease || Object.keys(disease).length === 0 || !disease.id) {
+        renderError(container, 'Disease details not found.');
+    } else {
+        renderDiseaseDetails(container, disease);
     }
+
+    loadFooter();
 }
 
-// Initialize
+function renderDiseaseDetails(container, disease) {
+    container.innerHTML = '';
+
+    const hero = document.createElement('section');
+    hero.className = 'info-hero';
+
+    const heroContainer = document.createElement('div');
+    heroContainer.className = 'container';
+
+    const backBtn = document.createElement('a');
+    backBtn.href = 'Disease.html';
+    backBtn.className = 'back-btn';
+    backBtn.innerHTML = '&larr; Back to Diseases';
+
+    const title = document.createElement('h1');
+    title.className = 'info-title';
+    title.textContent = disease.name;
+
+    heroContainer.appendChild(backBtn);
+    heroContainer.appendChild(title);
+    hero.appendChild(heroContainer);
+
+    const mainContent = document.createElement('div');
+    mainContent.className = 'container info-main';
+
+    const overview = document.createElement('section');
+    overview.className = 'info-card overview-section';
+    const overviewTitle = document.createElement('h2');
+    overviewTitle.textContent = 'Overview';
+    const overviewText = document.createElement('p');
+    overviewText.textContent = disease.description || disease.info;
+
+    overview.appendChild(overviewTitle);
+    overview.appendChild(overviewText);
+
+    const detailsGrid = document.createElement('div');
+    detailsGrid.className = 'info-details-grid';
+
+    const detailSections = [
+        { title: 'Symptoms', content: disease.symptoms, class: 'symptoms-card' },
+        { title: 'Treatment', content: disease.treatment, class: 'treatment-card' }
+    ];
+
+    detailSections.forEach(section => {
+        if (section.content) {
+            const card = document.createElement('section');
+            card.className = `info-card ${section.class}`;
+
+            const h2 = document.createElement('h2');
+            h2.textContent = section.title;
+
+            const p = document.createElement('p');
+            p.textContent = section.content;
+
+            card.appendChild(h2);
+            card.appendChild(p);
+            detailsGrid.appendChild(card);
+        }
+    });
+
+    mainContent.appendChild(overview);
+    mainContent.appendChild(detailsGrid);
+
+
+    const disclaimer = document.createElement('div');
+    disclaimer.className = 'medical-disclaimer';
+    disclaimer.innerHTML = '<strong>Medical Disclaimer:</strong> This information is for educational purposes only and does not constitute medical advice. Always consult with a qualified healthcare professional for diagnosis and treatment.';
+    mainContent.appendChild(disclaimer);
+
+    container.appendChild(hero);
+    container.appendChild(mainContent);
+}
+
+function renderError(container, message) {
+    container.innerHTML = `<div class="container error-state"><p>${message}</p><a href="Disease.html" class="btn btn-primary">Go Back</a></div>`;
+}
+
 init();

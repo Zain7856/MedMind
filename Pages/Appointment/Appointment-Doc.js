@@ -4,10 +4,8 @@ import loadFooter from "../../components/Footer/footer.js";
 import { createAppointment } from "../../api/Appointment-api.js";
 import { getDoctorsByid } from "../../api/doctors-api.js";
 import { requireAuth } from "../../api/auth-api.js";
-
-// Check if user is logged in
 if (!requireAuth()) {
-    throw new Error('Authentication required');
+  throw new Error('Authentication required');
 }
 
 loadHeader();
@@ -110,37 +108,37 @@ topBar.appendChild(backBtn);
 card.appendChild(topBar);
 
 form.onsubmit = async function (e) {
-    e.preventDefault();
+  e.preventDefault();
 
-    try {
-        // Get form values
-        const email = userIdInput.value.trim();
-        const doctorId = doctorIdInput.value.trim();
-        const dateTime = appointmentDateInput.value; // Format: YYYY-MM-DDTHH:MM
-        const status = statusSelect.value;
+  try {
+    // Get form values
+    const email = userIdInput.value.trim();
+    const doctorId = doctorIdInput.value.trim();
+    const dateTime = appointmentDateInput.value; // Format: YYYY-MM-DDTHH:MM
+    const status = statusSelect.value;
 
-        // Basic validation
-        if (!email || !doctorId || !dateTime) {
-            alert('Please fill in all required fields');
-            return;
-        }
-
-        // Create appointment
-        const result = await createAppointment(
-            email,          // UserID
-            doctorId,       // DoctorID
-            null,           // HospitalID (null for doctor appointments)
-            dateTime + ":00", // Add seconds
-            status
-        );
-        
-        alert('Appointment created successfully!');
-        console.log('Appointment created:', result);
-        
-    } catch (error) {
-        console.error('Error:', error);
-        alert('Error: ' + (error.message || 'Failed to create appointment'));
+    // Basic validation
+    if (!email || !doctorId || !dateTime) {
+      alert('Please fill in all required fields');
+      return;
     }
+
+    // Create appointment
+    const result = await createAppointment(
+      email,          // UserID
+      doctorId,       // DoctorID
+      null,           // HospitalID (null for doctor appointments)
+      dateTime + ":00", // Add seconds
+      status
+    );
+
+    alert('Appointment created successfully!');
+    console.log('Appointment created:', result);
+
+  } catch (error) {
+    console.error('Error:', error);
+    alert('Error: ' + (error.message || 'Failed to create appointment'));
+  }
 };
 
 card.appendChild(title);
@@ -157,8 +155,8 @@ async function init() {
   if (doctorIdFromUrl) {
     try {
       const doctor = await getDoctorsByid(doctorIdFromUrl);
-      if (doctor && doctor.Name) {
-        doctorNameDisplay.value = doctor.Name;
+      if (doctor && (doctor.name || doctor.Name)) {
+        doctorNameDisplay.value = doctor.name || doctor.Name;
       } else {
         doctorNameDisplay.value = 'Doctor not found';
       }

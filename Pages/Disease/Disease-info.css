@@ -1,35 +1,16 @@
-/* Disease Info Page CSS - Created from scratch */
+/* Disease Info Page CSS - Premium Hero & Grid Layout */
 
 :root {
-    --primary-color: #4f46e5;
+    --primary: #4f46e5;
     --primary-dark: #4338ca;
     --primary-light: #e0e7ff;
-    --bg-primary: #ffffff;
-    --bg-secondary: #f8fafc;
-    --text-primary: #1e293b;
-    --text-secondary: #64748b;
-    --text-white: #ffffff;
-    --border-color: #e2e8f0;
-    --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
-    --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
-    --shadow-lg: 0 10px 25px rgba(0,0,0,0.12);
-    --radius-sm: 8px;
-    --radius-md: 12px;
-    --radius-lg: 16px;
-    --spacing-xs: 4px;
-    --spacing-sm: 8px;
-    --spacing-md: 16px;
-    --spacing-lg: 24px;
-    --spacing-xl: 32px;
-    --font-size-sm: 14px;
-    --font-size-base: 16px;
-    --font-size-lg: 18px;
-    --font-size-xl: 20px;
-    --font-size-2xl: 24px;
-    --font-weight-medium: 500;
-    --font-weight-bold: 700;
-    --transition-fast: 150ms ease;
-    --transition-normal: 250ms ease;
+    --text-main: #1e293b;
+    --text-muted: #64748b;
+    --bg-page: #f8fafc;
+    --bg-card: #ffffff;
+    --border: #e2e8f0;
+    --radius: 16px;
+    --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
 }
 
 * {
@@ -39,120 +20,125 @@
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    background: linear-gradient(135deg, #f8fafc 0%, #e0e7ff 100%);
-    min-height: 100vh;
-    padding: var(--spacing-md);
-}
-
-.disease-info-page {
-    width: 100%;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    padding: var(--spacing-lg) var(--spacing-md);
-}
-
-.disease-info-container {
-    width: 100%;
-    max-width: 600px;
-}
-
-.disease-info-card {
-    background: var(--bg-primary);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-md);
-    overflow: hidden;
-    margin-top: var(--spacing-md);
-}
-
-.disease-info-header {
-    text-align: center;
-    padding: var(--spacing-lg) var(--spacing-md) var(--spacing-md);
-    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
-    color: var(--text-white);
-}
-
-.disease-info-title {
-    font-size: var(--font-size-xl);
-    font-weight: 700;
-    margin-bottom: var(--spacing-sm);
-}
-
-.disease-info-content {
-    padding: var(--spacing-lg) var(--spacing-md);
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-md);
-}
-
-.disease-section {
-    margin-bottom: var(--spacing-md);
-    background: var(--bg-secondary);
-    border-radius: var(--radius-md);
-    padding: var(--spacing-md);
-    transition: all var(--transition-fast);
-    border-left: 4px solid;
-}
-
-.disease-section:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
-}
-
-.disease-section-title {
-    color: var(--text-primary);
-    font-size: var(--font-size-lg);
-    margin-bottom: var(--spacing-md);
-    padding-bottom: var(--spacing-sm);
-    border-bottom: 2px solid var(--border-color);
-}
-
-.disease-section-content {
-    color: var(--text-primary);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background-color: var(--bg-page);
+    color: var(--text-main);
     line-height: 1.6;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.info-hero {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color: white;
+    padding: 60px 0;
+    margin-bottom: -40px; 
+}
+
+.back-btn {
+    display: inline-block;
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+    transition: color 0.2s;
+}
+
+.back-btn:hover {
+    color: white;
+}
+
+.info-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    letter-spacing: -0.025em;
+}
+
+/* Main Content */
+.info-main {
+    position: relative;
+    z-index: 10;
+    padding-bottom: 60px;
+}
+
+.info-card {
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    padding: 30px;
+    box-shadow: var(--shadow);
+    margin-bottom: 30px;
+    border: 1px solid var(--border);
+    animation: fadeIn 0.6s ease-out forwards;
+}
+
+.info-card h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.info-card h2::before {
+    content: '';
+    display: block;
+    width: 4px;
+    height: 20px;
+    background: var(--primary);
+    border-radius: 2px;
+}
+
+.info-card p {
+    color: var(--text-main);
+    font-size: 1.05rem;
     white-space: pre-wrap;
 }
 
-.description-section {
-    border-color: var(--primary-color);
+/* Details Grid */
+.info-details-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
 }
 
-.info-section {
-    border-color: #6366f1;
-}
+.symptoms-card h2 { color: #f59e0b; }
+.symptoms-card h2::before { background: #f59e0b; }
 
-.symptoms-section {
-    border-color: #f59e0b;
-}
+.treatment-card h2 { color: #10b981; }
+.treatment-card h2::before { background: #10b981; }
 
-.treatment-section {
-    border-color: #10b981;
-}
-
-.error-message {
+/* Disclaimer */
+.medical-disclaimer {
+    margin-top: 50px;
+    padding: 20px;
+    background: #fffbeb;
+    border: 1px solid #fef3c7;
+    border-radius: 12px;
+    color: #92400e;
+    font-size: 0.85rem;
     text-align: center;
-    color: var(--text-secondary);
-    font-size: var(--font-size-lg);
-    padding: var(--spacing-xl);
-    background: var(--bg-secondary);
-    border-radius: var(--radius-md);
-    margin: var(--spacing-lg) 0;
 }
 
+/* Utilities */
+.error-state {
+    text-align: center;
+    padding: 100px 0;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive */
 @media (max-width: 768px) {
-    .disease-info-page {
-        padding: var(--spacing-lg) var(--spacing-sm);
-    }
-    
-    .disease-info-content {
-        padding: var(--spacing-lg) var(--spacing-md);
-        flex-direction: column;
-        gap: var(--spacing-md);
-    }
-    
-    .disease-section {
-        padding: var(--spacing-md);
-    }
+    .info-title { font-size: 2rem; }
+    .info-details-grid { grid-template-columns: 1fr; }
+    .info-hero { padding: 40px 0; }
 }

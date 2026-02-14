@@ -3,24 +3,24 @@ import loadFooter from "../../components/Footer/footer.js";
 
 loadHeader();
 
-const getStartedBtn = document.getElementById('btn-get-started');
-if (getStartedBtn) {
-  getStartedBtn.onclick = function () {
-      window.location.href = '/Pages/Get Started/Get Started.html';
+const exploreGetStarted = document.getElementById('explore-get-started');
+if (exploreGetStarted) {
+  exploreGetStarted.onclick = function () {
+    window.location.href = '/Pages/Get Started/Get Started.html';
   };
 }
 
 const contactBtn = document.getElementById('btn-contact');
 if (contactBtn) {
   contactBtn.onclick = function () {
-      window.location.href = '/Pages/contact_us/Contact.html';
+    window.location.href = '/Pages/contact_us/Contact.html';
   };
 }
 
 const signUpBtn = document.getElementById('btn-sign-up');
 if (signUpBtn) {
   signUpBtn.onclick = function () {
-      window.location.href = '/Pages/Sign up/Sign up.html';
+    window.location.href = '/Pages/Sign up/Sign up.html';
   };
 }
 

@@ -3,9 +3,8 @@ import loadFooter from "../../components/Footer/footer.js";
 import { getHospitals } from "../../api/Hospitals-api.js";
 import { requireAuth } from "../../api/auth-api.js";
 
-// Check if user is logged in
 if (!requireAuth()) {
-    throw new Error('Authentication required');
+  throw new Error('Authentication required');
 }
 
 loadHeader();
@@ -30,7 +29,7 @@ function createHospitalCard(hospital) {
   const img = document.createElement('img');
   img.className = 'hospital-img';
   img.alt = hospital.name;
-  img.src = hospital.image || '/imgs/logo.png';
+  img.src = hospital.img || '/imgs/logo.png';
 
   const info = document.createElement('div');
   info.className = 'hospital-info';
@@ -51,6 +50,7 @@ function createHospitalCard(hospital) {
   btn.className = 'hospital-btn';
   btn.textContent = 'Book Now';
   btn.onclick = function () {
+    // Prioritize lowercase 'id', then '_id', then 'hospitalId', then 'name'
     const hospitalId = hospital.id || hospital._id || hospital.hospitalId || hospital.name;
     window.location.href = '/Pages/Appointment/A-hos.html?hospitalId=' + encodeURIComponent(hospitalId);
   };

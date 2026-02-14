@@ -4,7 +4,6 @@ import { createAppointment } from "../../api/Appointment-api.js";
 import { getHospitalById } from "../../api/Hospitals-api.js";
 import { requireAuth, getCurrentUser } from "../../api/auth-api.js";
 
-// Check if user is logged in
 if (!requireAuth()) {
     throw new Error('Authentication required');
 }
@@ -36,7 +35,7 @@ backBtn.type = 'button';
 backBtn.className = 'appointment-back-btn';
 backBtn.textContent = '← Back to Hospitals';
 backBtn.onclick = function () {
-  window.location.href = '/Pages/Hospitals/Hospitals.html';
+    window.location.href = '/Pages/Hospitals/Hospitals.html';
 };
 
 const topBar = document.createElement('div');
@@ -47,17 +46,17 @@ const form = document.createElement('form');
 form.className = 'appointment-form';
 
 function createField(labelText, inputEl) {
-  const field = document.createElement('div');
-  field.className = 'appointment-field';
+    const field = document.createElement('div');
+    field.className = 'appointment-field';
 
-  const label = document.createElement('label');
-  label.className = 'appointment-label';
-  label.textContent = labelText;
+    const label = document.createElement('label');
+    label.className = 'appointment-label';
+    label.textContent = labelText;
 
-  field.appendChild(label);
-  field.appendChild(inputEl);
+    field.appendChild(label);
+    field.appendChild(inputEl);
 
-  return field;
+    return field;
 }
 
 const userIdInput = document.createElement('input');
@@ -66,10 +65,9 @@ userIdInput.type = 'email';
 userIdInput.placeholder = 'Email';
 userIdInput.required = true;
 
-// Auto-populate with current user's email
 const currentUser = getCurrentUser();
-if (currentUser && currentUser.Email) {
-    userIdInput.value = currentUser.Email;
+if (currentUser && (currentUser.email || currentUser.Email)) {
+    userIdInput.value = currentUser.email || currentUser.Email;
     userIdInput.readOnly = true;
 }
 
@@ -96,10 +94,10 @@ statusSelect.required = true;
 
 const statusOptions = ['Pending', 'Confirmed', 'Cancelled'];
 statusOptions.forEach(function (status) {
-  const opt = document.createElement('option');
-  opt.value = status;
-  opt.textContent = status;
-  statusSelect.appendChild(opt);
+    const opt = document.createElement('option');
+    opt.value = status;
+    opt.textContent = status;
+    statusSelect.appendChild(opt);
 });
 statusSelect.value = 'Pending';
 
@@ -149,10 +147,10 @@ form.onsubmit = async function (e) {
             dateTime + ":00", // Add seconds
             status
         );
-        
+
         alert('Appointment created successfully!');
         console.log('Appointment created:', result);
-        
+
     } catch (error) {
         console.error('Error:', error);
         alert('Error: ' + (error.message || 'Failed to create appointment'));
