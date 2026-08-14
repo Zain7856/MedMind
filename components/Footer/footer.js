@@ -6,10 +6,10 @@ export default function loadFooter() {
     document.head.appendChild(link);
   }
 
-  if (!document.querySelector('link[href*="footer.css"]')) {
+  if (!document.querySelector('link[href*="Footer.css"]')) {
     const link = document.createElement('link');
     link.rel = 'stylesheet';
-    link.href = '/components/Footer/footer.css';
+    link.href = '/components/Footer/Footer.css';
     document.head.appendChild(link);
   }
 
@@ -29,15 +29,28 @@ export default function loadFooter() {
   const aboutCol = document.createElement('div');
   aboutCol.className = 'footer-col';
 
-  const aboutTitle = document.createElement('img');
-  aboutTitle.src = '/imgs/logo.png';
-  aboutTitle.className = 'footer-title';
+  const logoContainer = document.createElement('div');
+  logoContainer.className = 'footer-logo-container';
+  logoContainer.style.cssText = 'display: flex; align-items: center; gap: 10px; margin-bottom: 1rem;';
+
+  const logoIcon = document.createElement('img');
+  logoIcon.className = 'logo-icon';
+  logoIcon.src = '/imgs/logo.png';
+  logoIcon.style.cssText = 'width: 40px; height: 40px; border-radius: 50%; background: #fff; padding: 2px; object-fit: cover;';
+
+  const logoText = document.createElement('span');
+  logoText.className = 'logo-text';
+  logoText.textContent = 'MedMind';
+  logoText.style.cssText = 'font-size: 1.25rem; font-weight: 700; color: #fff;';
+
+  logoContainer.appendChild(logoIcon);
+  logoContainer.appendChild(logoText);
 
   const aboutText = document.createElement('p');
   aboutText.className = 'footer-text';
   aboutText.textContent = 'Your trusted healthcare companion for medical information and doctor consultations.';
 
-  aboutCol.appendChild(aboutTitle);
+  aboutCol.appendChild(logoContainer);
   aboutCol.appendChild(aboutText);
 
   const linksCol = document.createElement('div');
@@ -114,7 +127,7 @@ export default function loadFooter() {
 
   const copyright = document.createElement('p');
   copyright.className = 'copyright';
-  copyright.textContent = `© ${new Date().getFullYear()} MedCheck. All rights reserved.`;
+  copyright.textContent = `© ${new Date().getFullYear()} MedMind. All rights reserved.`;
 
   footerBottom.appendChild(copyright);
 

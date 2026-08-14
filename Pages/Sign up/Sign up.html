@@ -49,8 +49,12 @@
                     <select id="role" name="role" required>
                         <option value="Patient">Patient</option>
                         <option value="Doctor">Doctor</option>
+                        <option value="Hospital">Hospital</option>
                     </select>
                 </div>
+
+                <!-- Dynamic role-specific fields -->
+                <div id="roleFieldsContainer"></div>
                 
                 <button type="submit" class="auth-btn">Sign Up</button>
                 

@@ -19,7 +19,9 @@ export function getCurrentUser() {
                 email: raw.email || raw.Email,
                 age: raw.age || raw.Age,
                 phone: raw.phone || raw.Phone,
-                role: raw.role || raw.Role
+                role: raw.role || raw.Role,
+                approvalStatus: raw.approvalStatus || raw.ApprovalStatus,
+                isBanned: raw.isBanned || raw.IsBanned || 0
             };
         }
     }
@@ -60,7 +62,9 @@ export async function login(email, password) {
             email: user.email || user.Email,
             age: user.age || user.Age,
             phone: user.phone || user.Phone,
-            role: user.role || user.Role
+            role: user.role || user.Role,
+            approvalStatus: user.ApprovalStatus || user.approvalStatus,
+            isBanned: user.IsBanned || user.isBanned || 0
         };
 
         localStorage.setItem('currentUser', JSON.stringify(currentUser));
@@ -71,11 +75,16 @@ export async function login(email, password) {
     }
 }
 
-export function logout() {
+export function logout(askConfirmation = true) {
+    if (askConfirmation) {
+        const confirmed = confirm('Are you sure you want to log out?');
+        if (!confirmed) return;
+    }
     currentUser = null;
     localStorage.removeItem('currentUser');
     window.location.href = '/Pages/Sign in/Sign in.html';
 }
+
 
 export function requireAuth() {
     if (!isLoggedIn()) {
@@ -130,3 +139,44 @@ export async function createUser(user) {
         throw error;
     }
 }
+
+export async function updateUserProfile(id, userData) {
+    const prevUser = getCurrentUser() || {};
+    const updatedUser = {
+        id: id || userData.id || userData.ID || prevUser.id,
+        name: userData.name || userData.Name || prevUser.name,
+        email: userData.email || userData.Email || prevUser.email,
+        age: userData.age || userData.Age || prevUser.age,
+        phone: userData.phone || userData.Phone || prevUser.phone,
+        role: userData.role || userData.Role || prevUser.role || 'Patient',
+        approvalStatus: userData.approvalStatus || userData.ApprovalStatus || prevUser.approvalStatus || 'Approved',
+        isBanned: userData.isBanned || userData.IsBanned || prevUser.isBanned || 0
+    };
+
+    try {
+        if (id) {
+            const response = await fetch(`${baseUrl}/users/${id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    Name: updatedUser.name,
+                    Email: updatedUser.email,
+                    Age: updatedUser.age,
+                    Phone: updatedUser.phone,
+                    Role: updatedUser.role
+                })
+            });
+
+            if (!response.ok) {
+                console.warn('Backend update failed, updating local session');
+            }
+        }
+    } catch (error) {
+        console.warn('Backend server unreachable, updating local session:', error);
+    }
+
+    currentUser = updatedUser;
+    localStorage.setItem('currentUser', JSON.stringify(updatedUser));
+    return updatedUser;
+}
+

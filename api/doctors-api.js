@@ -10,6 +10,7 @@ export async function getDoctors() {
 
         return doctorsArray.map(doctor => ({
             id: doctor.ID || doctor.id,
+            userId: doctor.UserID || doctor.userId || null,
             name: doctor.Name || doctor.name,
             specialization: doctor.Specialization || doctor.specialization,
             phone: doctor.Phone || doctor.phone,

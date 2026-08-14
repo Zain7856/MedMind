@@ -1,7 +1,7 @@
 import loadHeader from "../../components/Header/header.js";
 import loadFooter from "../../components/Footer/footer.js";
 import { getHospitals } from "../../api/Hospitals-api.js";
-import { requireAuth } from "../../api/auth-api.js";
+import { requireAuth, getCurrentUser } from "../../api/auth-api.js";
 
 if (!requireAuth()) {
   throw new Error('Authentication required');
@@ -50,7 +50,6 @@ function createHospitalCard(hospital) {
   btn.className = 'hospital-btn';
   btn.textContent = 'Book Now';
   btn.onclick = function () {
-    // Prioritize lowercase 'id', then '_id', then 'hospitalId', then 'name'
     const hospitalId = hospital.id || hospital._id || hospital.hospitalId || hospital.name;
     window.location.href = '/Pages/Appointment/A-hos.html?hospitalId=' + encodeURIComponent(hospitalId);
   };
@@ -68,6 +67,21 @@ function createHospitalCard(hospital) {
 
 async function init() {
   let hospitals = await getHospitals();
+
+  const user = getCurrentUser();
+  if (user && user.role === 'Hospital') {
+    const hosUserMatch = hos => hos.userId === user.id || hos.userId === user.ID || (hos.userId && String(hos.userId) === String(user.id || user.ID));
+    hospitals = hospitals.filter(hosUserMatch);
+    if (hospitals.length === 0) {
+      hospitals = [{
+        id: 'self',
+        userId: user.id || user.ID,
+        name: user.name,
+        location: 'Not configured',
+        services: 'Click Edit Profile in your dashboard to configure hospital info.'
+      }];
+    }
+  }
 
   if (!Array.isArray(hospitals) || hospitals.length === 0) {
     hospitals = [

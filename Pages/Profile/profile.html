@@ -8,15 +8,32 @@
     <link rel="stylesheet" href="../../assets/css/global.css">
 </head>
 <body>
+    <div id="header-placeholder"></div>
+
     <div class="profile-container">
         <div class="profile-card">
             <div class="profile-header">
-                <img src="../../imgs/logo.png" alt="MedMind Logo" class="profile-logo">
-                <h1>My Profile</h1>
-                <p>Manage your personal information and appointments</p>
+                <div class="profile-pic-container">
+                    <div class="profile-pic-wrapper">
+                        <img id="profilePic" src="../../imgs/logo.png" alt="Profile Picture" class="profile-pic">
+                        <label for="profilePicInput" class="upload-pic-btn" title="Upload/Change Profile Picture">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                                <circle cx="12" cy="13" r="4"></circle>
+                            </svg>
+                        </label>
+                        <input type="file" id="profilePicInput" accept="image/*" style="display: none;">
+                    </div>
+                    <button id="removePicBtn" class="remove-pic-btn" title="Remove Profile Picture" style="display: none;">Remove Photo</button>
+                </div>
+                <h1 id="profileTitle">My Profile</h1>
+                <p id="profileSubtitle">Manage your personal information and appointments</p>
+                <span id="roleBadge" class="role-badge"></span>
             </div>
-            
+
             <div class="profile-content">
+
+                <!-- Personal Information (all roles) -->
                 <div class="profile-section">
                     <h2>Personal Information</h2>
                     <div class="info-grid">
@@ -42,14 +59,142 @@
                         </div>
                     </div>
                 </div>
-                
-                <div class="profile-section">
+
+                <!-- Patient: My Appointments -->
+                <div id="patientSection" class="profile-section" style="display:none;">
                     <h2>My Appointments</h2>
                     <div id="appointmentsList" class="appointments-list">
                         <p class="loading-text">Loading appointments...</p>
                     </div>
                 </div>
-                
+
+                <!-- Doctor: My Patients & Profile Edit -->
+                <div id="doctorSection" style="display:none;">
+                    <div class="profile-section">
+                        <div class="section-header-row">
+                            <h2>My Doctor Profile</h2>
+                            <button id="editDoctorProfileBtn" class="section-action-btn">✏️ Edit Profile</button>
+                        </div>
+                        <div id="doctorProfileInfo" class="info-grid">
+                            <p class="loading-text">Loading profile...</p>
+                        </div>
+                        <!-- Edit Form -->
+                        <form id="doctorProfileForm" class="edit-form" style="display:none;">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Specialization</label>
+                                    <input type="text" id="doc-specialization" placeholder="e.g. Cardiology">
+                                </div>
+                                <div class="form-group">
+                                    <label>Location</label>
+                                    <input type="text" id="doc-location" placeholder="City">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Phone</label>
+                                    <input type="tel" id="doc-phone" placeholder="Phone number">
+                                </div>
+                                <div class="form-group">
+                                    <label>Consultation Fee (L.E)</label>
+                                    <input type="number" id="doc-cost" min="0">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>About</label>
+                                <textarea id="doc-about" rows="3" placeholder="About your experience..."></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Photo URL</label>
+                                <input type="url" id="doc-img" placeholder="https://...">
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="profile-btn">Save Changes</button>
+                                <button type="button" id="cancelDoctorEdit" class="profile-btn logout-btn">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="profile-section">
+                        <h2>My Patients & Appointments</h2>
+                        <div id="doctorAppointmentsList" class="appointments-list">
+                            <p class="loading-text">Loading patients...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hospital: Appointments & Profile Edit -->
+                <div id="hospitalSection" style="display:none;">
+                    <div class="profile-section">
+                        <div class="section-header-row">
+                            <h2>My Hospital Profile</h2>
+                            <button id="editHospitalProfileBtn" class="section-action-btn">✏️ Edit Profile</button>
+                        </div>
+                        <div id="hospitalProfileInfo" class="info-grid">
+                            <p class="loading-text">Loading profile...</p>
+                        </div>
+                        <!-- Edit Form -->
+                        <form id="hospitalProfileForm" class="edit-form" style="display:none;">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Location / Address</label>
+                                    <input type="text" id="hos-location" placeholder="City / Address">
+                                </div>
+                                <div class="form-group">
+                                    <label>Phone</label>
+                                    <input type="tel" id="hos-phone" placeholder="Phone number">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Services Offered</label>
+                                <input type="text" id="hos-services" placeholder="e.g. Emergency, Cardiology">
+                            </div>
+                            <div class="form-group">
+                                <label>Hospital Photo URL</label>
+                                <input type="url" id="hos-img" placeholder="https://...">
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="profile-btn">Save Changes</button>
+                                <button type="button" id="cancelHospitalEdit" class="profile-btn logout-btn">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="profile-section">
+                        <h2>Appointments at My Hospital</h2>
+                        <div id="hospitalAppointmentsList" class="appointments-list">
+                            <p class="loading-text">Loading appointments...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Admin: Full Control Panel -->
+                <div id="adminSection" style="display:none;">
+                    <div class="profile-section admin-panel">
+                        <h2>⚙️ Admin Control Panel</h2>
+                        <div class="admin-tabs">
+                            <button class="admin-tab-btn active" data-tab="pending">Pending Approvals</button>
+                            <button class="admin-tab-btn" data-tab="allusers">All Users</button>
+                        </div>
+
+                        <div id="adminTab-pending" class="admin-tab-content">
+                            <div id="pendingUsersList" class="admin-users-list">
+                                <p class="loading-text">Loading pending users...</p>
+                            </div>
+                        </div>
+
+                        <div id="adminTab-allusers" class="admin-tab-content" style="display:none;">
+                            <div class="admin-search-row">
+                                <input type="text" id="adminUserSearch" placeholder="Search by name or email..." class="admin-search-input">
+                            </div>
+                            <div id="allUsersList" class="admin-users-list">
+                                <p class="loading-text">Loading users...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Shared Actions -->
                 <div class="profile-actions">
                     <button id="editProfileBtn" class="profile-btn">Edit Profile</button>
                     <button id="logoutBtn" class="profile-btn logout-btn">Logout</button>
@@ -58,6 +203,7 @@
         </div>
     </div>
     
+    <div id="footer-placeholder"></div>
     <script type="module" src="profile.js"></script>
 </body>
 </html>

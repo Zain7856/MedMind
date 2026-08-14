@@ -38,12 +38,16 @@ body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     background: linear-gradient(135deg, #f8fafc 0%, #e0e7ff 100%);
     min-height: 100vh;
-    padding: var(--spacing-md);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
 }
 
 .profile-container {
     width: 100%;
-    padding: var(--spacing-sm);
+    flex: 1;
+    padding: var(--spacing-xl) var(--spacing-md);
     display: flex;
     justify-content: center;
     align-items: flex-start;
@@ -52,11 +56,13 @@ body {
 .profile-card {
     background: var(--bg-primary);
     border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-md);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
     overflow: hidden;
-    margin-top: var(--spacing-md);
-    max-width: 100%;
+    width: 100%;
+    max-width: 850px;
+    margin: 0 auto;
 }
+
 
 .profile-header {
     text-align: center;
@@ -65,14 +71,71 @@ body {
     color: var(--text-white);
 }
 
-.profile-logo {
-    width: 80px;
-    height: 80px;
+.profile-pic-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     margin-bottom: var(--spacing-md);
-    border-radius: 50%;
-    background: var(--text-white);
-    padding: var(--spacing-sm);
+    gap: 8px;
 }
+
+.profile-pic-wrapper {
+    position: relative;
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    border: 3px solid #ffffff;
+    background: #ffffff;
+}
+
+.profile-pic {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.upload-pic-btn {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 34px;
+    height: 34px;
+    background: #2563eb;
+    color: #ffffff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    transition: all 0.2s ease;
+    border: 2px solid #ffffff;
+}
+
+.upload-pic-btn:hover {
+    background: #1d4ed8;
+    transform: scale(1.1);
+}
+
+.remove-pic-btn {
+    background: rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.remove-pic-btn:hover {
+    background: rgba(239, 68, 68, 0.8);
+    border-color: transparent;
+}
+
 
 .profile-header h1 {
     font-size: var(--font-size-2xl);
@@ -102,10 +165,11 @@ body {
 }
 
 .info-grid {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     gap: var(--spacing-md);
 }
+
 
 .info-item {
     display: flex;
@@ -238,3 +302,305 @@ body {
         padding: var(--spacing-sm);
     }
 }
+
+/* Edit Profile Modal */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(4px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    animation: fadeIn 0.25s ease-out;
+}
+
+.modal-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 32px 24px;
+    max-width: 460px;
+    width: 90%;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.edit-profile-card {
+    text-align: left;
+}
+
+.edit-profile-card .modal-title {
+    font-size: 22px;
+    font-weight: 800;
+    color: #0f172a;
+    margin-bottom: 4px;
+}
+
+.edit-profile-form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 16px;
+}
+
+.edit-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.edit-field label {
+    font-size: 13px;
+    font-weight: 700;
+    color: #1e293b;
+}
+
+.edit-field input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    font-size: 14px;
+    margin-bottom: 0;
+}
+
+.edit-field input:focus {
+    outline: none;
+    border-color: #4f46e5;
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+}
+
+.edit-modal-buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    margin-top: 12px;
+}
+
+.edit-modal-buttons .modal-btn {
+    flex: 1;
+    padding: 10px 16px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s ease;
+}
+
+.edit-modal-buttons .modal-btn-primary {
+    background: #4f46e5;
+    color: #ffffff;
+}
+
+.edit-modal-buttons .modal-btn-primary:hover {
+    background: #4338ca;
+}
+
+.edit-modal-buttons .modal-btn-secondary {
+    background: #f1f5f9;
+    color: #334155;
+    border: 1px solid #cbd5e1;
+}
+
+.edit-modal-buttons .modal-btn-secondary:hover {
+    background: #e2e8f0;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+/* ===== Role Badge ===== */
+.role-badge {
+    display: inline-block;
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    margin-top: 8px;
+    text-transform: uppercase;
+}
+.role-badge.role-patient { background: #d1fae5; color: #065f46; }
+.role-badge.role-doctor  { background: #dbeafe; color: #1e40af; }
+.role-badge.role-hospital{ background: #ede9fe; color: #5b21b6; }
+.role-badge.role-admin   { background: #fef3c7; color: #92400e; }
+
+/* ===== Section Header Row ===== */
+.section-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+.section-action-btn {
+    padding: 8px 18px;
+    background: var(--primary-color);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: background 0.2s;
+}
+.section-action-btn:hover { background: var(--primary-dark); }
+
+/* ===== Edit Form ===== */
+.edit-form {
+    margin-top: 20px;
+    padding: 20px;
+    background: var(--bg-secondary);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+    animation: slideUp 0.2s ease;
+}
+.edit-form .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+.edit-form .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 14px;
+}
+.edit-form label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+.edit-form input, .edit-form textarea {
+    padding: 10px 14px;
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    font-family: inherit;
+    transition: border-color 0.2s;
+}
+.edit-form input:focus, .edit-form textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+.form-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 8px;
+}
+
+/* ===== Doctor/Patient Appointment Card ===== */
+.doctor-appointment-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+.patient-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 14px;
+}
+.patient-info strong { font-size: 15px; color: var(--text-primary); }
+.appointment-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.appt-action-btn {
+    padding: 6px 14px;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.15s;
+}
+.appt-action-btn:hover { transform: translateY(-1px); }
+.confirm-btn { background: #d1fae5; color: #065f46; }
+.cancel-btn  { background: #fee2e2; color: #991b1b; }
+
+/* ===== Admin Panel ===== */
+.admin-panel h2 { margin-bottom: 16px; }
+.admin-tabs { display: flex; gap: 8px; margin-bottom: 20px; }
+.admin-tab-btn {
+    padding: 8px 20px;
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    background: #fff;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.2s;
+}
+.admin-tab-btn.active {
+    background: var(--primary-color);
+    color: #fff;
+    border-color: var(--primary-color);
+}
+.admin-search-row { margin-bottom: 16px; }
+.admin-search-input {
+    width: 100%;
+    padding: 10px 16px;
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-md);
+    font-size: 14px;
+}
+.admin-search-input:focus { outline: none; border-color: var(--primary-color); }
+.admin-users-list { display: flex; flex-direction: column; gap: 10px; }
+.admin-user-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 16px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    background: #fff;
+    flex-wrap: wrap;
+    gap: 10px;
+    transition: border-color 0.2s;
+}
+.admin-user-row.is-banned  { background: #fff1f1; border-color: #fca5a5; }
+.admin-user-row.is-pending { background: #fffbeb; border-color: #fde68a; }
+.admin-user-info { display: flex; flex-direction: column; gap: 4px; font-size: 14px; }
+.admin-user-info strong { font-size: 15px; }
+.admin-user-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.admin-action-btn {
+    padding: 6px 14px;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.15s;
+}
+.admin-action-btn:hover { transform: translateY(-1px); }
+.admin-btn-approve { background: #d1fae5; color: #065f46; }
+.admin-btn-reject  { background: #fee2e2; color: #991b1b; }
+.admin-btn-ban     { background: #fef3c7; color: #92400e; }
+
+/* ===== Admin Badges ===== */
+.admin-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+.badge-role       { background: #dbeafe; color: #1e40af; }
+.badge-status-approved { background: #d1fae5; color: #065f46; }
+.badge-status-pending  { background: #fef3c7; color: #92400e; }
+.badge-status-rejected { background: #fee2e2; color: #991b1b; }
+.badge-banned     { background: #fee2e2; color: #991b1b; }
+
+

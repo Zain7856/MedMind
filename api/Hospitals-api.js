@@ -10,6 +10,7 @@ export async function getHospitals() {
 
         return hospitalsArray.map(hospital => ({
             id: hospital.ID || hospital.id,
+            userId: hospital.UserID || hospital.userId || null,
             name: hospital.Name || hospital.name,
             location: hospital.Location || hospital.location,
             phone: hospital.Phone || hospital.phone,

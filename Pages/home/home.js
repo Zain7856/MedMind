@@ -10,10 +10,17 @@ if (exploreGetStarted) {
   };
 }
 
+const btnGetStarted = document.getElementById('btn-get-started');
+if (btnGetStarted) {
+  btnGetStarted.onclick = function () {
+    window.location.href = '/Pages/Get Started/Get Started.html';
+  };
+}
+
 const contactBtn = document.getElementById('btn-contact');
 if (contactBtn) {
   contactBtn.onclick = function () {
-    window.location.href = '/Pages/contact_us/Contact.html';
+    window.location.href = '/Pages/contact_us/contact.html';
   };
 }
 

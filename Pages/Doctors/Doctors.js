@@ -89,6 +89,24 @@ function createDoctorCard(doctor) {
 async function init() {
   let doctors = await getDoctors();
 
+  const user = getCurrentUser();
+  if (user && user.role === 'Doctor') {
+    const docUserMatch = doc => doc.userId === user.id || doc.userId === user.ID || (doc.userId && String(doc.userId) === String(user.id || user.ID));
+    doctors = doctors.filter(docUserMatch);
+    if (doctors.length === 0) {
+      doctors = [{
+        id: 'self',
+        userId: user.id || user.ID,
+        name: user.name,
+        specialization: 'Not configured',
+        phone: user.phone || 'Not configured',
+        location: 'Not configured',
+        cost: 0,
+        about: 'Click Edit Profile in your dashboard to add your specialization, fee, and about details.'
+      }];
+    }
+  }
+
   if (!Array.isArray(doctors) || doctors.length === 0) {
     doctors = [
       {

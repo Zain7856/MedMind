@@ -143,19 +143,68 @@ form.onsubmit = async function (e) {
         const result = await createAppointment(
             email,          // UserID
             null,           // DoctorID (null for hospital appointments)
-            hospitalId,     // HospitalID (now numeric)
+            hospitalId,     // HospitalID
             dateTime + ":00", // Add seconds
             status
         );
 
-        alert('Appointment created successfully!');
         console.log('Appointment created:', result);
+        showSuccessModal();
 
     } catch (error) {
         console.error('Error:', error);
         alert('Error: ' + (error.message || 'Failed to create appointment'));
     }
 };
+
+function showSuccessModal() {
+    const overlay = document.createElement('div');
+    overlay.className = 'modal-overlay';
+
+    const card = document.createElement('div');
+    card.className = 'modal-card';
+
+    const icon = document.createElement('div');
+    icon.className = 'modal-icon';
+    icon.innerHTML = '✓';
+
+    const modalTitle = document.createElement('h2');
+    modalTitle.className = 'modal-title';
+    modalTitle.textContent = 'Appointment Confirmed!';
+
+    const modalText = document.createElement('p');
+    modalText.className = 'modal-text';
+    modalText.textContent = 'Your hospital appointment has been booked successfully.';
+
+    const btnContainer = document.createElement('div');
+    btnContainer.className = 'modal-buttons';
+
+    const profileBtn = document.createElement('button');
+    profileBtn.className = 'modal-btn modal-btn-primary';
+    profileBtn.textContent = 'Go to My Profile';
+    profileBtn.onclick = function () {
+        window.location.href = '/Pages/Profile/profile.html';
+    };
+
+    const homeBtn = document.createElement('button');
+    homeBtn.className = 'modal-btn modal-btn-secondary';
+    homeBtn.textContent = 'Return to Home';
+    homeBtn.onclick = function () {
+        window.location.href = '/Pages/Home/home.html';
+    };
+
+    btnContainer.appendChild(profileBtn);
+    btnContainer.appendChild(homeBtn);
+
+    card.appendChild(icon);
+    card.appendChild(modalTitle);
+    card.appendChild(modalText);
+    card.appendChild(btnContainer);
+
+    overlay.appendChild(card);
+    document.body.appendChild(overlay);
+}
+
 
 card.appendChild(topBar);
 card.appendChild(title);
