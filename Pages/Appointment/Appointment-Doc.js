@@ -4,6 +4,7 @@ import loadFooter from "../../components/Footer/footer.js";
 import { createAppointment } from "../../api/Appointment-api.js";
 import { getDoctorsByid } from "../../api/doctors-api.js";
 import { requireAuth, getCurrentUser } from "../../api/auth-api.js";
+import showSuccessModal from "./Modal.js";
 if (!requireAuth()) {
   throw new Error('Authentication required');
 }
@@ -139,7 +140,7 @@ form.onsubmit = async function (e) {
     );
 
     console.log('Appointment created:', result);
-    showSuccessModal();
+    showSuccessModal('Appointment Confirmed!', 'Your doctor appointment has been booked successfully.');
 
   } catch (error) {
     console.error('Error:', error);
@@ -147,53 +148,53 @@ form.onsubmit = async function (e) {
   }
 };
 
-function showSuccessModal() {
-  const overlay = document.createElement('div');
-  overlay.className = 'modal-overlay';
+// function showSuccessModal() {
+//   const overlay = document.createElement('div');
+//   overlay.className = 'modal-overlay';
 
-  const card = document.createElement('div');
-  card.className = 'modal-card';
+//   const card = document.createElement('div');
+//   card.className = 'modal-card';
 
-  const icon = document.createElement('div');
-  icon.className = 'modal-icon';
-  icon.innerHTML = '✓';
+//   const icon = document.createElement('div');
+//   icon.className = 'modal-icon';
+//   icon.innerHTML = '✓';
 
-  const modalTitle = document.createElement('h2');
-  modalTitle.className = 'modal-title';
-  modalTitle.textContent = 'Appointment Confirmed!';
+//   const modalTitle = document.createElement('h2');
+//   modalTitle.className = 'modal-title';
+//   modalTitle.textContent = 'Appointment Confirmed!';
 
-  const modalText = document.createElement('p');
-  modalText.className = 'modal-text';
-  modalText.textContent = 'Your doctor appointment has been booked successfully.';
+//   const modalText = document.createElement('p');
+//   modalText.className = 'modal-text';
+//   modalText.textContent = 'Your doctor appointment has been booked successfully.';
 
-  const btnContainer = document.createElement('div');
-  btnContainer.className = 'modal-buttons';
+//   const btnContainer = document.createElement('div');
+//   btnContainer.className = 'modal-buttons';
 
-  const profileBtn = document.createElement('button');
-  profileBtn.className = 'modal-btn modal-btn-primary';
-  profileBtn.textContent = 'Go to My Profile';
-  profileBtn.onclick = function () {
-    window.location.href = '/Pages/Profile/profile.html';
-  };
+//   const profileBtn = document.createElement('button');
+//   profileBtn.className = 'modal-btn modal-btn-primary';
+//   profileBtn.textContent = 'Go to My Profile';
+//   profileBtn.onclick = function () {
+//     window.location.href = '/Pages/Profile/profile.html';
+//   };
 
-  const homeBtn = document.createElement('button');
-  homeBtn.className = 'modal-btn modal-btn-secondary';
-  homeBtn.textContent = 'Return to Home';
-  homeBtn.onclick = function () {
-    window.location.href = '/Pages/Home/home.html';
-  };
+//   const homeBtn = document.createElement('button');
+//   homeBtn.className = 'modal-btn modal-btn-secondary';
+//   homeBtn.textContent = 'Return to Home';
+//   homeBtn.onclick = function () {
+//     window.location.href = '/Pages/Home/home.html';
+//   };
 
-  btnContainer.appendChild(profileBtn);
-  btnContainer.appendChild(homeBtn);
+//   btnContainer.appendChild(profileBtn);
+//   btnContainer.appendChild(homeBtn);
 
-  card.appendChild(icon);
-  card.appendChild(modalTitle);
-  card.appendChild(modalText);
-  card.appendChild(btnContainer);
+//   card.appendChild(icon);
+//   card.appendChild(modalTitle);
+//   card.appendChild(modalText);
+//   card.appendChild(btnContainer);
 
-  overlay.appendChild(card);
-  document.body.appendChild(overlay);
-}
+//   overlay.appendChild(card);
+//   document.body.appendChild(overlay);
+// }
 
 
 card.appendChild(title);
