@@ -1,4 +1,3 @@
-
 import loadHeader from "../../components/Header/header.js";
 import loadFooter from "../../components/Footer/footer.js";
 import { createAppointment } from "../../api/Appointment-api.js";
@@ -13,6 +12,8 @@ loadHeader();
 
 const params = new URLSearchParams(window.location.search);
 const doctorIdFromUrl = params.get('doctorId') || '';
+
+const currentUser = getCurrentUser();
 
 const page = document.createElement('main');
 page.className = 'appointment-page';
@@ -37,26 +38,21 @@ form.className = 'appointment-form';
 function createField(labelText, inputEl) {
   const field = document.createElement('div');
   field.className = 'appointment-field';
-
   const label = document.createElement('label');
   label.className = 'appointment-label';
   label.textContent = labelText;
-
   field.appendChild(label);
   field.appendChild(inputEl);
-
   return field;
 }
 
 const userIdInput = document.createElement('input');
 userIdInput.className = 'appointment-input';
-userIdInput.type = 'email';
-userIdInput.placeholder = 'Email';
+userIdInput.type = 'text';
+userIdInput.placeholder = 'Your Name';
 userIdInput.required = true;
-
-const currentUser = getCurrentUser();
-if (currentUser && (currentUser.email || currentUser.Email)) {
-  userIdInput.value = currentUser.email || currentUser.Email;
+if (currentUser && currentUser.name) {
+  userIdInput.value = currentUser.name;
   userIdInput.readOnly = true;
 }
 
@@ -87,9 +83,7 @@ appointmentDateInput.required = true;
 const statusSelect = document.createElement('select');
 statusSelect.className = 'appointment-input';
 statusSelect.required = true;
-
-const statusOptions = ['Pending', 'Confirmed', 'Cancelled'];
-statusOptions.forEach(function (status) {
+['Pending', 'Confirmed', 'Cancelled'].forEach(function (status) {
   const opt = document.createElement('option');
   opt.value = status;
   opt.textContent = status;
@@ -102,7 +96,7 @@ submitBtn.type = 'submit';
 submitBtn.className = 'appointment-btn';
 submitBtn.textContent = 'Confirm Appointment';
 
-form.appendChild(createField('Email', userIdInput));
+form.appendChild(createField('Name', userIdInput));
 form.appendChild(doctorIdInput);
 form.appendChild(createField('Doctor', doctorNameDisplay));
 form.appendChild(createField('Appointment Date', appointmentDateInput));
@@ -116,95 +110,32 @@ card.appendChild(topBar);
 
 form.onsubmit = async function (e) {
   e.preventDefault();
-
   try {
-    // Get form values
-    const email = userIdInput.value.trim();
     const doctorId = doctorIdInput.value.trim();
-    const dateTime = appointmentDateInput.value; // Format: YYYY-MM-DDTHH:MM
+    const dateTime = appointmentDateInput.value;
     const status = statusSelect.value;
+    const userId = currentUser ? currentUser.id : null;
 
-    // Basic validation
-    if (!email || !doctorId || !dateTime) {
+    if (!userId || !doctorId || !dateTime) {
       alert('Please fill in all required fields');
       return;
     }
 
-    // Create appointment
-    const result = await createAppointment(
-      email,          // UserID
-      doctorId,       // DoctorID
-      null,           // HospitalID (null for doctor appointments)
-      dateTime + ":00", // Add seconds
-      status
-    );
-
+    const result = await createAppointment(userId, doctorId, 'Doctor', dateTime, status);
     console.log('Appointment created:', result);
     showSuccessModal('Appointment Confirmed!', 'Your doctor appointment has been booked successfully.');
-
   } catch (error) {
     console.error('Error:', error);
     alert('Error: ' + (error.message || 'Failed to create appointment'));
   }
 };
 
-// function showSuccessModal() {
-//   const overlay = document.createElement('div');
-//   overlay.className = 'modal-overlay';
-
-//   const card = document.createElement('div');
-//   card.className = 'modal-card';
-
-//   const icon = document.createElement('div');
-//   icon.className = 'modal-icon';
-//   icon.innerHTML = '✓';
-
-//   const modalTitle = document.createElement('h2');
-//   modalTitle.className = 'modal-title';
-//   modalTitle.textContent = 'Appointment Confirmed!';
-
-//   const modalText = document.createElement('p');
-//   modalText.className = 'modal-text';
-//   modalText.textContent = 'Your doctor appointment has been booked successfully.';
-
-//   const btnContainer = document.createElement('div');
-//   btnContainer.className = 'modal-buttons';
-
-//   const profileBtn = document.createElement('button');
-//   profileBtn.className = 'modal-btn modal-btn-primary';
-//   profileBtn.textContent = 'Go to My Profile';
-//   profileBtn.onclick = function () {
-//     window.location.href = '/Pages/Profile/profile.html';
-//   };
-
-//   const homeBtn = document.createElement('button');
-//   homeBtn.className = 'modal-btn modal-btn-secondary';
-//   homeBtn.textContent = 'Return to Home';
-//   homeBtn.onclick = function () {
-//     window.location.href = '/Pages/Home/home.html';
-//   };
-
-//   btnContainer.appendChild(profileBtn);
-//   btnContainer.appendChild(homeBtn);
-
-//   card.appendChild(icon);
-//   card.appendChild(modalTitle);
-//   card.appendChild(modalText);
-//   card.appendChild(btnContainer);
-
-//   overlay.appendChild(card);
-//   document.body.appendChild(overlay);
-// }
-
-
 card.appendChild(title);
 card.appendChild(subtitle);
 card.appendChild(form);
-
 container.appendChild(card);
 page.appendChild(container);
 document.body.appendChild(page);
-
 loadFooter();
 
 async function init() {

@@ -448,10 +448,10 @@ function createAppointmentCard(appointment) {
     const card = document.createElement('div');
     card.className = 'appointment-card';
 
-    const docName = appointment.doctorName;
-    const hosName = appointment.hospitalName;
+    const providerName = appointment.providerName || 'Unknown';
+    const providerType = appointment.providerType || '';
     const title = document.createElement('h3');
-    title.textContent = docName ? `Doctor: ${docName}` : (hosName ? `Hospital: ${hosName}` : 'Appointment');
+    title.textContent = providerType ? `${providerType}: ${providerName}` : providerName;
 
     const dateStr = appointment.appointmentDate;
     const date = document.createElement('p');

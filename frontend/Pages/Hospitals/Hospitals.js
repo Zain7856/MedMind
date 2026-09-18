@@ -70,12 +70,11 @@ async function init() {
 
   const user = getCurrentUser();
   if (user && user.role === 'Hospital') {
-    const hosUserMatch = hos => hos.userId === user.id || hos.userId === user.ID || (hos.userId && String(hos.userId) === String(user.id || user.ID));
+    const hosUserMatch = hos => hos.id === user.id;
     hospitals = hospitals.filter(hosUserMatch);
     if (hospitals.length === 0) {
       hospitals = [{
         id: 'self',
-        userId: user.id || user.ID,
         name: user.name,
         location: 'Not configured',
         services: 'Click Edit Profile in your dashboard to configure hospital info.'

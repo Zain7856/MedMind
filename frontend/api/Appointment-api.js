@@ -4,30 +4,26 @@ function mapAppointment(apt) {
     return {
         id: apt.ID || apt.id,
         userId: apt.UserID || apt.userId,
-        doctorId: apt.DoctorID || apt.doctorId,
-        hospitalId: apt.HospitalID || apt.hospitalId,
+        providerId: apt.ProviderID || apt.providerId,
+        providerType: apt.ProviderType || apt.providerType,
+        providerName: apt.ProviderName || apt.providerName,
         appointmentDate: apt.AppointmentDate || apt.appointmentDate,
         status: apt.Status || apt.status,
-        doctorName: apt.DoctorName || apt.doctorName,
-        hospitalName: apt.HospitalName || apt.hospitalName,
         userName: apt.UserName || apt.userName,
         patientPhone: apt.PatientPhone || apt.patientPhone,
         patientAge: apt.PatientAge || apt.patientAge
     };
 }
 
-export async function createAppointment(UserID, DoctorID, HospitalID, AppointmentDate, Status) {
+export async function createAppointment(UserID, ProviderID, ProviderType, AppointmentDate, Status) {
     try {
         const payload = {
             UserID,
-            DoctorID,
+            ProviderID,
+            ProviderType,
             AppointmentDate,
             Status
         };
-
-        if (HospitalID !== null && HospitalID !== undefined) {
-            payload.HospitalID = HospitalID;
-        }
 
         const response = await fetch(`${baseUrl}/appointments`, {
             method: 'POST',
@@ -110,7 +106,6 @@ export async function getAppointmentById(id) {
     }
 }
 
-// Admin endpoints
 export async function adminApproveUser(userId) {
     const r = await fetch(`${baseUrl}/admin/users/${userId}/approve`, { method: 'PATCH' });
     if (!r.ok) throw new Error((await r.json()).error || 'Failed to approve');

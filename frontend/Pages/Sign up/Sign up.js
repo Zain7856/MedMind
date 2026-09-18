@@ -79,7 +79,7 @@ document.getElementById('signupForm').addEventListener('submit', async (e) => {
     } else if (role === 'Hospital') {
         user.Location = formData.get('location') || null;
         user.Services = formData.get('services') || null;
-        user.img = formData.get('img') || null;
+        user.Img = formData.get('img') || null;
     }
 
     const submitBtn = e.target.querySelector('button[type="submit"]');

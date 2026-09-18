@@ -1,23 +1,23 @@
 const baseUrl = 'http://localhost:3000';
+
 export async function getDoctors() {
     try {
         const response = await fetch(`${baseUrl}/doctors`);
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-
 
         const doctors_list = await response.json();
         const doctorsArray = doctors_list.value || doctors_list;
 
         return doctorsArray.map(doctor => ({
             id: doctor.ID || doctor.id,
-            userId: doctor.UserID || doctor.userId || null,
             name: doctor.Name || doctor.name,
             specialization: doctor.Specialization || doctor.specialization,
             phone: doctor.Phone || doctor.phone,
             img: doctor.Img || doctor.img,
             location: doctor.Location || doctor.location,
             cost: doctor.cost || doctor.Cost,
-            about: doctor.about || doctor.About
+            about: doctor.About || doctor.about,
+            role: doctor.Role || 'Doctor'
         }));
 
     } catch (error) {
@@ -40,12 +40,11 @@ export async function getDoctorsByid(id) {
             img: doctor.Img || doctor.img,
             location: doctor.Location || doctor.location,
             cost: doctor.cost || doctor.Cost,
-            about: doctor.about || doctor.About
+            about: doctor.About || doctor.about,
+            role: doctor.Role || 'Doctor'
         };
     } catch (error) {
         console.error('Error fetching doctor details:', error);
         return {};
     }
 }
-
-
