@@ -1,0 +1,34 @@
+
+1- Design With google stitch
+
+2-When user open web can see all things without prof and the ai chat but cant book without booking
+
+3-filtration by specialzitaion and rate
+
+4-pagenatation {LATER}
+
+5-Add pages for each role\
+
+6-Add ai model at the whole project to help users
+
+7- google ai studio /gemini 
+create project 
+create API-key
+
+
+
+
+
+
+
+8- logo edit 
+    - add black ouline 
+    - social media logo
+
+9- banner design 
+    - هتبعت ال doc ل chatgpt 
+    - lets discuss this document ask design some material for marking like banners and website assests so lets discuss this by exchanging questions and i will answer
+    - servey development 
+        - questions 
+        - expected answers 
+    - 
