@@ -206,3 +206,4 @@ INSERT INTO appointments (ID, UserID, ProviderID, ProviderType, AppointmentDate,
   (3, 11, 29, 'Hospital', '2026-04-17T19:45:00', 'Pending'),
   (4, 11, 31, 'Hospital', '2026-07-21T15:10:00', 'Pending'),
   (5, 11, 30, 'Hospital', '2026-07-21T15:14:00', 'Pending');
+

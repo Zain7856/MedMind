@@ -1,13 +1,13 @@
 const baseUrl = 'http://localhost:3000';
 
-export async function sendMessageToAssistant(message) {
+export async function sendMessageToAssistant(message, history = []) {
     try {
         const response = await fetch(`${baseUrl}/chat`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ message })
+            body: JSON.stringify({ message, history })
         });
 
         if (!response.ok) {
@@ -23,6 +23,6 @@ export async function sendMessageToAssistant(message) {
         return data;
     } catch (error) {
         console.error('Error sending message to assistant:', error);
-        return { response: "I'm sorry, I'm having trouble connecting to my brain right now. Please try again later." };
+        return { response: "I'm sorry, I'm having trouble connecting to my brain right now. Please try again in a few moments." };
     }
 }

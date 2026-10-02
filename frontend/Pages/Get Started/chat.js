@@ -16,6 +16,8 @@ async function init() {
     const chatForm = document.getElementById('chat-form');
     const userInput = document.getElementById('user-input');
 
+    const conversationHistory = [];
+
     addMessage('bot', "Hello! I'm your MedMind Assistant. How can I help you with your health today?");
 
     chatForm.addEventListener('submit', async (e) => {
@@ -29,11 +31,26 @@ async function init() {
 
         const typingId = addTypingIndicator();
 
-        const responseData = await sendMessageToAssistant(message);
+        const responseData = await sendMessageToAssistant(message, conversationHistory);
 
         removeTypingIndicator(typingId);
-        addMessage('bot', responseData.response || "I'm sorry, I couldn't process that.");
+        const botReply = responseData.response || "I'm sorry, I couldn't process that.";
+        addMessage('bot', botReply);
+
+        conversationHistory.push({ role: 'user', text: message });
+        conversationHistory.push({ role: 'model', text: botReply });
     });
+}
+
+function formatBotMessage(text) {
+    const temp = document.createElement('div');
+    temp.textContent = text;
+    let safe = temp.innerHTML;
+    // Format bold text
+    safe = safe.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+    // Format bullet points
+    safe = safe.replace(/^\s*[\*\-]\s+(.*)$/gm, '• $1');
+    return safe;
 }
 
 function addMessage(sender, text) {
@@ -43,7 +60,11 @@ function addMessage(sender, text) {
 
     const content = document.createElement('div');
     content.className = 'message-content';
-    content.textContent = text;
+    if (sender === 'bot') {
+        content.innerHTML = formatBotMessage(text);
+    } else {
+        content.textContent = text;
+    }
 
     messageDiv.appendChild(content);
     chatMessages.appendChild(messageDiv);
