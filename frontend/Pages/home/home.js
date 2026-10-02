@@ -20,7 +20,7 @@ if (btnGetStarted) {
 const contactBtn = document.getElementById('btn-contact');
 if (contactBtn) {
   contactBtn.onclick = function () {
-    window.location.href = '/Pages/contact_us/contact.html';
+    window.location.href = '/Pages/contact_us/Contact.html';
   };
 }
 

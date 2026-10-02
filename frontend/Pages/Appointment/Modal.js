@@ -31,7 +31,7 @@ function showSuccessModal(modalTitleParam, modalTextParam) {
     homeBtn.className = 'modal-btn modal-btn-secondary';
     homeBtn.textContent = 'Return to Home';
     homeBtn.onclick = function () {
-        window.location.href = '/Pages/Home/home.html';
+        window.location.href = '/Pages/home/home.html';
     };
 
     btnContainer.appendChild(profileBtn);

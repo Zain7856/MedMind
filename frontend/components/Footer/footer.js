@@ -64,7 +64,7 @@ export default function loadFooter() {
   linksList.className = 'footer-list';
 
   const footerLinks = [
-    { label: 'Home', href: '/Pages/Home/home.html' },
+    { label: 'Home', href: '/Pages/home/home.html' },
     { label: 'Diseases', href: '/Pages/Disease/Disease.html' },
     { label: 'Doctors', href: '/Pages/Doctors/Doctors.html' },
     { label: 'Hospitals', href: '/Pages/Hospitals/Hospitals.html' },

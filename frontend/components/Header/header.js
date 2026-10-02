@@ -30,11 +30,11 @@ export default function loadHeader() {
     logoDiv.className = 'header-logo';
 
     const logoLink = document.createElement('a');
-    logoLink.href = '/Pages/Home/home.html';
+    logoLink.href = '/Pages/home/home.html';
     logoLink.className = 'logo-link';
     logoLink.onclick = function (e) {
         e.preventDefault();
-        window.location.href = '/Pages/Home/home.html';
+        window.location.href = '/Pages/home/home.html';
     };
 
     const logoIcon = document.createElement('img');
@@ -68,7 +68,7 @@ export default function loadHeader() {
     navList.className = 'nav-list flex';
 
     const navItems = [
-        { label: 'Home', href: '/Pages/Home/home.html' },
+        { label: 'Home', href: '/Pages/home/home.html' },
         { label: 'Get Started', href: '/Pages/Get Started/Get Started.html' },
         { label: 'Hospitals', href: '/Pages/Hospitals/Hospitals.html' },
         { label: 'Doctors', href: '/Pages/Doctors/Doctors.html' },
