@@ -1,0 +1,6 @@
+DROP TABLE IF EXISTS appointments;
+DROP TABLE IF EXISTS symptomdiseases;
+DROP TABLE IF EXISTS usersymptoms;
+DROP TABLE IF EXISTS diseases;
+DROP TABLE IF EXISTS symptoms;
+DROP TABLE IF EXISTS users;

@@ -1,0 +1,10 @@
+node_modules/
+
+# Secrets — backend/.env holds a real GEMINI_API_KEY
+.env
+.env.local
+.env.*.local
+
+# SQLite sidecar files (WAL mode). app.db is tracked; these are transient.
+*.db-shm
+*.db-wal
