@@ -27,11 +27,10 @@
 - [x] SQL
 
 **Framework&Libraries** 
-- [x] better-sqlite3
 - [x] express
-- [x] Node.js
+- [x] Node.js (with its built-in node:sqlite)
 - [x] SQLite
-- [x] Cors
+- [x] Gemini API (Google AI)
 
 **Database** 
 - [x] Database: SQLite3
@@ -47,8 +46,8 @@
 **SQL:** 
 - HANDLING THE READ AND WRITE OPERATIONS OF DB
 
-**better-sqlite3:**
-- CONNECTING BACKEND SERVICES TO THE SQLite database
+**node:sqlite (built into Node.js):**
+- CONNECTING BACKEND SERVICES TO THE SQLite database, WITH NOTHING EXTRA TO INSTALL
 
 **express:**
 - exposing the backend API endpoints to the frontend 
@@ -59,7 +58,10 @@
 **SQLite:**
 - USING SQL TO MAKE THE DATABASE AND MANAGE THE READ AND WRITE OPERATIONS
 
-**Cors:**
+**Gemini API:**
+- THE AI THAT ANSWERS THE CHATBOT. THE BACKEND CALLS IT WITH ONE PLAIN fetch REQUEST
+
+**CORS (a few lines in server.js, no library):**
 - ALLOWING THE FRONTEND TO MAKE REQUESTS TO THE BACKEND
 
 
@@ -68,11 +70,9 @@
 
 | Package | Version | Purpose |
 |---------|---------|---------|
-| express | 4.22.1 | Web server & APIs |
-| better-sqlite3 | 11.10.0 | Database connection |
-| @google/generative-ai | 0.24.1 | AI Chatbot |
-| cors | 2.8.6 | Frontend-backend connection |
-| dotenv | 17.2.4 | Environment settings |
+| express | 5.3.0 | Web server & APIs (the only package) |
+
+Everything else is built into Node.js 22.5 or newer: `node:sqlite` (database), `process.loadEnvFile` (reads `.env`) and `fetch` (calls Gemini).
 
 ---
 
@@ -102,21 +102,27 @@ in the past people can not known they are have a disease or not and dont know th
 MedMind/
 ├── backend/                  # Express.js REST API Server
 │   ├── server.js             # Main server entry point & route mounting
-│   ├── API/                  # Route modules (users, doctors, appointments, chat)
-│   ├── Services/             # Business logic & DB access (db.js, Gemini.js, etc.)
+│   ├── API/                  # Route modules (users, providers, appointments, diseases, symptoms, chat, stats)
+│   ├── Services/             # One small file per topic; each function runs one query (db.js, Gemini.js, etc.)
 │   ├── database/             # SQLite database (app.db, app.sql)
-│   └── package.json          # Backend dependencies & scripts
+│   ├── .env.example          # Shape of the secret .env file (Gemini key)
+│   └── package.json          # Backend dependency (express) & scripts
 └── frontend/                 # Client-side web application
-    ├── index.html            # Main entry point & splash screen
-    ├── Pages/                # Application pages (home, Doctors, Hospitals, etc.)
+    ├── index.html            # Entry point (goes straight to the home page)
+    ├── Pages/                # One folder per page
     │   ├── home/             # Homepage & service navigation
-    │   ├── Doctors/          # Doctors directory & profiles
-    │   ├── Hospitals/        # Hospitals directory
-    │   ├── Disease/          # Disease information & symptoms
-    │   ├── Appointment/      # Appointment booking flows
-    │   ├── Sign in/          # User login
-    │   └── Sign up/          # User registration
-    ├── api/                  # Frontend API client modules
+    │   ├── doctors/          # Doctors directory
+    │   ├── hospitals/        # Hospitals directory
+    │   ├── diseases/         # Disease list
+    │   ├── disease/          # One disease, with clickable symptoms
+    │   ├── symptom-checker/  # Tick symptoms, see matching diseases
+    │   ├── chat/             # AI assistant
+    │   ├── booking/          # Book a doctor or a hospital
+    │   ├── profile/          # Profile, bookings and the admin panel
+    │   ├── sign-in/          # User login
+    │   └── sign-up/          # User registration
+    ├── api/                  # Frontend API client modules (one tiny file per topic)
+    ├── components/           # Header and footer
     └── assets/               # CSS styles & design assets
 ```
 
@@ -140,11 +146,11 @@ MedMind/
 
 | File | Purpose | Lines of Code |
 |------|---------|:-------------:|
-| `backend/server.js` | Express server entry point, middleware, and route mounting | ~40 |
-| `backend/Services/Gemini.js` | Google Gemini AI integration for 24/7 medical chatbot | ~65 |
-| `backend/Services/Appointments.js` | Appointment booking, status management, and queries | ~125 |
-| `backend/Services/Users.js` | User authentication, registration, and profile logic | ~150 |
-| `backend/database/app.sql` | SQLite database schema, constraints, and seed data | ~210 |
+| `backend/server.js` | Express server entry point, middleware, and route mounting | ~43 |
+| `backend/Services/Gemini.js` | Google Gemini AI integration for 24/7 medical chatbot | ~43 |
+| `backend/Services/Appointments.js` | Appointment booking, status management, and queries | ~32 |
+| `backend/Services/Users.js` | User registration, profile, password and approval queries | ~71 |
+| `backend/database/app.sql` | SQLite database schema (5 tables), constraints, and seed data | ~195 |
 | `frontend/Pages/home/home.html` | Home page UI with service overview and chatbot access | ~80 |
 
 
@@ -200,14 +206,15 @@ MedMind/
 
 | Screen | File / Route | Description | Transitions To |
 |--------|--------------|-------------|----------------|
-| Landing | `frontend/index.html` | Welcome splash screen with loading animation | Home |
+| Landing | `frontend/index.html` | Goes straight to the home page | Home |
 | Home | `frontend/Pages/home/home.html` | Main hub with service cards, quick actions, and chatbot | Doctors, Hospitals, Diseases, Sign in |
-| Chatbot | `home.html` (AI Widget) | 24/7 AI medical consultation and symptom checker | Doctors, Hospitals |
-| Doctors | `frontend/Pages/Doctors/Doctors.html` | Browse doctors by specialty, location, and fees | Appointments, Home |
-| Hospitals | `frontend/Pages/Hospitals/Hospitals.html` | Browse hospitals and available medical care | Appointments, Home |
-| Diseases | `frontend/Pages/Disease/Disease.html` | Search diseases, symptoms, and health prevention tips | Home |
-| Appointments | `frontend/Pages/Appointment/Appointment.html` | Book an appointment with selected doctor or hospital | Profile, Home |
-| Sign In / Up | `frontend/Pages/Sign in/Sign in.html` | User login and new account registration | Home |
+| Chatbot | `frontend/Pages/chat/chat.html` | 24/7 AI medical consultation (sign-in needed) | Doctors, Hospitals |
+| Symptom checker | `frontend/Pages/symptom-checker/symptom-checker.html` | Tick symptoms and see the diseases that match the most of them | Disease, Chatbot |
+| Doctors | `frontend/Pages/doctors/doctors.html` | Browse doctors by specialty, location, and fees | Appointments, Home |
+| Hospitals | `frontend/Pages/hospitals/hospitals.html` | Browse hospitals and available medical care | Appointments, Home |
+| Diseases | `frontend/Pages/diseases/diseases.html` | Browse diseases; each one shows its symptoms (click one to learn more) and treatment | Home |
+| Appointments | `frontend/Pages/booking/booking.html` | Book an appointment with selected doctor or hospital | Profile, Home |
+| Sign In / Up | `frontend/Pages/sign-in/sign-in.html` | User login and new account registration | Home |
 
 
 ---
@@ -372,7 +379,7 @@ By the end of this project, the student will be able to:
 | Language | HTML, CSS, JavaScript, SQL |
 | Framework | Node.js, Express.js |
 | Database | SQLite3 |
-| Libraries | better-sqlite3, cors, dotenv, @google/generative-ai |
+| Libraries | express (SQLite and fetch are built into Node.js) |
 
 ---
 

@@ -38,10 +38,10 @@ MedMind
 
 ### Frameworks & Libraries
 
-- [x] better-sqlite3
 - [x] express
-- [x] Node.js
+- [x] Node.js (with its built-in node:sqlite)
 - [x] SQLite
+- [x] Gemini API (Google AI, for the chatbot)
 
 ### Data Source | مصدر البيانات
 
@@ -73,13 +73,14 @@ MedMind
 نعم، استخدمنا API من MedMind API لتوصيل الbackend الخاص بنا بالfrontend الخاص بنا.
 
 ### 5. ما هي التقنيات/Frameworks المستخدمة؟
-- better-sqlite3
 - express
-- Node.js
+- Node.js (فيه node:sqlite جاهزة جواه)
 - SQLite
+- Gemini API
 
 ### 6. ما أهمية كل تقنية استخدمتها؟
-- **better-sqlite3:** يساعدنا على التعامل مع قاعدة البيانات بسهولة باستخدام JavaScript
+- **node:sqlite:** مكتبة جاهزة جوه Node.js نفسه بنتعامل بيها مع قاعدة البيانات بسهولة باستخدام JavaScript من غير ما نحمّل أي حاجة زيادة
+- **Gemini API:** هو الذكاء الاصطناعي اللي بيرد على المستخدم في الـ chatbot
 - **express:** يساعدنا على بناء API بسهولة
 - **Node.js:** لتشغيل JavaScript برا الbrowser بسرعة اكثر بسبب محركه القوي (V8) لتفعيل الbackend بشكل اسرع وبناء local server لامكانية التفاعل مع الAPI
 - **SQLite:** يساعدنا على تخزين البيانات بسهولة
