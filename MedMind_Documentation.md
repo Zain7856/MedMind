@@ -1,160 +1,477 @@
-# MedMind — Project Documentation | توثيق المشروع
 
-**Developed by | تطوير:** Mohamed Zain
-**Date | التاريخ:** February 11, 2026
-**Competition | المسابقة:** Afro-Asian International Web Competition
+# Software Project Documentation | توثيق مشروع البرمجيات
 
----
-
-## 1. Overview | نظرة عامة
-
-MedMind هو health-tech platform هدفه إنه يقرب المسافة بين "حاسس إني مش تمام" و"عارف أعمل إيه بالظبط". من خلال chatbot متاح 24 ساعة، وdatabase فيها دكاترة ومستشفيات، ومكتبة معلومات عن الأمراض، المستخدم يقدر يطمن على نفسه من بيته بدل ما يضيع وقت في البحث في أماكن متفرقة.
-
-The idea is simple: catch problems early, before they turn into something that's harder — and more expensive — to treat.
+<div class="arabic">
+قالب توثيق مشاريع البرمجيات — للمسابقة الأفريقية الآسيوية للتكنولوجيا
+</div>
 
 ---
 
-## 2. The Problem | المشكلة
+## 1. Project Overview | نظرة عامة على المشروع
 
-كتير من الناس بتأجل زيارة الدكتور مش لأنهم مش حاسين بحاجة، لكن لأن العملية نفسها متعبة: مش عارفين يروحوا لأنهي تخصص، صعب يقارنوا بين الدكاترة والمستشفيات، ومفيش وسيلة سريعة يعرفوا بيها هل الأعراض دي فعلاً محتاجة قلق. And by the time they act, the condition is usually more advanced.
+| Field | Value |
+|-------|-------|
+| **Project Title** | [MedMind] |
+| **Project Type** | [Web App] |
+| **Description** | [MedMind هو Medical website بيساعدك تعملcheck بسيط علي صحتك عن طريق الchatbot بتاعنا(MedMind)
+ ودا بيساعدك تعمل check دوري كل فتره عشان تطمن طب لو محتاج برضو MedMind موفرلك دكاتره و مستشفيات 
+ وبرضو لو حابب تعرف عن المرض نفسه فMedMind
+ برضو ف لو حسيت في اي وقت انك مش تمام مش لازم تنزل مخصوص لازم تنزل ولا لا وايه المجالات الي لازم تكشف فيها] |
+| **Target Users** |
+- Primary: From 45-60
+  Secondery: From 31-45,Babies
+  Tertiary: From 20-30,Teenagers|
+| **Date** | [2026] |
 
-## 3. The Solution | الحل
+### Tech Stack | Technology Stack
 
-MedMind بتجمع كل الرحلة دي في مكان واحد:
+| Category | Technology | Purpose |
+|----------|-----------|---------|
+| 
+**Language** |[لغه اساسيه] 
+ [
+- [x] HTML
+- [x] CSS
+- [x] JavaScript
+- [x] SQL] | 
 
-- **Chatbot (24h)** — initial read على الأعراض في أي وقت
-- **Doctors (anywhere)** — بحث بالمكان والسعر والمواعيد المتاحة
-- **Hospitals (anywhere)** — نفس الفكرة بس للمستشفيات
-- **Diseases** — مكتبة تعرّفك أكتر على الحالة اللي أعراضك بتشبهها
+| **Framework&Libraries** |
+- [x] better-sqlite3
+- [x] express
+- [x] Node.js
+- [x] SQLite
+- [x] Cors|
+
+| **Database** | 
+- [x] Database: SQLite3
+- [x] API: MedMind API
+- [x] Static Data
+ |
+- **HTML:**
+ TO BUILD THE STRUCTURE OF THE FRONTEND PAGES
+- **CSS:** 
+TO DESIGN PAGES
+- **JavaScript:** 
+TO MAKE THE BACKEND STRUCTURE AND THE INTERACTIVE THINGS ON FRONTEND 
+- **SQL:** 
+TO STORE THE DATA 
+- **better-sqlite3:**
+TO CONNECT THE BACKEND-JS CODE TO THE SQL
+- **express:**
+TO CONNECT THE APIs TO EACH OTHER AND MAKE IT WORK
+- **Node.js:** 
+TO RUN THE Backend-JS CODE ON THE TERMINAL
+- **SQLite:**
+TO MAKE THE STRUCTURE OF DB
+
+ - **Cors:**
+TO PROTECT OUR SERVER
+
+
+
+### Dependencies | المكتبات المستخدمة
+
+| Package | Version | Purpose |
+|---------|---------|---------|
+| express | 4.18.2 | Web server & APIs |
+| better-sqlite3 | 11.0.0 | Database connection |
+| @google/generative-ai | 0.24.1 | AI Chatbot |
+| cors | 2.8.6 | Frontend-backend connection |
+| dotenv | 17.2.4 | Environment settings |
+
+<!-- Screenshot: Main screen of your project -->
+---
+
+## 2. Problem Statement | بيان المشكلة
+
+<div class="arabic">
+هنا تكتب المشكلة التي يحلها مشروعك — لماذا هذا المشروع مهم؟
+</div>
+
+### What problem does this project solve? | ما المشكلة التي يحلها هذا المشروع؟
+
+[many people get sick every day and they don't know what to do so they go to the doctor and waste time and money and they don't know if they're okay or not]
+
+### Why does it matter? | لماذا هذا مهم؟
+
+[because if they don't go to the doctor they might die and this is the point of MedMind he notice you to prevent you from got sick and gives you the best solution to get better]
+
+### How is it currently solved? | كيف تُحل المشكلة حالياً؟
+
+[in the past people can not known they are have a disease or not and dont know the symptomps of it and the only way to know is to go to the doctor but don`t know what is the specialaztion they need to go or if they are travel where is the nearest Doctor or Hospital And this What MedMind do they help people to check themeself and know about diseases and Book a Appointment to the doctor or hospital ]
 
 ---
 
-## 4. Features | الميزات
+## 3. Technical Architecture | البنية التقنية
 
-| Feature | الوصف |
-|---|---|
-| Chatbot (24h) | مساعد متاح دايمًا لفحص أولي للأعراض |
-| Doctors (anywhere) | بحث عن دكاترة بالمكان، السعر، والمواعيد |
-| Hospitals (anywhere) | بحث عن مستشفيات بالمكان والخدمات |
-| Diseases | مكتبة مرجعية للأعراض والأمراض |
+<div class="arabic">
+هنا تشرح كيف مشروعك مبني من الداخل — هيكل الملفات والتقنيات المستخدمة
+</div>
+
+### Project Structure | هيكل المشروع
+
+```
+MedMind/
+├── backend/                  # Express.js REST API Server
+│   ├── server.js             # Main server entry point & route mounting
+│   ├── API/                  # Route modules (users, doctors, appointments, chat)
+│   ├── Services/             # Business logic & DB access (db.js, Gemini.js, etc.)
+│   ├── database/             # SQLite database (app.db, app.sql)
+│   └── package.json          # Backend dependencies & scripts
+└── frontend/                 # Client-side web application
+    ├── index.html            # Main entry point & splash screen
+    ├── Pages/                # Application pages (home, Doctors, Hospitals, etc.)
+    │   ├── home/             # Homepage & service navigation
+    │   ├── Doctors/          # Doctors directory & profiles
+    │   ├── Hospitals/        # Hospitals directory
+    │   ├── Disease/          # Disease information & symptoms
+    │   ├── Appointment/      # Appointment booking flows
+    │   ├── Sign in/          # User login
+    │   └── Sign up/          # User registration
+    ├── api/                  # Frontend API client modules
+    └── assets/               # CSS styles & design assets
+```
+
+### Architecture Diagram | مخطط البنية
+
+```
+[User Browser]
+      │
+      ▼
+[Frontend: HTML / CSS / JS]
+      │  HTTP Requests (Fetch API)
+      ▼
+[Backend: Express.js API Server (Port 3000)]
+      │                     │
+      ▼                     ▼
+[SQLite DB: app.db]    [Google Gemini AI]
+(Users, Appointments,   (24/7 Medical Chatbot)
+ Doctors, Diseases)
+```
+
+The frontend sends REST API requests to the Express.js backend. The backend queries the SQLite database for records (users, doctors, appointments, diseases) and forwards chatbot questions to Google Gemini AI.
+
+### Key Files | الملفات الرئيسية
+
+| File | Purpose | Lines of Code |
+|------|---------|:-------------:|
+| `backend/server.js` | Express server entry point, middleware, and route mounting | ~40 |
+| `backend/Services/Gemini.js` | Google Gemini AI integration for 24/7 medical chatbot | ~65 |
+| `backend/Services/Appointments.js` | Appointment booking, status management, and queries | ~125 |
+| `backend/Services/Users.js` | User authentication, registration, and profile logic | ~150 |
+| `backend/database/app.sql` | SQLite database schema, constraints, and seed data | ~210 |
+| `frontend/Pages/home/home.html` | Homepage UI with service overview and chatbot access | ~80 |
+
+
 
 ---
 
-## 5. Tech Stack | التقنيات المستخدمة
+## 4. Features & User Flow | الميزات وتدفق المستخدم
 
-### Languages
+<div class="arabic">
+هنا تكتب قائمة الميزات + مخطط تدفق المستخدم عبر الشاشات
+</div>
 
-| Tech | ليه استخدمناها |
-|---|---|
-| HTML | بناء هيكل الصفحة |
-| CSS | التصميم والشكل |
-| JavaScript | التفاعل مع المستخدم |
-| SQL | تخزين البيانات |
+### Feature List | قائمة الميزات
 
-### Frameworks & Runtime
+| # | Feature | Description | Status |
+|---|---------|-------------|:------:|
+| 1 | [Chatbot] | 
+[It answers any question you ask about your health and tells you if you are okay or not] | ✅ |
+| 2 | [Doctors] | 
+[It tells you the nearest doctors and hospitals to you and their prices and you can book an appointment with them] | ✅ |
+| 3 | [Hospitals] | 
+[It tells you the nearest hospitals to you and their prices and you can book an appointment with them] | ✅ |
+| 4 | [Diseases] | 
+[It tells you about diseases and how to prevent them and their symptoms] | ✅ |
+| 5 | [Appointments] | 
+[You can book an appointment with any doctor or hospital you want] | ✅ |
 
-| Tech | ليه استخدمناها |
-|---|---|
-| **Node.js** | بيشغل JavaScript برا الـ browser بمحرك V8، فبيدي الـ backend سرعة أعلى، وبتقدر تشتغل بنفس اللغة على الـ frontend والـ backend |
-| **Express** | بيسهّل بناء الـ REST API اللي بيربط الـ frontend بالـ backend |
-| **better-sqlite3** | مكتبة synchronous سريعة للتعامل مع SQLite من JavaScript بسهولة |
-| **SQLite** | قاعدة بيانات خفيفة (file-based) مناسبة لبيانات الدكاترة والمستشفيات والأمراض |
+> Status: ✅ Complete | ⏳ In Progress | ❌ Not Started
+
+### User Flow | تدفق المستخدم
+
+```
+                      ┌────────────────┐
+                      │  LANDING PAGE  │
+                      │  (index.html)  │
+                      └───────┬────────┘
+                              │
+                      ┌───────▼────────┐
+                      │   HOME PAGE    │
+                      │   (Main Hub)   │
+                      └───────┬────────┘
+                              │
+         ┌──────────────┬─────┴──────┬──────────────┐
+         ▼              ▼            ▼              ▼
+   ┌───────────┐  ┌───────────┐  ┌───────────┐  ┌───────────┐
+   │  CHATBOT  │  │  DOCTORS  │  │ HOSPITALS │  │ DISEASES  │
+   │ (AI Test) │  │  (Search) │  │  (Search) │  │  (Info)   │
+   └───────────┘  └─────┬─────┘  └─────┬─────┘  └───────────┘
+                        │              │
+                        └──────┬───────┘
+                               ▼
+                      ┌────────────────┐
+                      │  APPOINTMENTS  │
+                      │ (Booking Flow) │
+                      └────────────────┘
+```
+
+### Screen Reference | دليل الشاشات
+
+| Screen | File / Route | Description | Transitions To |
+|--------|--------------|-------------|----------------|
+| Landing | `frontend/index.html` | Welcome splash screen with loading animation | Home |
+| Home | `frontend/Pages/home/home.html` | Main hub with service cards, quick actions, and chatbot | Doctors, Hospitals, Diseases, Sign in |
+| Chatbot | `home.html` (AI Widget) | 24/7 AI medical consultation and symptom checker | Doctors, Hospitals |
+| Doctors | `frontend/Pages/Doctors/Doctors.html` | Browse doctors by specialty, location, and fees | Appointments, Home |
+| Hospitals | `frontend/Pages/Hospitals/Hospitals.html` | Browse hospitals and available medical care | Appointments, Home |
+| Diseases | `frontend/Pages/Disease/Disease.html` | Search diseases, symptoms, and health prevention tips | Home |
+| Appointments | `frontend/Pages/Appointment/Appointment.html` | Book an appointment with selected doctor or hospital | Profile, Home |
+| Sign In / Up | `frontend/Pages/Sign in/Sign in.html` | User login and new account registration | Home |
+
+
+---
+
+## 5. UI/UX Design | تصميم واجهة المستخدم
+
+<div class="arabic">
+هنا تحط لقطات الشاشة + وصف التصميم البصري لمشروعك
+</div>
+
+### Screenshots | لقطات الشاشة
+
+<!-- Screenshot: Landing page -->
+**Landing Page**: [describe what the user sees]
+
+<!-- Screenshot: Main dashboard -->
+**Dashboard**: [describe what the user sees]
+
+<!-- Screenshot: Key feature screen -->
+**Key Feature**: [describe what the user sees]
+
+<!-- Add more screenshots as needed -->
+
+### Design System | نظام التصميم
+
+| Element | Style |
+|---------|-------|
+| **Primary Color** | #1e40af (Blue) / #4f46e5 (Indigo) |
+| **Secondary Color** | #059669 (Green) |
+| **Font** | 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif |
+| **Button Style** | Rounded (8px radius), flat with hover transition |
+| **Layout** | Top navigation bar, hero banner, responsive card grid |
+
+### Responsive Design | التصميم المتجاوب
+
+| Breakpoint | Layout | Tested? |
+|------------|--------|:-------:|
+| Desktop (1024px+) | 4-column card grid, full hero banner, wide layout | ☑ |
+| Tablet (768-1024px) | 2-column card grid, adapted spacing & padding | ☑ |
+| Mobile (< 768px) | 1-column stacked cards, full-width buttons | ☑ |
+---
+
+## 6. Data Sources | مصادر البيانات
+
+<div class="arabic">
+هنا تكتب منين جبت الداتا — قاعدة بيانات، API، ملفات، أو داتا مكتوبة في الكود
+</div>
 
 ### Data Sources | مصادر البيانات
 
-- **Database:** SQLite3
-- **API:** MedMind API — الـ API ده مش خدمة خارجية، إحنا اللي بنينا الـ Frontend والـ Backend بأيدينا، والـ API هو الجسر اللي بيربط بينهم عشان يتكلموا مع بعض ويبادلوا البيانات
-- **Static Data:** محتوى ثابت لمكتبة الأمراض
+| Source | Type | Description |
+|--------|------|-------------|
+| SQLite (app.db) | Database | Stores users, doctors, hospitals, appointments |
+| Google Gemini | API | Medical chatbot answers |
+| User Input | Forms | Login, sign up, appointment booking |
+
+### Database Schema | مخطط قاعدة البيانات
+
+| Table | Columns | Description |
+|-------|---------|-------------|
+| users | ID, Name, Email, Role, Specialization, Location | User, doctor, and hospital profiles |
+| appointments | ID, UserID, ProviderID, AppointmentDate, Status | Booked appointments |
+| diseases | ID, Name, description, treatment | Disease information |
+| symptoms | ID, Name, Description | Symptom details |
+
+### External APIs (if any) | واجهات برمجة التطبيقات
+
+| API | Purpose | Rate Limit |
+|-----|---------|------------|
+| Google Gemini AI | Medical chatbot | 15 RPM (free tier) |
+---
+
+## 7. Educational Content | المحتوى التعليمي
+
+<div class="arabic">
+هنا تكتب المحتوى التعليمي — ماذا يتعلم الطالب من هذا المشروع؟ كيف يتعلق بالمنهج؟
+</div>
+
+### Learning Objectives | أهداف التعلم
+
+By the end of this project, the student will be able to:
+
+1. Build a full-stack web application with Node.js and Express
+2. Design and query a SQLite database
+3. Create a responsive web UI using HTML, CSS, and JavaScript
+4. Integrate Google Gemini AI for medical guidance
+5. Implement appointment booking and user authentication
+
+### Cultural / Historical Context | السياق الثقافي / التاريخي
+
+| Topic | Description |
+|-------|-------------|
+| Healthcare Access | Helping people get quick medical guidance from home |
+| Digital Health in Region | Connecting patients to local doctors and hospitals |
+
+### Curriculum Alignment | التوافق مع المنهج
+
+| Skill Area | What the Student Practices |
+|------------|---------------------------|
+| Problem Solving | Solving medical access problems with code |
+| Computational Thinking | Database schema design and REST API routing |
+| Creativity | UI/UX design and chatbot conversation flow |
+| Collaboration | Modular team development and code organization |
+| Technical Writing | Documenting APIs, database schema, and project features |
 
 ---
 
-## 6. Architecture | البنية التقنية
+## 8. Marketing Plan | خطة تسويقية
 
-```
-User (Browser)
-      │
-      ▼
-Frontend (HTML/CSS/JS)
-      │  HTTP requests
-      ▼
-Express.js API Server (Node.js)
-      │
-      ▼
-better-sqlite3
-      │
-      ▼
-SQLite Database (doctors, hospitals, diseases, chatbot data)
-```
+> **Short version** — for full marketing plans, use the main Afro-Asian template.
 
----
+<div class="arabic">
+نسخة مختصرة — للخطط التسويقية الكاملة، استخدم القالب الرئيسي
+</div>
 
-## 7. Technical Q&A | أسئلة تقنية
+### Target Audience | الجمهور المستهدف
 
-**إيه إمكانيات المشروع؟**
-MedMind بيوصّلك لدكتور أو مستشفى أو معلومة عن مرضك في أسرع وقت ممكن، بدل ما تضيع وقتك بتدور في أماكن كتير متفرقة. المنصة بتوفرلك 4 حاجات أساسية: chatbot متاح 24 ساعة يديك فحص أولي لأعراضك، بحث عن دكاترة في أي مكان بالسعر والمواعيد، بحث عن مستشفيات بنفس الطريقة، ومكتبة معلومات عن الأمراض تفهمك أكتر عن حالتك.
+- **Primary**: Adults & Elderly ages 45–60
+- **Secondary**: Adults ages 31–45 and Parents with babies
+- **Tertiary**: Young adults ages 20–30 and Teenagers
 
-**إيه المشكلة اللي بيحلها المشروع؟**
-كتير من الناس بتمرض وبتوصل لمرحلة متأخرة من غير ما تحس، لأنها مش بتاخد خطوة غير لما الحالة تكون اتطورت وبقى صعب علاجها. MedMind بيديك فرصة إنك تطمن على نفسك من بيتك في أسرع وقت، ولو حسيت إن فيه اشتباه في حاجة تلحق نفسك بدري في الوقت المناسب بدل التأخير.
+### Platforms | المنصات
 
-**إيه اللغات المستخدمة وليه؟**
-استخدمنا HTML لبناء هيكل الصفحة، CSS لتصميمها وإخراجها بشكل مناسب، JavaScript عشان نعمل تفاعل حقيقي مع المستخدم في المتصفح، وSQL عشان نخزن ونسترجع بيانات الدكاترة والمستشفيات والأمراض بشكل منظم.
+- Web browsers (Chrome, Edge, Firefox)
+- Mobile phones & Tablets (Responsive web)
+- Desktop computers
 
-**هل استخدمتوا API؟ منين؟**
-أيوه، استخدمنا MedMind API، وهو API بنيناه إحنا بنفسنا مش جاهز أو خارجي. الهدف منه إنه يربط بين حاجتين احنا اللي عملناهم: الـ Frontend (الواجهة اللي المستخدم بيشوفها ويتعامل معاها) والـ Backend (المنطق وقاعدة البيانات اللي شغالة من ورا). يعني الـ API ده هو خط الاتصال اللي بيخلي الاتنين يبعتوا ويستقبلوا بيانات من بعض بشكل منظم.
+### Promotion Ideas | أفكار ترويجية
 
-**إيه الـ Frameworks/التقنيات المستخدمة؟**
-استخدمنا better-sqlite3, Express, Node.js, وSQLite. كل واحدة فيهم كان ليها دور مختلف: Node.js شغّل الـ JavaScript على السيرفر، Express بنى الـ API اللي بتتكلم بيه الواجهة مع قاعدة البيانات، better-sqlite3 سهّل التعامل مع قاعدة البيانات من جوه الكود، وSQLite كانت مكان تخزين البيانات نفسها.
+1. Facebook campaigns focused on our primary target users
+2. Weekly email tips about health and disease prevention
+3. User reviews and shared experiences for discounts
+4. Presentation at the Afro-Asian Tech Forum competition
 
 ---
 
-## 8. Marketing Plan | الخطة التسويقية
+## 9. Student Worksheet | ورقة عمل الطالب
 
-### Product Positioning
-Always be able to check on your health and stay aware of your health status — من غير ما تحتاج تروح لدكتور كل شهر بس عشان تطمن.
 
-### Target Users | المستخدمون المستهدفون
+### My Project Information | معلومات مشروعي
 
-| Priority | Segment |
-|---|---|
-| Primary | Elderly; adults 40–59 |
-| Secondary | Adults 33–39; babies (via parents) |
-| Tertiary | Children, teenagers, adults 20–30 |
+**Student Name**: Mohamed Ahmed Ali Zain
+**Project Title**: MedMind
 
-### Unique Feature | الميزة الفريدة
-All things you need to know or use about your health, in one place.
-
-### Digital Marketing | التسويق الرقمي
-
-1. **Social Media** — التركيز الأساسي على Facebook لأن حوالي 80% من الـ target users موجودين عليه، مع وجود ثانوي على Instagram وTwitter/X.
-2. **Email Marketing** — إرسال health tips أسبوعية وتحديثات عن المنتج للمشتركين.
-3. **Community & Reviews** — تشجيع المستخدمين يشاركوا تجربتهم مع MedMind (review) مقابل discount.
-
-### Marketing Budget | الميزانية التسويقية
-- Facebook Ads: __________
-- Instagram/Twitter Ads: __________
-- Content creation (posts, weekly emails): __________
-- **Total monthly budget:** __________
-
-### Timeline | الجدول الزمني
-- Month 1 — __________
-- Month 2 — __________
-- Month 3 — __________
-- Month 6 target — __________
-
-### Success Metrics (KPIs) | مؤشرات النجاح
-- Target signups/month: __________
-- Chatbot usage rate: __________
-- Doctor/hospital bookings via platform: __________
-- Review/referral rate from Community program: __________
+**Date**: 2026/9/10
 
 ---
 
-## 9. Team | الفريق
+#### What is your project about? | عن ماذا يتحدث مشروعي؟
 
-**Developed by | تطوير:** Mohamed Zain (Solo Project)
+[MedMind هو Medical website بيساعدك تعملcheck بسيط علي صحتك عن طريق الchatbot بتاعنا(MedMind)
+ ودا بيساعدك تعمل check دوري كل فتره عشان تطمن طب لو محتاج برضو MedMind موفرلك دكاتره و مستشفيات 
+ وبرضو لو حابب تعرف عن المرض نفسه فMedMind
+ برضو ف لو حسيت في اي وقت انك مش تمام مش لازم تنزل مخصوص لازم تنزل ولا لا وايه المجالات الي لازم تكشف فيها]
+
+#### What problem does it solve? | ما المشكلة التي يحلها؟
+
+[many people get sick every day and they don't know what to do so they go to the doctor and waste time and money and they don't know if they're okay or not]
+---
+
+### My Tech Stack | التقنيات المستخدمة
+
+**My project type**: Web App  
+
+**Technologies I used**:
+
+| Category | Technology |
+|----------|-----------|
+| Language | HTML, CSS, JavaScript, SQL |
+| Framework | Node.js, Express.js |
+| Database | SQLite3 |
+| Libraries | better-sqlite3, cors, dotenv, @google/generative-ai |
 
 ---
 
-## 10. Repository | المستودع البرمجي
+### My Screens | شاشات مشروعي
 
-GitHub: https://github.com/Zain7856/MedMind
+Draw or describe all the screens in your project:
+
+| Screen Name | What the user sees/does | How to get here |
+|-------------|------------------------|-----------------|
+| Home Page | Main services overview and AI chatbot | Opens on website launch |
+| Chatbot | 24/7 AI medical consultation & symptom check | Click Chatbot on Home page |
+| Doctors | Browse doctors, specializations, and prices | Click "Doctors" in navbar |
+| Hospitals | Browse hospitals and available care | Click "Hospitals" in navbar |
+| Diseases | Read disease symptoms and prevention info | Click "Diseases" in navbar |
+| Appointments | Book an appointment with a doctor or hospital | Click "Book" on doctor/hospital card |
+
+---
+
+### My Features | ميزات مشروعي
+
+| Feature | What it does | Status |
+| 1 | [Chatbot] | 
+[It answers any question you ask about your health and tells you if you are okay or not] | ✅ |
+| 2 | [Doctors] | 
+[It tells you the nearest doctors and hospitals to you and their prices and you can book an appointment with them] | ✅ |
+| 3 | [Hospitals] | 
+[It tells you the nearest hospitals to you and their prices and you can book an appointment with them] | ✅ |
+| 4 | [Diseases] | 
+[It tells you about diseases and how to prevent them and their symptoms] | ✅ |
+| 5 | [Appointments] | 
+[You can book an appointment with any doctor or hospital you want] | ✅ |
+
+---
+
+### My Data | بيانات مشروعي
+
+**Where does data come from?**
+Our data come from two things
+ First: The Doctors and The Hospitals is a testing data we got them from claude
+ Second: The Disease come from World Health Orgainization(WHO)
+_______________________________________________
+
+**What data is stored?**
+The data that stored in our database is:
+ 1. Users
+ 2. Doctors
+ 3. Hospitals
+ 4. Diseases
+ 5. Appointments
+_______________________________________________
+
+---
+
+### What I Learned | ما تعلمته
+
+1. The hardest part of building my project was: Connecting the frontend to the backend REST APIs and managing database tables.
+
+2. The most fun part of building my project was: Integrating the Google Gemini AI chatbot and watching it answer medical questions.
+
+3. If I had more time, I would add: Live video consultations with doctors and online payment.
+
+4. One thing I would do differently: Make Whole project have Ai Assisstant
+---
+
+### Screenshot of My Project | لقطة شاشة من مشروعي
+
+<!-- Paste a screenshot of your project running here -->
+
+---
+
+<div class="session-footer">
+  <p>Techno Kids, Techno Future — Software Documentation Template</p>
+  <p>Afro-Asian Tech Forum · Software Category · 2026</p>
+</div>
