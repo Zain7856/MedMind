@@ -212,17 +212,17 @@ MedMind/
 
 ---
 
-## 5. UI/UX Design | تصميم واجهة المستخدم
+## 5. UI/UX Design | 
 
-### Screenshots | لقطات الشاشة
+### Screenshots |  
 
-<!-- Screenshot: Home Page -->
+
 ![alt text](ScreenShots/home.png)
 ![alt text](ScreenShots/Chatbot.png)
 ![alt text](ScreenShots/Doctors.png)
 ![alt text](ScreenShots/Hospitals.png)
-![alt text](ScreenShots/Disease.png)
-![alt text](ScreenShots/Appointment.png)
+![alt text](ScreenShots/disease.png)
+![alt text](ScreenShots/about.png)
 
 ### Design System | نظام التصميم
 
@@ -281,7 +281,7 @@ MedMind/
 
 ### Learning Objectives | أهداف التعلم
 
-By the end of this project, the student will be able to:
+At the end of this project, I am able to:
 
 1. Build a full-stack web application with Node.js and Express
 2. Design and query a SQLite database
@@ -324,9 +324,9 @@ By the end of this project, the student will be able to:
 
 ### Platforms | المنصات
 
-- Web browsers (Chrome, Edge, Firefox)
+- Web browsers (Chrome, Edge, Brave)
 - Mobile phones & Tablets (Responsive web)
-- Desktop computers
+
 
 ### Promotion Ideas | أفكار ترويجية
 
