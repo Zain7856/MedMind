@@ -1,9 +1,5 @@
 
-# Software Project Documentation | توثيق مشروع البرمجيات
-
-<div class="arabic">
-قالب توثيق مشاريع البرمجيات — للمسابقة الأفريقية الآسيوية للتكنولوجيا
-</div>
+# Software Project Documentation | 
 
 ---
 
@@ -11,61 +7,60 @@
 
 | Field | Value |
 |-------|-------|
-| **Project Title** | [MedMind] |
-| **Project Type** | [Web App] |
-| **Description** | [MedMind هو Medical website بيساعدك تعملcheck بسيط علي صحتك عن طريق الchatbot بتاعنا(MedMind)
+| **Project Title** | MedMind |
+| **Project Type** | Web App |
+| **Description** | MedMind هو Medical website بيساعدك تعملcheck بسيط علي صحتك عن طريق الchatbot بتاعنا(MedMind)
  ودا بيساعدك تعمل check دوري كل فتره عشان تطمن طب لو محتاج برضو MedMind موفرلك دكاتره و مستشفيات 
  وبرضو لو حابب تعرف عن المرض نفسه فMedMind
- برضو ف لو حسيت في اي وقت انك مش تمام مش لازم تنزل مخصوص لازم تنزل ولا لا وايه المجالات الي لازم تكشف فيها] |
-| **Target Users** |
+ برضو ف لو حسيت في اي وقت انك مش تمام مش لازم تنزل مخصوص لازم تنزل ولا لا وايه المجالات الي لازم تكشف فيها |
+<!-- | **Target Users** |
 - Primary: From 45-60
   Secondery: From 31-45,Babies
-  Tertiary: From 20-30,Teenagers|
-| **Date** | [2026] |
+  Tertiary: From 20-30,Teenagers| -->
 
 ### Tech Stack | Technology Stack
 
-| Category | Technology | Purpose |
-|----------|-----------|---------|
-| 
-**Language** |[لغه اساسيه] 
- [
+**Language**
 - [x] HTML
 - [x] CSS
 - [x] JavaScript
-- [x] SQL] | 
+- [x] SQL
 
-| **Framework&Libraries** |
+**Framework&Libraries** 
 - [x] better-sqlite3
 - [x] express
 - [x] Node.js
 - [x] SQLite
-- [x] Cors|
+- [x] Cors
 
-| **Database** | 
+**Database** 
 - [x] Database: SQLite3
 - [x] API: MedMind API
 - [x] Static Data
- |
-- **HTML:**
- TO BUILD THE STRUCTURE OF THE FRONTEND PAGES
-- **CSS:** 
-TO DESIGN PAGES
-- **JavaScript:** 
-TO MAKE THE BACKEND STRUCTURE AND THE INTERACTIVE THINGS ON FRONTEND 
-- **SQL:** 
-TO STORE THE DATA 
-- **better-sqlite3:**
-TO CONNECT THE BACKEND-JS CODE TO THE SQL
-- **express:**
-TO CONNECT THE APIs TO EACH OTHER AND MAKE IT WORK
-- **Node.js:** 
-TO RUN THE Backend-JS CODE ON THE TERMINAL
-- **SQLite:**
-TO MAKE THE STRUCTURE OF DB
 
- - **Cors:**
-TO PROTECT OUR SERVER
+**HTML:** TO BUILD THE STRUCTURE OF THE FRONTEND PAGES
+
+**CSS:** TO DESIGN PAGES
+
+**JavaScript:** TO MAKE THE BACKEND STRUCTURE AND THE INTERACTIVE FEATURES ON FRONTEND
+
+**SQL:** 
+- HANDLING THE READ AND WRITE OPERATIONS OF DB
+
+**better-sqlite3:**
+- CONNECTING BACKEND SERVICES TO THE SQLite database
+
+**express:**
+- exposing the backend API endpoints to the frontend 
+
+**Node.js:** 
+- RUNTIME TO RUN THE Backend-JS CODE
+
+**SQLite:**
+- USING SQL TO MAKE THE DATABASE AND MANAGE THE READ AND WRITE OPERATIONS
+
+**Cors:**
+- ALLOWING THE FRONTEND TO MAKE REQUESTS TO THE BACKEND
 
 
 
@@ -73,40 +68,33 @@ TO PROTECT OUR SERVER
 
 | Package | Version | Purpose |
 |---------|---------|---------|
-| express | 4.18.2 | Web server & APIs |
-| better-sqlite3 | 11.0.0 | Database connection |
+| express | 4.22.1 | Web server & APIs |
+| better-sqlite3 | 11.10.0 | Database connection |
 | @google/generative-ai | 0.24.1 | AI Chatbot |
 | cors | 2.8.6 | Frontend-backend connection |
 | dotenv | 17.2.4 | Environment settings |
 
-<!-- Screenshot: Main screen of your project -->
 ---
 
 ## 2. Problem Statement | بيان المشكلة
 
-<div class="arabic">
-هنا تكتب المشكلة التي يحلها مشروعك — لماذا هذا المشروع مهم؟
-</div>
+
 
 ### What problem does this project solve? | ما المشكلة التي يحلها هذا المشروع؟
 
-[many people get sick every day and they don't know what to do so they go to the doctor and waste time and money and they don't know if they're okay or not]
+many people get sick every day and they don't know what to do so they go to the doctor and waste time and money and they don't know if they're okay or not
 
 ### Why does it matter? | لماذا هذا مهم؟
 
-[because if they don't go to the doctor they might die and this is the point of MedMind he notice you to prevent you from got sick and gives you the best solution to get better]
+because if they don't go to the doctor they might die and this is the point of MedMind he notice you to prevent you from got sick and gives you the best solution to get better
 
 ### How is it currently solved? | كيف تُحل المشكلة حالياً؟
 
-[in the past people can not known they are have a disease or not and dont know the symptomps of it and the only way to know is to go to the doctor but don`t know what is the specialaztion they need to go or if they are travel where is the nearest Doctor or Hospital And this What MedMind do they help people to check themeself and know about diseases and Book a Appointment to the doctor or hospital ]
+in the past people can not known they are have a disease or not and dont know the symptomps of it and the only way to know is to go to the doctor but don`t know what is the specialaztion they need to go or if they are travel where is the nearest Doctor or Hospital And this What MedMind do they help people to check themeself and know about diseases and Book a Appointment to the doctor or hospital 
 
 ---
 
 ## 3. Technical Architecture | البنية التقنية
-
-<div class="arabic">
-هنا تشرح كيف مشروعك مبني من الداخل — هيكل الملفات والتقنيات المستخدمة
-</div>
 
 ### Project Structure | هيكل المشروع
 
@@ -138,18 +126,15 @@ MedMind/
 [User Browser]
       │
       ▼
-[Frontend: HTML / CSS / JS]
-      │  HTTP Requests (Fetch API)
+[Frontend | HTML / CSS / JS]
+      │
       ▼
-[Backend: Express.js API Server (Port 3000)]
+[Backend | Express.js API Server | PORT 3000]
       │                     │
       ▼                     ▼
 [SQLite DB: app.db]    [Google Gemini AI]
-(Users, Appointments,   (24/7 Medical Chatbot)
- Doctors, Diseases)
 ```
 
-The frontend sends REST API requests to the Express.js backend. The backend queries the SQLite database for records (users, doctors, appointments, diseases) and forwards chatbot questions to Google Gemini AI.
 
 ### Key Files | الملفات الرئيسية
 
@@ -160,32 +145,26 @@ The frontend sends REST API requests to the Express.js backend. The backend quer
 | `backend/Services/Appointments.js` | Appointment booking, status management, and queries | ~125 |
 | `backend/Services/Users.js` | User authentication, registration, and profile logic | ~150 |
 | `backend/database/app.sql` | SQLite database schema, constraints, and seed data | ~210 |
-| `frontend/Pages/home/home.html` | Homepage UI with service overview and chatbot access | ~80 |
+| `frontend/Pages/home/home.html` | Home page UI with service overview and chatbot access | ~80 |
 
 
 
 ---
 
-## 4. Features & User Flow | الميزات وتدفق المستخدم
+## 4. Features & User Flow
 
-<div class="arabic">
-هنا تكتب قائمة الميزات + مخطط تدفق المستخدم عبر الشاشات
-</div>
-
-### Feature List | قائمة الميزات
+### Feature List
 
 | # | Feature | Description | Status |
 |---|---------|-------------|:------:|
-| 1 | [Chatbot] | 
-[It answers any question you ask about your health and tells you if you are okay or not] | ✅ |
-| 2 | [Doctors] | 
-[It tells you the nearest doctors and hospitals to you and their prices and you can book an appointment with them] | ✅ |
-| 3 | [Hospitals] | 
-[It tells you the nearest hospitals to you and their prices and you can book an appointment with them] | ✅ |
-| 4 | [Diseases] | 
-[It tells you about diseases and how to prevent them and their symptoms] | ✅ |
-| 5 | [Appointments] | 
-[You can book an appointment with any doctor or hospital you want] | ✅ |
+| 1 | Chatbot | It answers any question you ask about your health and tells you if you are okay or not | ✅ |
+| 2 | Doctors | It tells you the nearest doctors and hospitals to you and their prices and you can book an appointment with them | ✅ |
+| 3 | Hospitals | It tells you the nearest hospitals to you and their prices and you can book an appointment with them | ✅ |
+| 4 | Diseases | It tells you about diseases and how to prevent them and their symptoms | ✅ |
+| 5 | Appointments | You can book an appointment with any doctor or hospital you want | ✅ |
+| 6 | Profile Picture| That Allow You TO Put a Photo Of You Or A Logo Of Hospital| ⏳ |
+| 7 | Live video consultations with doctors|Make Your Chosen Doctor Call You 2 Times in week | ❌ |
+| 8 |Online payment|make you pay for the appointment through online| ❌ |
 
 > Status: ✅ Complete | ⏳ In Progress | ❌ Not Started
 
@@ -235,22 +214,15 @@ The frontend sends REST API requests to the Express.js backend. The backend quer
 
 ## 5. UI/UX Design | تصميم واجهة المستخدم
 
-<div class="arabic">
-هنا تحط لقطات الشاشة + وصف التصميم البصري لمشروعك
-</div>
-
 ### Screenshots | لقطات الشاشة
 
-<!-- Screenshot: Landing page -->
-**Landing Page**: [describe what the user sees]
-
-<!-- Screenshot: Main dashboard -->
-**Dashboard**: [describe what the user sees]
-
-<!-- Screenshot: Key feature screen -->
-**Key Feature**: [describe what the user sees]
-
-<!-- Add more screenshots as needed -->
+<!-- Screenshot: Home Page -->
+![alt text](ScreenShots/home.png)
+![alt text](ScreenShots/Chatbot.png)
+![alt text](ScreenShots/Doctors.png)
+![alt text](ScreenShots/Hospitals.png)
+![alt text](ScreenShots/Disease.png)
+![alt text](ScreenShots/Appointment.png)
 
 ### Design System | نظام التصميم
 
@@ -467,7 +439,7 @@ _______________________________________________
 
 ### Screenshot of My Project | لقطة شاشة من مشروعي
 
-<!-- Paste a screenshot of your project running here -->
+![alt text](ScreenShots/home.png)
 
 ---
 
