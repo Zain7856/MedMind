@@ -1,59 +1,45 @@
 import db from "./db.js";
 
-async function createsymptom(Name, Description) {
-    const query = db.prepare(
-        "INSERT INTO symptoms (Name,Description) VALUES (?, ?)"
-    );
-    const result = query.run(Name, Description);
+function getSymptoms() {
+    return db.prepare("SELECT ID, Name, Description FROM symptoms ORDER BY Name").all();
+}
+
+// One symptom, with the diseases that have it: symptom.Diseases = [{ ID, Name }, ...]
+function getSymptom(ID) {
+    const symptom = db.prepare("SELECT ID, Name, Description FROM symptoms WHERE ID = ?").get(ID);
+    if (!symptom) return undefined;
+
+    symptom.Diseases = db.prepare(
+        "SELECT d.ID, d.Name FROM symptomdiseases sd " +
+        "JOIN diseases d ON d.ID = sd.DiseaseID WHERE sd.SymptomID = ? ORDER BY d.Name"
+    ).all(ID);
+    return symptom;
+}
+
+function addSymptom(Name, Description) {
+    const result = db.prepare("INSERT INTO symptoms (Name, Description) VALUES (?, ?)").run(Name, Description ?? null);
     return result.lastInsertRowid;
 }
 
-function getallsymptoms() {
-    const query = db.prepare("SELECT * FROM symptoms");
-    const result = query.all();
-    return result;
-}
-
-function getSymptomById(ID) {
-    const query = db.prepare("SELECT * FROM symptoms WHERE ID = ?");
-    const result = query.get(ID);
-    return result;
-}
-
-function updatesymptom(ID, Name, Description) {
-    try {
-        const query = db.prepare(
-            "UPDATE symptoms SET Name = ?, Description = ? WHERE ID = ?"
-        );
-        const result = query.run(Name, Description, ID);
-        console.log(`Updated symptom with ID: ${ID}`);
-        return result;
-    } catch (error) {
-        console.error("Error updating symptom:", error.message);
-        throw error;
-    }
+function updateSymptom(ID, Name, Description) {
+    return db.prepare("UPDATE symptoms SET Name = ?, Description = ? WHERE ID = ?").run(Name, Description ?? null, ID);
 }
 
 function deleteSymptom(ID) {
-    try {
-        // Foreign key constraints with ON DELETE CASCADE will handle related records
-        const query = db.prepare("DELETE FROM symptoms WHERE ID = ?");
-        const result = query.run(ID);
-        console.log(`Deleted symptom with ID: ${ID}`);
-        return result;
-    } catch (error) {
-        console.error("Error deleting symptom:", error.message);
-        throw error;
-    }
+    return db.prepare("DELETE FROM symptoms WHERE ID = ?").run(ID);
 }
 
-
-
-
-export {
-    createsymptom,
-    getallsymptoms,
-    getSymptomById,
-    updatesymptom,
-    deleteSymptom
+// The symptom checker. Gives back the diseases that have at least one of the ticked
+// symptoms, the one with the most matching symptoms first.
+function checkSymptoms(SymptomIDs) {
+    // One "?" for each ticked symptom, like "?, ?, ?"
+    const marks = SymptomIDs.map(() => "?").join(", ");
+    return db.prepare(
+        "SELECT d.ID, d.Name, d.Description, COUNT(*) AS Matches " +
+        "FROM symptomdiseases sd JOIN diseases d ON d.ID = sd.DiseaseID " +
+        "WHERE sd.SymptomID IN (" + marks + ") " +
+        "GROUP BY d.ID ORDER BY Matches DESC, d.Name"
+    ).all(...SymptomIDs);
 }
+
+export { getSymptoms, getSymptom, addSymptom, updateSymptom, deleteSymptom, checkSymptoms }

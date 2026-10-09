@@ -146,3 +146,7 @@ input:focus {
 @media (min-width: 769px) {
   .hide-desktop { display: none; }
 }
+/* Things with the hidden attribute stay hidden, even when a class sets their display */
+[hidden] {
+    display: none !important;
+}

@@ -1,250 +1,152 @@
 import express from "express";
 import {
-    createuser,
-    getallusers,
-    getuserById,
-    getuserByEmail,
-    updateuser,
-    updateUserStatus,
-    updateUserBanned,
-    updateuserPassword,
-    deleteuser,
-    updateDoctorProfile,
-    updateHospitalProfile
+    findUserByEmail,
+    findUserById,
+    getUser,
+    getUsers,
+    addUser,
+    updateUser,
+    setPassword,
+    setApprovalStatus,
+    deleteUser
 } from "../Services/Users.js";
 
 const router = express.Router();
 
+// A password shorter than this is too easy to guess.
+const MIN_PASSWORD_LENGTH = 6;
+
+// Sign in. Gives back the user (without the password) when the email and password match.
 router.post("/users/login", (req, res) => {
-    try {
-        const { email, password } = req.body;
+    const { email, password } = req.body;
 
-        if (!email || !password) {
-            return res.status(400).json({
-                error: "Missing required fields: email, password"
-            });
-        }
-
-        const user = getuserByEmail(email);
-        if (!user) {
-            return res.status(401).json({
-                error: "Invalid email or password"
-            });
-        }
-
-        if (user.Password !== password) {
-            return res.status(401).json({
-                error: "Invalid email or password"
-            });
-        }
-
-        if (user.IsBanned === 1) {
-            return res.status(403).json({
-                error: "Your account has been banned by the Admin."
-            });
-        }
-
-        if (user.ApprovalStatus === 'Pending') {
-            return res.status(403).json({
-                error: "Your account is pending Admin approval."
-            });
-        }
-
-        if (user.ApprovalStatus === 'Rejected') {
-            return res.status(403).json({
-                error: "Your account registration was rejected."
-            });
-        }
-
-        const { Password, ...userWithoutPassword } = user;
-        res.status(200).json(userWithoutPassword);
-    } catch (error) {
-        res.status(500).json({ error: error.message });
+    if (!email || !password) {
+        return res.status(400).json({ error: "Please type your email and password." });
     }
+
+    const user = findUserByEmail(email);
+    if (!user || user.Password !== password) {
+        return res.status(401).json({ error: "Wrong email or password." });
+    }
+    if (user.ApprovalStatus === "Pending") {
+        return res.status(403).json({ error: "Your account is waiting for the admin to approve it." });
+    }
+    if (user.ApprovalStatus === "Rejected") {
+        return res.status(403).json({ error: "Your account was rejected by the admin." });
+    }
+
+    res.json(getUser(user.ID));
 });
 
-router.post("/users", async (req, res) => {
-    try {
-        const { Name, Email, Password, Age, Phone, Role, Specialization, Location, cost, About, Img, Services } = req.body;
+// Sign up.
+router.post("/users", (req, res) => {
+    const user = req.body;
 
-        if (!Name || !Email || !Password) {
-            return res.status(400).json({
-                error: "Missing required fields: Name, Email, Password"
-            });
-        }
-
-        const existingUser = getuserByEmail(Email);
-        if (existingUser) {
-            return res.status(409).json({
-                error: "Email already registered"
-            });
-        }
-
-        const userId = createuser(Name, Email, Password, Age, Phone, Role, "Pending");
-
-        if (Role === 'Doctor') {
-            const costNum = cost ? parseFloat(cost) : null;
-            updateDoctorProfile(userId, Specialization || null, Location || null, costNum, About || null, Img || null);
-        } else if (Role === 'Hospital') {
-            updateHospitalProfile(userId, Location || null, Services || null, Img || null);
-        }
-
-        res.status(201).json({
-            message: "User created successfully with status Pending",
-            userId
-        });
-    } catch (error) {
-        res.status(500).json({ error: error.message });
+    if (!user.Name || !user.Email || !user.Password) {
+        return res.status(400).json({ error: "Please fill in your name, email and password." });
     }
+    if (!user.Email.includes("@")) {
+        return res.status(400).json({ error: "That email does not look right." });
+    }
+    if (user.Password.length < MIN_PASSWORD_LENGTH) {
+        return res.status(400).json({ error: "Your password needs at least " + MIN_PASSWORD_LENGTH + " characters." });
+    }
+    if (!["Patient", "Doctor", "Hospital"].includes(user.Role)) {
+        return res.status(400).json({ error: "Please choose Patient, Doctor or Hospital." });
+    }
+    if (findUserByEmail(user.Email)) {
+        return res.status(409).json({ error: "That email is already used." });
+    }
+
+    // Patients can sign in right away. Doctors and hospitals show up in the
+    // public lists, so the admin has to approve them first.
+    if (user.Role === "Patient") {
+        user.ApprovalStatus = "Approved";
+    } else {
+        user.ApprovalStatus = "Pending";
+    }
+
+    const ID = addUser(user);
+    res.status(201).json({ message: "Account created.", ID: ID, ApprovalStatus: user.ApprovalStatus });
 });
 
+// The admin's list of everybody.
 router.get("/users", (req, res) => {
-    try {
-        const users = getallusers();
-        res.status(200).json(users);
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
+    res.json(getUsers());
 });
 
-router.get("/users/:id", (req, res) => {
-    try {
-        const { id } = req.params;
-        const user = getuserById(id);
-        if (!user) {
-            return res.status(404).json({ error: "User not found" });
-        }
-        res.status(200).json(user);
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-});
-
-router.get("/users/email/:email", (req, res) => {
-    try {
-        const { email } = req.params;
-        const user = getuserByEmail(email);
-        if (!user) {
-            return res.status(404).json({ error: "User not found" });
-        }
-        res.status(200).json(user);
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-});
-
+// Edit your own info (and your doctor or hospital listing).
 router.put("/users/:id", (req, res) => {
-    try {
-        const { id } = req.params;
-        const { Name, Email, Age, Phone, Role, Specialization, Location, cost, About, Img, Services } = req.body;
+    const user = req.body;
 
-        if (!Name || !Email) {
-            return res.status(400).json({
-                error: "Missing required fields: Name, Email"
-            });
-        }
-
-        const result = updateuser(id, Name, Email, Age, Phone, Role);
-        if (result.changes === 0) {
-            return res.status(404).json({ error: "User not found" });
-        }
-
-        if (Role === 'Doctor') {
-            const costNum = cost ? parseFloat(cost) : null;
-            updateDoctorProfile(id, Specialization || null, Location || null, costNum, About || null, Img || null);
-        } else if (Role === 'Hospital') {
-            updateHospitalProfile(id, Location || null, Services || null, Img || null);
-        }
-
-        res.status(200).json({
-            message: "User updated successfully",
-            changes: result.changes
-        });
-    } catch (error) {
-        res.status(500).json({ error: error.message });
+    if (!getUser(req.params.id)) {
+        return res.status(404).json({ error: "User not found." });
     }
+    if (!user.Name || !user.Email || !user.Email.includes("@")) {
+        return res.status(400).json({ error: "Please fill in your name and a good email." });
+    }
+    const sameEmail = findUserByEmail(user.Email);
+    if (sameEmail && String(sameEmail.ID) !== req.params.id) {
+        return res.status(409).json({ error: "That email is already used." });
+    }
+
+    updateUser(req.params.id, user);
+    res.json(getUser(req.params.id));
 });
 
 router.put("/users/:id/password", (req, res) => {
-    try {
-        const { id } = req.params;
-        const { PasswordHash } = req.body;
-        if (!PasswordHash) {
-            return res.status(400).json({ error: "Missing required field: PasswordHash" });
-        }
-        const result = updateuserPassword(id, PasswordHash);
-        if (result.changes === 0) {
-            return res.status(404).json({ error: "User not found" });
-        }
-        res.status(200).json({ message: "Password updated successfully", changes: result.changes });
-    } catch (error) {
-        res.status(500).json({ error: error.message });
+    const { CurrentPassword, NewPassword } = req.body;
+    const user = findUserById(req.params.id);
+
+    if (!user) {
+        return res.status(404).json({ error: "User not found." });
     }
+    if (user.Password !== CurrentPassword) {
+        return res.status(401).json({ error: "Your current password is wrong." });
+    }
+    if (!NewPassword || NewPassword.length < MIN_PASSWORD_LENGTH) {
+        return res.status(400).json({ error: "Your new password needs at least " + MIN_PASSWORD_LENGTH + " characters." });
+    }
+
+    setPassword(req.params.id, NewPassword);
+    res.json({ message: "Password changed." });
 });
 
+// Deletes the account and all of its appointments.
 router.delete("/users/:id", (req, res) => {
-    try {
-        const { id } = req.params;
-        const result = deleteuser(id);
-        if (result.changes === 0) {
-            return res.status(404).json({ error: "User not found" });
-        }
-        res.status(200).json({ message: "User deleted successfully", changes: result.changes });
-    } catch (error) {
-        res.status(500).json({ error: error.message });
+    const user = getUser(req.params.id);
+
+    if (!user) {
+        return res.status(404).json({ error: "User not found." });
     }
+    if (user.Role === "Admin") {
+        return res.status(400).json({ error: "The admin account cannot be deleted." });
+    }
+
+    deleteUser(req.params.id);
+    res.json({ message: "Account deleted." });
 });
 
 router.patch("/admin/users/:id/approve", (req, res) => {
-    try {
-        const { id } = req.params;
-        const result = updateUserStatus(id, 'Approved');
-        if (result.changes === 0) {
-            return res.status(404).json({ error: "User not found" });
-        }
-        res.status(200).json({ message: "User account approved successfully" });
-    } catch (error) {
-        res.status(500).json({ error: error.message });
+    if (!getUser(req.params.id)) {
+        return res.status(404).json({ error: "User not found." });
     }
+    setApprovalStatus(req.params.id, "Approved");
+    res.json({ message: "User approved." });
 });
 
+// Rejected users cannot sign in, and they disappear from the doctor and hospital lists.
 router.patch("/admin/users/:id/reject", (req, res) => {
-    try {
-        const { id } = req.params;
-        const result = updateUserStatus(id, 'Rejected');
-        if (result.changes === 0) {
-            return res.status(404).json({ error: "User not found" });
-        }
-        res.status(200).json({ message: "User account rejected successfully" });
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-});
+    const user = getUser(req.params.id);
 
-router.patch("/admin/users/:id/ban", (req, res) => {
-    try {
-        const { id } = req.params;
-        const result = updateUserBanned(id, 1);
-        if (result.changes === 0) {
-            return res.status(404).json({ error: "User not found" });
-        }
-        res.status(200).json({ message: "User has been banned and pending appointments cancelled" });
-    } catch (error) {
-        res.status(500).json({ error: error.message });
+    if (!user) {
+        return res.status(404).json({ error: "User not found." });
     }
-});
-
-router.patch("/admin/users/:id/unban", (req, res) => {
-    try {
-        const { id } = req.params;
-        const result = updateUserBanned(id, 0);
-        if (result.changes === 0) {
-            return res.status(404).json({ error: "User not found" });
-        }
-        res.status(200).json({ message: "User has been unbanned successfully" });
-    } catch (error) {
-        res.status(500).json({ error: error.message });
+    if (user.Role === "Admin") {
+        return res.status(400).json({ error: "The admin cannot be rejected." });
     }
+    setApprovalStatus(req.params.id, "Rejected");
+    res.json({ message: "User rejected." });
 });
 
 export default router;

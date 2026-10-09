@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="booking.css">
+    <title>Book an appointment - MedMind</title>
+</head>
+<body>
+    <main class="appointment-page">
+        <div class="appointment-container">
+            <div class="appointment-card">
+                <div class="appointment-top-bar">
+                    <a class="appointment-back-btn" id="back-link" href="../doctors/doctors.html">&larr; Back</a>
+                </div>
+                <h1 class="appointment-title" id="booking-title">Book an appointment</h1>
+                <p class="appointment-subtitle">Pick a date and time. The doctor or hospital will confirm it.</p>
+
+                <form class="appointment-form" id="booking-form">
+                    <div class="appointment-field">
+                        <label class="appointment-label" for="patient-name">Name</label>
+                        <input class="appointment-input" id="patient-name" type="text" readonly>
+                    </div>
+                    <div class="appointment-field">
+                        <label class="appointment-label" for="provider-name">With</label>
+                        <input class="appointment-input" id="provider-name" type="text" value="Loading..." readonly>
+                    </div>
+                    <div class="appointment-field">
+                        <label class="appointment-label" for="appointment-date">Date and time</label>
+                        <input class="appointment-input" id="appointment-date" type="datetime-local" required>
+                    </div>
+                    <button type="submit" class="appointment-btn">Confirm appointment</button>
+                </form>
+            </div>
+        </div>
+    </main>
+    <script type="module" src="booking.js"></script>
+</body>
+</html>

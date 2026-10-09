@@ -1,15 +1,11 @@
-import Database from "better-sqlite3";
-import path from "path";
-import { fileURLToPath } from "url";
+import { DatabaseSync } from "node:sqlite";
+import { fileURLToPath } from "node:url";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const dbPath = path.resolve(__dirname, "../database/app.db");
+// The whole database is one file: backend/database/app.db
+const dbPath = fileURLToPath(new URL("../database/app.db", import.meta.url));
+const db = new DatabaseSync(dbPath);
 
-const db = new Database(dbPath);
-
-// Enforce foreign keys and enable Write-Ahead Logging (WAL)
-db.pragma("foreign_keys = ON");
-db.pragma("journal_mode = WAL");
+// Without this, deleting a user would not delete their appointments.
+db.exec("PRAGMA foreign_keys = ON");
 
 export default db;

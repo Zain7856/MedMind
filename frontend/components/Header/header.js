@@ -1,223 +1,121 @@
+import { getCurrentUser, signOut } from '../../api/users.js';
+import { esc } from '../helpers.js';
+
+function addStylesheet(href) {
+    if (document.querySelector('link[href="' + href + '"]')) return;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = href;
+    document.head.appendChild(link);
+}
+
+// The menu only shows what the current visitor can open.
+function getMenuLinks(user) {
+    const links = [
+        { icon: '🏠', label: 'Home', href: '/Pages/home/home.html' },
+        { icon: '📚', label: 'Diseases', href: '/Pages/diseases/diseases.html' },
+        { icon: '🩺', label: 'Symptoms', href: '/Pages/symptom-checker/symptom-checker.html' },
+        { icon: '👨‍⚕️', label: 'Doctors', href: '/Pages/doctors/doctors.html' },
+        { icon: '🏥', label: 'Hospitals', href: '/Pages/hospitals/hospitals.html' }
+    ];
+    if (user) {
+        links.push({ icon: '💬', label: 'Chat', href: '/Pages/chat/chat.html' });
+    }
+    links.push({ icon: 'ℹ️', label: 'About', href: '/Pages/about/about.html' });
+    return links;
+}
+
 export default function loadHeader() {
-    // Check if user is logged in
-    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    
-    if (!document.querySelector('link[href*="global.css"]')) {
-        const link = document.createElement('link');
-        link.rel = 'stylesheet';
-        link.href = '/assets/css/global.css';
-        document.head.appendChild(link);
+    addStylesheet('/assets/css/global.css');
+    addStylesheet('/components/Header/header.css');
+
+    const user = getCurrentUser();
+
+    let menuHtml = '';
+    for (const link of getMenuLinks(user)) {
+        let active = '';
+        if (window.location.pathname === link.href) active = ' active';
+        menuHtml += '<li class="nav-item"><a class="nav-link' + active + '" href="' + link.href + '">' + link.icon + ' ' + link.label + '</a></li>';
     }
 
-    if (!document.querySelector('link[href*="header.css"]')) {
-        const link = document.createElement('link');
-        link.rel = 'stylesheet';
-        link.href = '/components/Header/header.css';
-        document.head.appendChild(link);
+    // On the right: the sign in / sign up buttons, or the profile menu.
+    let rightHtml = '';
+    if (user) {
+        // The profile photo is saved in this browser only (see profile.js).
+        const photo = localStorage.getItem('medmind_profile_pic_' + user.Email) || '/imgs/logo.png';
+        rightHtml = `
+            <div class="header-profile-container" id="profile-menu">
+                <button type="button" class="header-profile-trigger" id="profile-trigger">
+                    <div class="header-avatar-wrapper">
+                        <img class="header-user-avatar" src="${esc(photo)}" alt="">
+                        <span class="header-online-dot"></span>
+                    </div>
+                    <span class="header-user-name">${esc(user.Name)}</span>
+                </button>
+                <div class="header-profile-dropdown">
+                    <div class="dropdown-user-info">
+                        <img class="dropdown-avatar" src="${esc(photo)}" alt="">
+                        <div class="dropdown-user-details">
+                            <span class="dropdown-user-name">${esc(user.Name)}</span>
+                            <span class="dropdown-user-email">${esc(user.Email)}</span>
+                            <span class="dropdown-user-badge">${esc(user.Role)}</span>
+                        </div>
+                    </div>
+                    <div class="dropdown-divider"></div>
+                    <a href="/Pages/profile/profile.html" class="dropdown-item">👤 My profile</a>
+                    <button type="button" class="dropdown-item dropdown-item-danger" id="sign-out-button">🚪 Log out</button>
+                </div>
+            </div>`;
+    } else {
+        rightHtml = `
+            <div class="header-guest-buttons">
+                <a class="nav-link" href="/Pages/sign-in/sign-in.html">Sign in</a>
+                <a class="btn" href="/Pages/sign-up/sign-up.html">Sign up</a>
+            </div>`;
     }
 
     const header = document.createElement('header');
     header.id = 'header';
     header.className = 'header';
-
-    const container = document.createElement('div');
-    container.className = 'container';
-
-    const headerContent = document.createElement('div');
-    headerContent.className = 'header-content flex-between';
-
-    const logoDiv = document.createElement('div');
-    logoDiv.className = 'header-logo';
-
-    const logoLink = document.createElement('a');
-    logoLink.href = '/Pages/home/home.html';
-    logoLink.className = 'logo-link';
-    logoLink.onclick = function (e) {
-        e.preventDefault();
-        window.location.href = '/Pages/home/home.html';
-    };
-
-    const logoIcon = document.createElement('img');
-    logoIcon.className = 'logo-icon';
-    logoIcon.src = '/imgs/logo.png';
-
-    const logoText = document.createElement('span');
-    logoText.className = 'logo-text';
-    logoText.textContent = 'MedMind';
-
-    logoLink.appendChild(logoIcon);
-    logoLink.appendChild(logoText);
-    logoDiv.appendChild(logoLink);
-
-
-    const hamburgerBtn = document.createElement('button');
-    hamburgerBtn.id = 'hamburger-btn';
-    hamburgerBtn.className = 'hamburger-btn hide-desktop';
-
-    for (let i = 0; i < 3; i++) {
-        const line = document.createElement('span');
-        line.className = 'hamburger-line';
-        hamburgerBtn.appendChild(line);
-    }
-
-    const navMenu = document.createElement('nav');
-    navMenu.id = 'nav-menu';
-    navMenu.className = 'nav-menu';
-
-    const navList = document.createElement('ul');
-    navList.className = 'nav-list flex';
-
-    const navItems = [
-        { label: 'Home', href: '/Pages/home/home.html' },
-        { label: 'Get Started', href: '/Pages/Get Started/Get Started.html' },
-        { label: 'Hospitals', href: '/Pages/Hospitals/Hospitals.html' },
-        { label: 'Doctors', href: '/Pages/Doctors/Doctors.html' },
-        { label: 'Diseases', href: '/Pages/Disease/Disease.html' },
-        { label: 'About', href: '/Pages/About us/About.html' },
-    ];
-
-    navItems.forEach(item => {
-        const li = document.createElement('li');
-        li.className = 'nav-item';
-
-        const a = document.createElement('a');
-        a.href = item.href;
-        a.className = 'nav-link';
-        a.textContent = item.label;
-
-        a.onclick = function (e) {
-            e.preventDefault();
-            window.location.href = item.href;
-        };
-
-        li.appendChild(a);
-        navList.appendChild(li);
-    });
-
-    navMenu.appendChild(navList);
-
-    // Show Sign Up button when not logged in, Profile dropdown menu when logged in
-    if (currentUser) {
-        const userEmail = currentUser.email || currentUser.Email || currentUser.id || currentUser.ID || 'default';
-        const userPic = localStorage.getItem(`medmind_profile_pic_${userEmail}`);
-        const userName = currentUser.name || currentUser.Name || 'My Profile';
-        const displayEmail = currentUser.email || currentUser.Email || '';
-        const userRole = currentUser.role || currentUser.Role || 'Member';
-
-        const profileContainer = document.createElement('div');
-        profileContainer.className = 'header-profile-container';
-
-        const trigger = document.createElement('button');
-        trigger.type = 'button';
-        trigger.className = 'header-profile-trigger';
-
-        const avatarWrapper = document.createElement('div');
-        avatarWrapper.className = 'header-avatar-wrapper';
-
-        const avatarImg = document.createElement('img');
-        avatarImg.className = 'header-user-avatar';
-        avatarImg.src = userPic || '/imgs/logo.png';
-        avatarImg.alt = userName;
-
-        const onlineDot = document.createElement('span');
-        onlineDot.className = 'header-online-dot';
-
-        avatarWrapper.appendChild(avatarImg);
-        avatarWrapper.appendChild(onlineDot);
-
-        const nameSpan = document.createElement('span');
-        nameSpan.className = 'header-user-name';
-        nameSpan.textContent = userName;
-
-        const chevron = document.createElement('span');
-        chevron.className = 'header-chevron';
-        chevron.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>`;
-
-        trigger.appendChild(avatarWrapper);
-        trigger.appendChild(nameSpan);
-        trigger.appendChild(chevron);
-
-        const dropdown = document.createElement('div');
-        dropdown.className = 'header-profile-dropdown';
-
-        dropdown.innerHTML = `
-            <div class="dropdown-user-info">
-                <img class="dropdown-avatar" src="${userPic || '/imgs/logo.png'}" alt="${userName}">
-                <div class="dropdown-user-details">
-                    <span class="dropdown-user-name">${userName}</span>
-                    <span class="dropdown-user-email">${displayEmail}</span>
-                    <span class="dropdown-user-badge">${userRole}</span>
+    header.innerHTML = `
+        <div class="container">
+            <div class="header-content flex-between">
+                <div class="header-logo">
+                    <a href="/Pages/home/home.html" class="logo-link">
+                        <img class="logo-icon" src="/imgs/logo.png" alt="">
+                        <span class="logo-text">MedMind</span>
+                    </a>
                 </div>
+                <button type="button" class="hamburger-btn hide-desktop" id="hamburger-button">
+                    <span class="hamburger-line"></span><span class="hamburger-line"></span><span class="hamburger-line"></span>
+                </button>
+                <nav class="nav-menu" id="nav-menu"><ul class="nav-list flex">${menuHtml}</ul></nav>
+                ${rightHtml}
             </div>
-            <div class="dropdown-divider"></div>
-            <a href="/Pages/Profile/profile.html" class="dropdown-item">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                My Profile
-            </a>
-            <a href="/Pages/Profile/profile.html" class="dropdown-item">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-                My Appointments
-            </a>
-            <div class="dropdown-divider"></div>
-            <button type="button" id="headerLogoutBtn" class="dropdown-item dropdown-item-danger">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
-                Logout
-            </button>
-        `;
+        </div>`;
+    document.body.prepend(header);
 
-        profileContainer.appendChild(trigger);
-        profileContainer.appendChild(dropdown);
-
-        trigger.addEventListener('click', (e) => {
-            e.stopPropagation();
-            profileContainer.classList.toggle('active');
-        });
-
-        document.addEventListener('click', (e) => {
-            if (!profileContainer.contains(e.target)) {
-                profileContainer.classList.remove('active');
-            }
-        });
-
-        setTimeout(() => {
-            const logoutBtn = dropdown.querySelector('#headerLogoutBtn');
-            if (logoutBtn) {
-                logoutBtn.onclick = function () {
-                    if (confirm('Are you sure you want to log out?')) {
-                        localStorage.removeItem('currentUser');
-                        window.location.href = '/Pages/Sign in/Sign in.html';
-                    }
-                };
-            }
-        }, 0);
-
-
-        headerContent.appendChild(logoDiv);
-        headerContent.appendChild(hamburgerBtn);
-        headerContent.appendChild(navMenu);
-        headerContent.appendChild(profileContainer);
-    } else {
-        const signBtn = document.createElement('button');
-        signBtn.className = 'btn btn-primary';
-        signBtn.textContent = 'Sign Up';
-        signBtn.onclick = function () {
-            window.location.href = '/Pages/Sign up/Sign up.html';
-        };
-
-        headerContent.appendChild(logoDiv);
-        headerContent.appendChild(hamburgerBtn);
-        headerContent.appendChild(navMenu);
-        headerContent.appendChild(signBtn);
-    }
-
-    container.appendChild(headerContent);
-    header.appendChild(container);
-
-    hamburgerBtn.onclick = function () {
-        hamburgerBtn.classList.toggle('active');
-        navMenu.classList.toggle('active');
+    // Phone menu: the three-lines button opens and closes the menu.
+    const hamburger = document.getElementById('hamburger-button');
+    hamburger.onclick = function () {
+        hamburger.classList.toggle('active');
+        document.getElementById('nav-menu').classList.toggle('active');
     };
 
-    document.body.prepend(header);
+    if (user) {
+        const profileMenu = document.getElementById('profile-menu');
+        document.getElementById('profile-trigger').onclick = function (event) {
+            event.stopPropagation();
+            profileMenu.classList.toggle('active');
+        };
+        // A click anywhere else closes the profile menu.
+        document.addEventListener('click', function () {
+            profileMenu.classList.remove('active');
+        });
+        document.getElementById('sign-out-button').onclick = function () {
+            if (confirm('Are you sure you want to log out?')) {
+                signOut();
+            }
+        };
+    }
 }
-

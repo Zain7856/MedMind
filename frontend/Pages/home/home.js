@@ -1,48 +1,31 @@
 import loadHeader from "../../components/Header/header.js";
 import loadFooter from "../../components/Footer/footer.js";
-import { getStats } from "../../api/stats-api.js";
+import { getStats } from "../../api/stats.js";
+import { getCurrentUser } from "../../api/users.js";
 
 loadHeader();
 
-const SIGN_UP_URL = '../Sign up/Sign up.html';
-const GET_STARTED_URL = '../Get Started/Get Started.html';
+document.getElementById('btn-get-started').onclick = function () {
+    window.location.href = '../chat/chat.html';
+};
+document.getElementById('btn-sign-up-hero').onclick = function () {
+    window.location.href = '../sign-up/sign-up.html';
+};
+document.getElementById('btn-sign-up').onclick = function () {
+    window.location.href = '../sign-up/sign-up.html';
+};
 
-const btnGetStarted = document.getElementById('btn-get-started');
-if (btnGetStarted) {
-    btnGetStarted.onclick = function () {
-        window.location.href = GET_STARTED_URL;
-    };
+// Somebody who is signed in does not need the sign up buttons.
+if (getCurrentUser()) {
+    document.getElementById('btn-sign-up-hero').hidden = true;
+    document.getElementById('cta').hidden = true;
 }
 
-const btnSignUpHero = document.getElementById('btn-sign-up-hero');
-if (btnSignUpHero) {
-    btnSignUpHero.onclick = function () {
-        window.location.href = SIGN_UP_URL;
-    };
+// The three numbers under the banner come from the server.
+const stats = await getStats();
+for (const element of document.querySelectorAll('[data-stat]')) {
+    element.textContent = stats[element.dataset.stat].toLocaleString();
 }
-
-const btnSignUp = document.getElementById('btn-sign-up');
-if (btnSignUp) {
-    btnSignUp.onclick = function () {
-        window.location.href = SIGN_UP_URL;
-    };
-}
-
-const trustBar = document.getElementById('trust');
-
-if (trustBar) {
-    getStats().then(function (stats) {
-        if (!stats) return;
-
-        trustBar.querySelectorAll('[data-stat]').forEach(function (el) {
-            const value = stats[el.dataset.stat];
-            if (typeof value === 'number') {
-                el.textContent = value.toLocaleString();
-            }
-        });
-
-        trustBar.hidden = false;
-    });
-}
+document.getElementById('trust').hidden = false;
 
 loadFooter();

@@ -57,7 +57,8 @@ MedMind بتجمع كل الرحلة دي في مكان واحد:
 |---|---|
 | **Node.js** | بيشغل JavaScript برا الـ browser بمحرك V8، فبيدي الـ backend سرعة أعلى، وبتقدر تشتغل بنفس اللغة على الـ frontend والـ backend |
 | **Express** | بيسهّل بناء الـ REST API اللي بيربط الـ frontend بالـ backend |
-| **better-sqlite3** | مكتبة synchronous سريعة للتعامل مع SQLite من JavaScript بسهولة |
+| **node:sqlite** | مكتبة جاهزة جوه Node.js نفسه للتعامل مع SQLite من JavaScript بسهولة، من غير ما نحمّل أي مكتبة زيادة |
+| **Gemini API** | الذكاء الاصطناعي من Google اللي بيرد على المستخدم في الـ chatbot |
 | **SQLite** | قاعدة بيانات خفيفة (file-based) مناسبة لبيانات الدكاترة والمستشفيات والأمراض |
 
 ### Data Sources | مصادر البيانات
@@ -80,10 +81,12 @@ Frontend (HTML/CSS/JS)
 Express.js API Server (Node.js)
       │
       ▼
-better-sqlite3
+node:sqlite
       │
       ▼
-SQLite Database (doctors, hospitals, diseases, chatbot data)
+SQLite Database (users, diseases, symptoms, appointments)
+
+Express ──► Gemini API (chatbot)
 ```
 
 ---
@@ -103,7 +106,7 @@ MedMind بيوصّلك لدكتور أو مستشفى أو معلومة عن م�
 أيوه، استخدمنا MedMind API، وهو API بنيناه إحنا بنفسنا مش جاهز أو خارجي. الهدف منه إنه يربط بين حاجتين احنا اللي عملناهم: الـ Frontend (الواجهة اللي المستخدم بيشوفها ويتعامل معاها) والـ Backend (المنطق وقاعدة البيانات اللي شغالة من ورا). يعني الـ API ده هو خط الاتصال اللي بيخلي الاتنين يبعتوا ويستقبلوا بيانات من بعض بشكل منظم.
 
 **إيه الـ Frameworks/التقنيات المستخدمة؟**
-استخدمنا better-sqlite3, Express, Node.js, وSQLite. كل واحدة فيهم كان ليها دور مختلف: Node.js شغّل الـ JavaScript على السيرفر، Express بنى الـ API اللي بتتكلم بيه الواجهة مع قاعدة البيانات، better-sqlite3 سهّل التعامل مع قاعدة البيانات من جوه الكود، وSQLite كانت مكان تخزين البيانات نفسها.
+استخدمنا Express, Node.js, وSQLite (عن طريق node:sqlite اللي جوه Node.js)، وGemini API للـ chatbot. كل واحدة فيهم كان ليها دور مختلف: Node.js شغّل الـ JavaScript على السيرفر، Express بنى الـ API اللي بتتكلم بيه الواجهة مع قاعدة البيانات، node:sqlite سهّلت التعامل مع قاعدة البيانات من جوه الكود، وSQLite كانت مكان تخزين البيانات نفسها.
 
 ---
 

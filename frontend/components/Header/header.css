@@ -109,7 +109,7 @@
 
 .nav-link {
     display: block;
-    padding: var(--spacing-md) var(--spacing-lg);
+    padding: var(--spacing-md);
     color: var(--text-white);
     font-weight: var(--font-weight-medium);
     transition: all var(--transition-fast);
@@ -447,4 +447,16 @@
     .hamburger-btn {
         display: flex;
     }
+}
+
+/* Sign in link and Sign up button, shown when nobody is signed in */
+.header-guest-buttons {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+/* Keep each menu item on one line, icon next to its label */
+.nav-link {
+    white-space: nowrap;
 }

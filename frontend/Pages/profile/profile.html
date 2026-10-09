@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - MedMind</title>
+    <link rel="stylesheet" href="profile.css">
+    <link rel="stylesheet" href="../../assets/css/global.css">
+</head>
+<body>
+    <div class="profile-container">
+        <div class="profile-card">
+            <div class="profile-header">
+                <div class="profile-pic-container">
+                    <div class="profile-pic-wrapper">
+                        <img id="profilePic" src="../../imgs/logo.png" alt="Profile Picture" class="profile-pic">
+                        <label for="profilePicInput" class="upload-pic-btn" title="Upload/Change Profile Picture">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                                <circle cx="12" cy="13" r="4"></circle>
+                            </svg>
+                        </label>
+                        <input type="file" id="profilePicInput" accept="image/*" hidden>
+                    </div>
+                    <button id="removePicBtn" class="remove-pic-btn" title="Remove Profile Picture" hidden>Remove Photo</button>
+                </div>
+                <h1 id="profileTitle">My Profile</h1>
+                <p id="profileSubtitle"></p>
+                <span id="roleBadge" class="role-badge"></span>
+            </div>
+
+            <div class="profile-content">
+
+                <!-- Personal information (everybody) -->
+                <div class="profile-section">
+                    <h2>Personal Information</h2>
+                    <div class="info-grid">
+                        <div class="info-item"><label>Name:</label><span id="name"></span></div>
+                        <div class="info-item"><label>Email:</label><span id="email"></span></div>
+                        <div class="info-item"><label>Role:</label><span id="role"></span></div>
+                        <div class="info-item"><label>Age:</label><span id="age"></span></div>
+                        <div class="info-item"><label>Phone:</label><span id="phone"></span></div>
+                    </div>
+                </div>
+
+                <!-- Patient -->
+                <div id="patientSection" class="profile-section" hidden>
+                    <h2>My Appointments</h2>
+                    <div id="patientAppointments" class="appointments-list"></div>
+                </div>
+
+                <!-- Doctor or hospital -->
+                <div id="providerSection" hidden>
+                    <div class="profile-section">
+                        <h2 id="listingTitle">My Listing</h2>
+                        <div id="listingInfo" class="info-grid"></div>
+                    </div>
+                    <div class="profile-section">
+                        <h2>Appointments with Me</h2>
+                        <div id="providerAppointments" class="appointments-list"></div>
+                    </div>
+                </div>
+
+                <!-- Admin -->
+                <div id="adminSection" hidden>
+                    <div class="profile-section admin-panel">
+                        <h2>⚙️ Admin Control Panel</h2>
+                        <div class="admin-tabs">
+                            <button class="admin-tab-btn active" data-tab="pending">Pending approvals</button>
+                            <button class="admin-tab-btn" data-tab="users">Users</button>
+                            <button class="admin-tab-btn" data-tab="diseases">Diseases</button>
+                            <button class="admin-tab-btn" data-tab="symptoms">Symptoms</button>
+                        </div>
+
+                        <div id="adminTab-pending" class="admin-tab-content">
+                            <div id="pendingList" class="admin-users-list"></div>
+                        </div>
+
+                        <div id="adminTab-users" class="admin-tab-content" hidden>
+                            <div id="usersList" class="admin-users-list"></div>
+                        </div>
+
+                        <div id="adminTab-diseases" class="admin-tab-content" hidden>
+                            <div id="diseasesList" class="admin-users-list"></div>
+                            <form id="diseaseForm" class="edit-form admin-form">
+                                <h3 id="diseaseFormTitle">Add a disease</h3>
+                                <div class="form-group">
+                                    <label for="diseaseName">Name</label>
+                                    <input type="text" id="diseaseName" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="diseaseDescription">Description</label>
+                                    <textarea id="diseaseDescription" rows="2"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="diseaseTreatment">Treatment</label>
+                                    <textarea id="diseaseTreatment" rows="2"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>Symptoms</label>
+                                    <div id="diseaseSymptoms" class="admin-checkboxes"></div>
+                                </div>
+                                <div class="form-actions">
+                                    <button type="submit" class="profile-btn">Save disease</button>
+                                    <button type="button" id="diseaseClear" class="profile-btn logout-btn">Clear</button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div id="adminTab-symptoms" class="admin-tab-content" hidden>
+                            <div id="symptomsList" class="admin-users-list"></div>
+                            <form id="symptomForm" class="edit-form admin-form">
+                                <h3 id="symptomFormTitle">Add a symptom</h3>
+                                <div class="form-group">
+                                    <label for="symptomName">Name</label>
+                                    <input type="text" id="symptomName" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="symptomDescription">Description</label>
+                                    <textarea id="symptomDescription" rows="2"></textarea>
+                                </div>
+                                <div class="form-actions">
+                                    <button type="submit" class="profile-btn">Save symptom</button>
+                                    <button type="button" id="symptomClear" class="profile-btn logout-btn">Clear</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Change password (closed until you click it) -->
+                <details class="profile-section">
+                    <summary><strong>Change password</strong></summary>
+                    <form id="passwordForm" class="edit-form">
+                        <div class="form-group">
+                            <label for="currentPassword">Current password</label>
+                            <input type="password" id="currentPassword" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="newPassword">New password</label>
+                            <input type="password" id="newPassword" required>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="profile-btn logout-btn">Change password</button>
+                        </div>
+                    </form>
+                </details>
+
+                <div class="profile-actions">
+                    <button id="editProfileBtn" class="profile-btn">Edit profile</button>
+                    <button id="logoutBtn" class="profile-btn logout-btn">Log out</button>
+                    <button id="deleteAccountBtn" class="delete-account-btn">Delete my account</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="profile.js"></script>
+</body>
+</html>
