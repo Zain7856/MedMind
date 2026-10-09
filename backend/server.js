@@ -11,6 +11,7 @@ import symptomsApi from './API/apiSymptoms.js';
 import userSymptomsApi from './API/apiUserSymptoms.js';
 import symptomDiseasesApi from './API/apiSymptomDiseases.js';
 import chatApi from './API/apiChat.js';
+import statsApi from './API/apiStats.js';
 import cors from 'cors';
 
 dotenv.config();
@@ -31,6 +32,7 @@ app.use(symptomsApi);
 app.use(userSymptomsApi);
 app.use(symptomDiseasesApi);
 app.use(chatApi);
+app.use(statsApi);
 
 
 app.listen(3000, () => {

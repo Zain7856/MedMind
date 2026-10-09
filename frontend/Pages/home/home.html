@@ -4,78 +4,174 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="MedMind — browse diseases and their symptoms, find doctors and hospitals, and ask the medical assistant a question in plain language.">
     <link rel="stylesheet" href="home.css">
     <link rel="stylesheet" href="../../assets/css/global.css">
-    <title>Document</title>
+    <title>MedMind — Diseases, doctors and hospitals in one place</title>
 </head>
 
 <body>
 
     <main class="home-container">
+
+        <!-- 1. Hero — split: text left, banner right -->
         <section class="hero" id="hero">
             <div class="hero-content">
+                <p class="hero-eyebrow">Medical information, without the guesswork</p>
                 <h1 class="hero-title">MedMind</h1>
-                <p class="hero-subtitle">Your trusted healthcare companion for medical information and guidance.</p>
+                <p class="hero-subtitle">
+                    Browse diseases and the symptoms linked to them, find a doctor or a hospital,
+                    and put a plain-language question to the assistant — all from one place.
+                </p>
                 <div class="hero-actions">
-                    <button class="btn" id="btn-get-started">Get Started</button>
+                    <button type="button" class="btn btn-hero-primary" id="btn-get-started">Get Started</button>
+                    <button type="button" class="btn btn-hero-secondary" id="btn-sign-up-hero">Sign Up</button>
                 </div>
             </div>
+
+            <figure class="hero-media">
+                <picture>
+                    <source media="(max-width: 768px)" srcset="../../imgs/banner-800.jpg">
+                    <img class="hero-image" src="../../imgs/banner.jpg"
+                        srcset="../../imgs/banner-800.jpg 800w, ../../imgs/banner.jpg 1600w"
+                        sizes="(max-width: 768px) 100vw, 560px" width="1600" height="640" loading="eager"
+                        decoding="async" alt="A collage of medical imagery: a doctor consulting a patient, laboratory equipment and pharmacy shelves.">
+                </picture>
+                <figcaption class="hero-caption">One directory for conditions, clinicians and hospitals.</figcaption>
+            </figure>
         </section>
-        <section class="features" id="features">
+
+        <!-- 2. Trust bar — populated from GET /stats; hidden entirely if that fails -->
+        <section class="trust" id="trust" aria-label="MedMind at a glance" hidden>
+            <div class="trust-item">
+                <span class="trust-value" data-stat="doctors">—</span>
+                <span class="trust-label">Doctors listed</span>
+            </div>
+            <div class="trust-divider" aria-hidden="true"></div>
+            <div class="trust-item">
+                <span class="trust-value" data-stat="hospitals">—</span>
+                <span class="trust-label">Hospitals listed</span>
+            </div>
+            <div class="trust-divider" aria-hidden="true"></div>
+            <div class="trust-item">
+                <span class="trust-value" data-stat="diseases">—</span>
+                <span class="trust-label">Diseases documented</span>
+            </div>
+        </section>
+
+        <!-- 3. Core services — bento grid, uneven tiles -->
+        <section class="services" id="services">
             <h2 class="section-title">What you can do</h2>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <h3 class="feature-title">Learn About Diseases</h3>
-                    <p class="feature-text">Explore symptoms, tips, and basic information.</p>
-                </div>
-                <div class="feature-card">
-                    <h3 class="feature-title">Find Hospitals</h3>
-                    <p class="feature-text">Browse hospitals and healthcare centers.</p>
-                </div>
-                <div class="feature-card">
-                    <h3 class="feature-title">Chat With Ai</h3>
-                    <p class="feature-text">Get instant medical guidance and support.</p>
-                </div>
-                <div class="feature-card">
-                    <h3 class="feature-title">Find Doctors</h3>
-                    <p class="feature-text">Go to the Doctors page to browse and choose.</p>
-                </div>
+            <p class="section-lede">Four tools, sized by how much of the site they cover.</p>
+
+            <div class="services-grid">
+                <a class="tile tile-diseases" href="../Disease/Disease.html">
+                    <span class="tile-icon" aria-hidden="true">
+                        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                            <path d="M9 7h7"></path>
+                            <path d="M9 11h5"></path>
+                        </svg>
+                    </span>
+                    <h3 class="tile-title">Learn About Diseases</h3>
+                    <p class="tile-text">
+                        The full library. Open any condition and read its overview, the symptoms recorded
+                        against it and its treatment notes, on one page instead of pieced together from
+                        search results.
+                    </p>
+                    <span class="tile-cta">Open the disease library</span>
+                </a>
+
+                <a class="tile tile-chat" href="../Get Started/Get Started.html">
+                    <span class="tile-icon" aria-hidden="true">
+                        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8z"></path>
+                        </svg>
+                    </span>
+                    <h3 class="tile-title">Chat With AI</h3>
+                    <p class="tile-text">Ask in your own words and get an answer you can read, then a steer on whether to see a doctor or a hospital.</p>
+                    <span class="tile-cta">Open the assistant</span>
+                </a>
+
+                <a class="tile tile-doctors" href="../Doctors/Doctors.html">
+                    <span class="tile-icon" aria-hidden="true">
+                        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                    </span>
+                    <h3 class="tile-title">Find Doctors</h3>
+                    <p class="tile-text">Every doctor in the directory, with their specialty, location and fee.</p>
+                </a>
+
+                <a class="tile tile-hospitals" href="../Hospitals/Hospitals.html">
+                    <span class="tile-icon" aria-hidden="true">
+                        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="7" width="18" height="13" rx="2"></rect>
+                            <path d="M9 7V4h6v3"></path>
+                            <path d="M12 11v5"></path>
+                            <path d="M9.5 13.5h5"></path>
+                        </svg>
+                    </span>
+                    <h3 class="tile-title">Find Hospitals</h3>
+                    <p class="tile-text">Every hospital listed, with its location and the services it offers.</p>
+                </a>
             </div>
         </section>
 
-        <section class="explore" id="explore">
-            <h2 class="section-title">Explore</h2>
-            <div class="explore-grid">
-                <div class="explore-card" id="explore-get-started" role="button" tabindex="0">
-                    <h3 class="explore-title">Get Started</h3>
-                    <p class="explore-text">Useful services and resources</p>
-                </div>
-                <div class="explore-card" id="explore-diseases" role="button" tabindex="0">
-                    <h3 class="explore-title">Diseases</h3>
-                    <p class="explore-text">Information and guidance</p>
-                </div>
-                <div class="explore-card" id="explore-hospitals" role="button" tabindex="0">
-                    <h3 class="explore-title">Hospitals</h3>
-                    <p class="explore-text">Find healthcare centers</p>
-                </div>
+        <!-- 4. How it works -->
+        <section class="how" id="how">
+            <h2 class="section-title">How it works</h2>
+            <p class="section-lede">Three steps, in the order people actually use them.</p>
 
-                <div class="explore-card" id="explore-doctors" role="button" tabindex="0">
-                    <h3 class="explore-title">Doctors</h3>
-                    <p class="explore-text">Browse doctors and specialties</p>
-                </div>
-            </div>
+            <ol class="steps">
+                <li class="step">
+                    <span class="step-number" aria-hidden="true">1</span>
+                    <h3 class="step-title">Narrow down what it might be</h3>
+                    <p class="step-text">
+                        Open the disease library and pick a condition. Its page carries an overview, the
+                        symptoms recorded against it and treatment notes, so you read one condition in full
+                        before you talk to anyone about it.
+                    </p>
+                </li>
+                <li class="step">
+                    <span class="step-number" aria-hidden="true">2</span>
+                    <h3 class="step-title">Ask the question in your own words</h3>
+                    <p class="step-text">
+                        Describe what you are feeling and the assistant answers in plain language, keeping the
+                        thread of the conversation as it goes. It also points you towards whether this is
+                        something for a doctor, a hospital, or neither right now.
+                    </p>
+                </li>
+                <li class="step">
+                    <span class="step-number" aria-hidden="true">3</span>
+                    <h3 class="step-title">Book with the right person</h3>
+                    <p class="step-text">
+                        Browse the directories to see each doctor's specialty, location and fee or each
+                        hospital's location and services, then send a booking request from their page.
+                        Requests and their status live in your profile.
+                    </p>
+                </li>
+            </ol>
         </section>
 
+        <!-- 5. Final CTA -->
         <section class="cta" id="cta">
             <div class="cta-content">
-                <h2 class="cta-title">Ready to start?</h2>
-                <p class="cta-text">Create an account to get the best experience.</p>
-                <button class="btn btn-primary" id="btn-sign-up">Sign Up</button>
+                <div class="cta-copy">
+                    <h2 class="cta-title">Ready to start?</h2>
+                    <p class="cta-text">Create an account to keep your bookings and your assistant history in one place.</p>
+                </div>
+                <button type="button" class="btn btn-cta" id="btn-sign-up">Sign Up</button>
             </div>
         </section>
+
     </main>
 
+    <script type="module" src="home.js"></script>
+
 </body>
-<script type="module" src="home.js"></script>
 
 </html>

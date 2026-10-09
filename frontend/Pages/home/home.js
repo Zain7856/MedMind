@@ -1,56 +1,48 @@
 import loadHeader from "../../components/Header/header.js";
 import loadFooter from "../../components/Footer/footer.js";
+import { getStats } from "../../api/stats-api.js";
 
 loadHeader();
 
-const exploreGetStarted = document.getElementById('explore-get-started');
-if (exploreGetStarted) {
-  exploreGetStarted.onclick = function () {
-    window.location.href = '/Pages/Get Started/Get Started.html';
-  };
-}
+const SIGN_UP_URL = '../Sign up/Sign up.html';
+const GET_STARTED_URL = '../Get Started/Get Started.html';
 
 const btnGetStarted = document.getElementById('btn-get-started');
 if (btnGetStarted) {
-  btnGetStarted.onclick = function () {
-    window.location.href = '/Pages/Get Started/Get Started.html';
-  };
+    btnGetStarted.onclick = function () {
+        window.location.href = GET_STARTED_URL;
+    };
 }
 
-const contactBtn = document.getElementById('btn-contact');
-if (contactBtn) {
-  contactBtn.onclick = function () {
-    window.location.href = '/Pages/contact_us/Contact.html';
-  };
+const btnSignUpHero = document.getElementById('btn-sign-up-hero');
+if (btnSignUpHero) {
+    btnSignUpHero.onclick = function () {
+        window.location.href = SIGN_UP_URL;
+    };
 }
 
-const signUpBtn = document.getElementById('btn-sign-up');
-if (signUpBtn) {
-  signUpBtn.onclick = function () {
-    window.location.href = '/Pages/Sign up/Sign up.html';
-  };
+const btnSignUp = document.getElementById('btn-sign-up');
+if (btnSignUp) {
+    btnSignUp.onclick = function () {
+        window.location.href = SIGN_UP_URL;
+    };
 }
 
-const exploreDiseases = document.getElementById('explore-diseases');
-if (exploreDiseases) {
-  exploreDiseases.onclick = function () {
-    window.location.href = '/Pages/Disease/Disease.html';
-  };
-}
+const trustBar = document.getElementById('trust');
 
-const exploreHospitals = document.getElementById('explore-hospitals');
-if (exploreHospitals) {
-  exploreHospitals.onclick = function () {
-    window.location.href = '/Pages/Hospitals/Hospitals.html';
-  };
-}
+if (trustBar) {
+    getStats().then(function (stats) {
+        if (!stats) return;
 
+        trustBar.querySelectorAll('[data-stat]').forEach(function (el) {
+            const value = stats[el.dataset.stat];
+            if (typeof value === 'number') {
+                el.textContent = value.toLocaleString();
+            }
+        });
 
-const exploreDoctors = document.getElementById('explore-doctors');
-if (exploreDoctors) {
-  exploreDoctors.onclick = function () {
-    window.location.href = '/Pages/Doctors/Doctors.html';
-  };
+        trustBar.hidden = false;
+    });
 }
 
 loadFooter();
