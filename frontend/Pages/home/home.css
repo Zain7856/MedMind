@@ -1,6 +1,6 @@
 .home-container{
     width: 100%;
-    max-width: 1180px;
+    max-width: var(--page-width);
     margin: 0 auto;
     padding: var(--spacing-xl) var(--spacing-md) 72px;
 }

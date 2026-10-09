@@ -1,4 +1,6 @@
 :root {
+  /* How wide the header and the list pages (home, doctors, hospitals, diseases) are on a big screen. */
+  --page-width: 1500px;
   --primary-color: #1e40af;
   --primary-light: #3b82f6;
   --primary-dark: #1e3a8a;
@@ -81,7 +83,7 @@ a:hover {
 
 .container {
   width: 100%;
-  max-width: 1200px;
+  max-width: var(--page-width);
   margin: 0 auto;
   padding: 0 var(--spacing-md);
 }
