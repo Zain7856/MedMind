@@ -196,7 +196,7 @@ MedMind/
                       └────────────────┘
 ```
 
-### Screen Reference | دليل الشاشات
+### Screen Reference |  
 
 | Screen | File / Route | Description | Transitions To |
 |--------|--------------|-------------|----------------|
