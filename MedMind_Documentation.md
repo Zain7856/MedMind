@@ -13,10 +13,7 @@
  ودا بيساعدك تعمل check دوري كل فتره عشان تطمن طب لو محتاج برضو MedMind موفرلك دكاتره و مستشفيات 
  وبرضو لو حابب تعرف عن المرض نفسه فMedMind
  برضو ف لو حسيت في اي وقت انك مش تمام مش لازم تنزل مخصوص لازم تنزل ولا لا وايه المجالات الي لازم تكشف فيها |
-<!-- | **Target Users** |
-- Primary: From 45-60
-  Secondery: From 31-45,Babies
-  Tertiary: From 20-30,Teenagers| -->
+
 
 ### Tech Stack | Technology Stack
 
@@ -38,11 +35,11 @@
 - [x] API: MedMind API
 - [x] Static Data
 
-**HTML:** TO BUILD THE STRUCTURE OF THE FRONTEND PAGES
+**HTML:** BUILD THE STRUCTURE OF THE FRONTEND PAGES
 
-**CSS:** TO DESIGN PAGES
+**CSS:** styling pages
 
-**JavaScript:** TO MAKE THE BACKEND STRUCTURE AND THE INTERACTIVE FEATURES ON FRONTEND
+**JavaScript:** for the BACKEND STRUCTURE and the INTERACTIVE FEATURES ON FRONTEND
 
 **SQL:** 
 - HANDLING THE READ AND WRITE OPERATIONS OF DB
@@ -120,7 +117,7 @@ MedMind/
     └── assets/               # CSS styles & design assets
 ```
 
-### Architecture Diagram | مخطط البنية
+### Architecture Diagram | 
 
 ```
 [User Browser]
@@ -136,7 +133,7 @@ MedMind/
 ```
 
 
-### Key Files | الملفات الرئيسية
+### Key Files |  
 
 | File | Purpose | Lines of Code |
 |------|---------|:-------------:|
@@ -168,7 +165,7 @@ MedMind/
 
 > Status: ✅ Complete | ⏳ In Progress | ❌ Not Started
 
-### User Flow | تدفق المستخدم
+### User Flow Diagram
 
 ```
                       ┌────────────────┐
@@ -224,7 +221,7 @@ MedMind/
 ![alt text](ScreenShots/disease.png)
 ![alt text](ScreenShots/about.png)
 
-### Design System | نظام التصميم
+### Design System |  
 
 | Element | Style |
 |---------|-------|
@@ -234,7 +231,7 @@ MedMind/
 | **Button Style** | Rounded (8px radius), flat with hover transition |
 | **Layout** | Top navigation bar, hero banner, responsive card grid |
 
-### Responsive Design | التصميم المتجاوب
+### Responsive Design | 
 
 | Breakpoint | Layout | Tested? |
 |------------|--------|:-------:|
@@ -243,13 +240,9 @@ MedMind/
 | Mobile (< 768px) | 1-column stacked cards, full-width buttons | ☑ |
 ---
 
-## 6. Data Sources | مصادر البيانات
+## 6. Data Sources |  
 
-<div class="arabic">
-هنا تكتب منين جبت الداتا — قاعدة بيانات، API، ملفات، أو داتا مكتوبة في الكود
-</div>
-
-### Data Sources | مصادر البيانات
+### Data Sources |  
 
 | Source | Type | Description |
 |--------|------|-------------|
@@ -257,7 +250,7 @@ MedMind/
 | Google Gemini | API | Medical chatbot answers |
 | User Input | Forms | Login, sign up, appointment booking |
 
-### Database Schema | مخطط قاعدة البيانات
+### Database Schema |   
 
 | Table | Columns | Description |
 |-------|---------|-------------|
@@ -265,21 +258,21 @@ MedMind/
 | appointments | ID, UserID, ProviderID, AppointmentDate, Status | Booked appointments |
 | diseases | ID, Name, description, treatment | Disease information |
 | symptoms | ID, Name, Description | Symptom details |
+| symptomsdisease| ID,SymptomID,DiseaseID | to store the symptoms of the diseases and make it easier to query |
+| symptomsuser | ID,UserID,SymptomID | to store the symptoms of the user and make it easier to query later |
 
-### External APIs (if any) | واجهات برمجة التطبيقات
+
+
+### External APIs (if any) |
 
 | API | Purpose | Rate Limit |
 |-----|---------|------------|
 | Google Gemini AI | Medical chatbot | 15 RPM (free tier) |
 ---
 
-## 7. Educational Content | المحتوى التعليمي
+## 7. Educational Content | 
 
-<div class="arabic">
-هنا تكتب المحتوى التعليمي — ماذا يتعلم الطالب من هذا المشروع؟ كيف يتعلق بالمنهج؟
-</div>
-
-### Learning Objectives | أهداف التعلم
+### Learning Objectives | 
 
 At the end of this project, I am able to:
 
@@ -289,14 +282,14 @@ At the end of this project, I am able to:
 4. Integrate Google Gemini AI for medical guidance
 5. Implement appointment booking and user authentication
 
-### Cultural / Historical Context | السياق الثقافي / التاريخي
+### Cultural / Historical Context | 
 
 | Topic | Description |
 |-------|-------------|
 | Healthcare Access | Helping people get quick medical guidance from home |
 | Digital Health in Region | Connecting patients to local doctors and hospitals |
 
-### Curriculum Alignment | التوافق مع المنهج
+### Curriculum Alignment |  
 
 | Skill Area | What the Student Practices |
 |------------|---------------------------|
@@ -305,22 +298,19 @@ At the end of this project, I am able to:
 | Creativity | UI/UX design and chatbot conversation flow |
 | Collaboration | Modular team development and code organization |
 | Technical Writing | Documenting APIs, database schema, and project features |
+| DB Design | designing Database tables serving the buisness requirements of the apps |
 
 ---
 
-## 8. Marketing Plan | خطة تسويقية
+## 8. Marketing Plan | 
 
 > **Short version** — for full marketing plans, use the main Afro-Asian template.
 
-<div class="arabic">
-نسخة مختصرة — للخطط التسويقية الكاملة، استخدم القالب الرئيسي
-</div>
+### Target Audience | 
 
-### Target Audience | الجمهور المستهدف
-
-- **Primary**: Adults & Elderly ages 45–60
-- **Secondary**: Adults ages 31–45 and Parents with babies
-- **Tertiary**: Young adults ages 20–30 and Teenagers
+- **Primary**: Adults above 34
+- **Secondary**: Adults 20-30 and Parents with babies
+- **Tertiary**: Young adults 18-20 and Teenagers
 
 ### Platforms | المنصات
 
@@ -344,9 +334,6 @@ At the end of this project, I am able to:
 
 **Student Name**: Mohamed Ahmed Ali Zain
 **Project Title**: MedMind
-
-**Date**: 2026/9/10
-
 ---
 
 #### What is your project about? | عن ماذا يتحدث مشروعي؟
@@ -358,7 +345,7 @@ At the end of this project, I am able to:
 
 #### What problem does it solve? | ما المشكلة التي يحلها؟
 
-[many people get sick every day and they don't know what to do so they go to the doctor and waste time and money and they don't know if they're okay or not]
+Many people get sick every day and they don't know what to do so they go to the doctor and waste time and money and they don't know if they're okay or not.
 ---
 
 ### My Tech Stack | التقنيات المستخدمة
@@ -382,7 +369,7 @@ Draw or describe all the screens in your project:
 
 | Screen Name | What the user sees/does | How to get here |
 |-------------|------------------------|-----------------|
-| Home Page | Main services overview and AI chatbot | Opens on website launch |
+| Home Page | Main services overview and AI chatbot,also you can login or signup and if you are a doctor or hospital you can login and add your information | Opens on website launch |
 | Chatbot | 24/7 AI medical consultation & symptom check | Click Chatbot on Home page |
 | Doctors | Browse doctors, specializations, and prices | Click "Doctors" in navbar |
 | Hospitals | Browse hospitals and available care | Click "Hospitals" in navbar |
@@ -435,15 +422,9 @@ _______________________________________________
 3. If I had more time, I would add: Live video consultations with doctors and online payment.
 
 4. One thing I would do differently: Make Whole project have Ai Assisstant
----
 
-### Screenshot of My Project | لقطة شاشة من مشروعي
-
-![alt text](ScreenShots/home.png)
-
----
 
 <div class="session-footer">
-  <p>Techno Kids, Techno Future — Software Documentation Template</p>
+  <p>Techno Kids, Techno Future — Software Documentation</p>
   <p>Afro-Asian Tech Forum · Software Category · 2026</p>
 </div>

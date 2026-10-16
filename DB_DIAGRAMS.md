@@ -7,7 +7,6 @@ erDiagram
     users ||--o{ appointments : "has"
     users ||--o{ usersymptoms : "has"
     users ||--o{ symptomdiseases : "has"
-    users ||--o{ diseases : "treats"
     symptoms ||--o{ usersymptoms : "has"
     symptoms ||--o{ symptomdiseases : "has"
     diseases ||--o{ symptomdiseases : "has"
