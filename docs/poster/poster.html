@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MedMind Poster</title>
+<!-- Printed size: 1000 x 2000 mm, plus 5 mm extra on each edge for trimming. Build the PDF with: python docs/build.py poster -->
+<!-- Boxes with class="todo" are for the student to write. Replace the whole <span class="todo">…</span> with your words. -->
+<link rel="stylesheet" href="../assets/brand.css">
+<style>
+  @page { size: 1010mm 2010mm; margin: 0; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--paper); }
+  body { -webkit-print-color-adjust: exact; print-color-adjust: exact; font-family: var(--sans); color: var(--ink); }
+  .poster { position: relative; width: 1010mm; height: 2010mm; overflow: hidden; background: var(--paper);
+            background-image:
+              linear-gradient(rgba(17,51,83,0.035) 0.6mm, transparent 0.6mm),
+              linear-gradient(90deg, rgba(17,51,83,0.035) 0.6mm, transparent 0.6mm);
+            background-size: 20mm 20mm; }
+
+  /* ---------- hero (read from far away) ---------- */
+  .hero { position: absolute; left: 0; top: 0; width: 1010mm; height: 380mm; background: var(--ink); overflow: hidden; }
+  /* the slogan, repeated faintly; every second row starts half a phrase earlier so it reads as a pattern */
+  .hero .texture { position: absolute; inset: 0; padding: 8mm 0 0 18mm; color: var(--accent); opacity: 0.10;
+                   font-family: var(--display); font-weight: 600; font-size: 30mm; line-height: 1.38; white-space: nowrap; }
+  .hero .texture div:nth-child(even) { margin-left: -300mm; }
+  .hero .glow { position: absolute; right: 40mm; top: 0; width: 380mm; height: 380mm; border-radius: 50%;
+                background: radial-gradient(circle, rgba(79,191,186,0.42) 0%, rgba(47,95,152,0.16) 52%, rgba(47,95,152,0) 72%); }
+  .hero .mark { position: absolute; left: 685mm; top: 50mm; width: 280mm; height: 280mm; padding: 14mm; background: var(--paper); border-radius: 46mm;
+               box-shadow: 0 0 0 4mm rgba(79,191,186,0.35); }
+  .hero .text { position: absolute; left: 60mm; top: 62mm; width: 600mm; }
+  .hero .kicker { font-family: var(--mono); font-weight: 700; font-size: 14mm; letter-spacing: 0.22em; color: var(--warm-2); text-transform: uppercase; }
+  .hero h1 { font-family: var(--display); font-weight: 700; font-size: 84mm; line-height: 1; color: var(--paper);
+             margin: 16mm 0 14mm -2mm; letter-spacing: -0.02em; white-space: nowrap; }
+  .hero h1 .dot { color: var(--accent); }
+  .hero .tagline { font-family: var(--display); font-size: 40mm; line-height: 1.05; color: var(--accent); }
+  .hero .promise { font-size: 19mm; line-height: 1.32; color: var(--paper); opacity: 0.94; margin-top: 14mm; max-width: 560mm; }
+  .hero .todo { font-family: var(--sans); font-size: 15mm; line-height: 1.45; font-weight: 500; }
+
+  /* a row of "pixels" between the dark top and the light body */
+  .band { position: absolute; left: 0; top: 380mm; width: 1010mm; height: 20mm;
+          background:
+            linear-gradient(90deg, var(--accent) 50%, var(--ink) 50%) 0 0 / 20mm 10mm repeat-x,
+            linear-gradient(90deg, var(--ink) 50%, var(--accent) 50%) 0 10mm / 20mm 10mm repeat-x; }
+
+  /* ---------- body (read up close) ---------- */
+  .body { position: absolute; left: 35mm; top: 432mm; width: 940mm; }
+  h2 { font-family: var(--sans); font-weight: 700; font-size: 40mm; line-height: 1.05; color: var(--ink); margin-bottom: 10mm; letter-spacing: -0.02em; }
+  h2 .num { font-family: var(--display); font-weight: 400; font-size: 13mm; color: var(--accent-dark); letter-spacing: 0.08em; margin-right: 8mm; vertical-align: 0.45em; }
+  h2 .ar { font-size: 16mm; font-weight: 600; color: var(--ink-soft); margin-left: 6mm; vertical-align: 0.3em; }
+  h2 .todo { font-size: 17mm; font-weight: 500; vertical-align: 0.35em; letter-spacing: 0; }
+  section { margin-bottom: 24mm; }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 20mm; }
+  .card { background: var(--white); border: 0.8mm solid var(--line); border-radius: 6mm; padding: 10mm 14mm; }
+  .card.hot { border: 1.2mm solid var(--accent); background: #EAF7F6; }
+  .card h3 { font-size: 16mm; font-weight: 700; margin-bottom: 4mm; }
+  .card p { font-size: 11.5mm; line-height: 1.38; color: var(--ink-soft); }
+  .label { font-family: var(--mono); font-weight: 700; font-size: 9mm; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent-dark); margin-bottom: 4mm; }
+
+  /* two screenshots side by side, as big as the width allows */
+  .shots { display: grid; grid-template-columns: 1fr 1fr; gap: 18mm; align-items: start; }
+  .shot { border: 0.8mm solid rgba(17,51,83,0.25); border-radius: 5mm; overflow: hidden; background: #fff; }
+  .shot img { display: block; width: 100%; object-fit: cover; object-position: top left; }
+  .shots .shot img { height: 560mm; object-position: center top; }
+  .caption { font-size: 10mm; color: var(--ink-soft); margin-top: 5mm; line-height: 1.35; }
+  ul.features { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); column-gap: 16mm; row-gap: 9mm; margin-top: 16mm; }
+  ul.features li { display: flex; gap: 6mm; align-items: flex-start; }
+  ul.features .dot { flex: none; width: 7mm; height: 7mm; margin-top: 3.5mm; background: var(--accent); }
+  ul.features strong { font-size: 13mm; font-weight: 700; display: block; }
+  ul.features span.d { font-size: 10.5mm; color: var(--ink-soft); line-height: 1.3; display: block; margin-top: 1mm; }
+
+  /* the columns follow each diagram's shape (flow 16:9, schema about 5:4), so both come out the same height */
+  .how { display: grid; grid-template-columns: 1.78fr 1.24fr; gap: 16mm; }
+  .how .card { padding: 11mm 12mm 12mm; }
+  .how img { display: block; width: 100%; border-radius: 3mm; }
+
+  .foot { position: absolute; left: 35mm; top: 1830mm; width: 940mm; border-top: 0.8mm solid var(--ink);
+          padding-top: 10mm; display: flex; justify-content: space-between; align-items: flex-start; }
+  .chips { display: flex; gap: 4mm; margin: 4mm 0 9mm; }
+  .chips span { font-family: var(--mono); font-size: 10mm; border: 0.6mm solid var(--ink); padding: 1.5mm 4mm; background: #fff; }
+  .who { font-size: 15mm; font-weight: 700; }
+  .who .todo { font-size: 11mm; font-weight: 500; }
+  .meta { font-size: 11mm; margin-top: 3mm; color: var(--ink-soft); }
+  .meta .todo { font-size: 10mm; }
+  .note { font-size: 10mm; color: var(--accent-dark); margin-top: 6mm; font-family: var(--mono); }
+  .qr { text-align: center; }
+  .qr .code { background: #fff; padding: 4mm; border: 0.8mm solid var(--ink); display: inline-block; }
+  .qr img { display: block; width: 120mm; height: 120mm; image-rendering: pixelated; }
+  .qr p { font-family: var(--mono); font-size: 8.5mm; color: var(--ink-soft); margin-top: 4mm; line-height: 1.4; }
+  .qr p b { color: var(--ink); }
+</style>
+</head>
+<body>
+<div class="poster">
+
+  <div class="hero">
+    <div class="texture">
+      <div>YOUR HEALTH • OUR PRIORITY • YOUR HEALTH • OUR PRIORITY • YOUR HEALTH • OUR PRIORITY •</div>
+      <div>YOUR HEALTH • OUR PRIORITY • YOUR HEALTH • OUR PRIORITY • YOUR HEALTH • OUR PRIORITY •</div>
+      <div>YOUR HEALTH • OUR PRIORITY • YOUR HEALTH • OUR PRIORITY • YOUR HEALTH • OUR PRIORITY •</div>
+      <div>YOUR HEALTH • OUR PRIORITY • YOUR HEALTH • OUR PRIORITY • YOUR HEALTH • OUR PRIORITY •</div>
+      <div>YOUR HEALTH • OUR PRIORITY • YOUR HEALTH • OUR PRIORITY • YOUR HEALTH • OUR PRIORITY •</div>
+      <div>YOUR HEALTH • OUR PRIORITY • YOUR HEALTH • OUR PRIORITY • YOUR HEALTH • OUR PRIORITY •</div>
+      <div>YOUR HEALTH • OUR PRIORITY • YOUR HEALTH • OUR PRIORITY • YOUR HEALTH • OUR PRIORITY •</div>
+      <div>YOUR HEALTH • OUR PRIORITY • YOUR HEALTH • OUR PRIORITY • YOUR HEALTH • OUR PRIORITY •</div>
+      <div>YOUR HEALTH • OUR PRIORITY • YOUR HEALTH • OUR PRIORITY • YOUR HEALTH • OUR PRIORITY •</div>
+    </div>
+    <div class="glow"></div>
+    <img class="mark" src="../assets/mark.svg" alt="MedMind mark">
+    <div class="text">
+      <div class="kicker">Medical website · Egypt</div>
+      <h1>Med<span class="dot">Mind</span></h1>
+      <div class="tagline">Your Health • Our Priority</div>
+      <p class="promise">Check on your health with an AI assistant, learn about diseases, and find and book a doctor or hospital, without leaving home.</p>
+    </div>
+  </div>
+  <div class="band"></div>
+
+  <div class="body">
+    <section>
+      <h2><span class="num">01 · WHY</span>People get sick and don’t know what to do.</h2>
+      <div class="two">
+        <div class="card">
+          <div class="label">The problem <span class="ar">المشكلة</span></div>
+          <h3>Sick, and not sure what to do</h3>
+          <p>Many people feel unwell and can’t tell if it is serious. They go to a doctor, lose time and money, and often don’t know which specialty they needed.</p>
+        </div>
+        <div class="card hot">
+          <div class="label">Our solution <span class="ar">الحل</span></div>
+          <h3>Check, learn, then book</h3>
+          <p>MedMind lets people check their symptoms, read about diseases and ask an AI assistant, then book the right doctor or hospital online.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2><span class="num">02 · SEE IT</span>From a symptom to a booking.<span class="ar">من العَرَض إلى الموعد</span></h2>
+      <div class="shots">
+        <div>
+          <div class="shot"><img src="../screenshots/poster-symptom-checker.jpg" alt="Symptom checker screen"></div>
+          <p class="caption">Symptom checker: four symptoms ticked (cough, fatigue, fever, headache). Seasonal Flu has all 4, so it comes first, then COVID-19 with 3.</p>
+        </div>
+        <div>
+          <div class="shot"><img src="../screenshots/poster-chat.jpg" alt="AI assistant chat screen"></div>
+          <p class="caption">AI chat: a signed-in patient asks about a headache and a mild fever. Gemini answers in plain words and says when to see a doctor.</p>
+        </div>
+      </div>
+      <ul class="features">
+        <li><span class="dot"></span><div><strong>A disease library</strong><span class="d">20 diseases, each with an overview, a treatment and its symptoms.</span></div></li>
+        <li><span class="dot"></span><div><strong>A symptom checker</strong><span class="d">Tick any of 31 symptoms. Diseases come back ranked by how many match.</span></div></li>
+        <li><span class="dot"></span><div><strong>Doctors and hospitals</strong><span class="d">15 doctors in 15 specialties and 10 hospitals, with place and fee.</span></div></li>
+        <li><span class="dot"></span><div><strong>Book in one step</strong><span class="d">Patients pick a date and time. The doctor or hospital confirms it.</span></div></li>
+        <li><span class="dot"></span><div><strong>An AI assistant</strong><span class="d">Signed-in users ask Gemini in their own words, up to 1000 characters.</span></div></li>
+        <li><span class="dot"></span><div><strong>Admin tools</strong><span class="d">Approve or reject new doctors and hospitals. Add, edit and delete diseases and symptoms.</span></div></li>
+      </ul>
+    </section>
+
+    <section>
+      <h2><span class="num">03 · HOW</span>Plain JavaScript, plain SQL.<span class="ar">جافاسكريبت و SQL ببساطة</span></h2>
+      <div class="how">
+        <div class="card">
+          <div class="label">How a booking moves</div>
+          <img src="../diagrams/flow.png" alt="Booking flow diagram">
+        </div>
+        <div class="card">
+          <div class="label">What the database keeps</div>
+          <img src="../diagrams/db-schema.png" alt="Database schema diagram">
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="foot">
+    <div>
+      <div class="label">Built with</div>
+      <div class="chips"><span>JavaScript</span><span>Node.js</span><span>Express</span><span>SQLite</span><span>HTML + CSS</span><span>Gemini</span></div>
+      <div class="who">Mohamed Ahmed Ali Zain · Techno Future KFS</div>
+      <div class="meta">Afro-Asian Forum for Innovation and Technology · Aswan Finals 2026 · 
+med.mind.ai.2026@gmail.com</div>
+      <div class="note">A school demo, not medical advice. Passwords are plain text: no real patient data.</div>
+    </div>
+    <div class="qr">
+      <div class="code"><img src="../assets/qr-app.svg" alt="QR code for medmind.example.com"></div>
+      <p>Scan to try it<br><b>medmind.example.com</b></p>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

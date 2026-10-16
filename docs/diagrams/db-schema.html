@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Database Schema</title>
+<!-- Made by make_schema.py. Edit the look here; edit the layout with POSITIONS in make_schema.py. -->
+<link rel="stylesheet" href="../assets/brand.css">
+<style>
+  html, body { margin: 0; background: var(--white); }
+  .canvas { position: relative; width: 1240px; height: 1002px; font-family: var(--mono); color: var(--ink); }
+  svg { position: absolute; inset: 0; }
+  svg path { fill: none; stroke: var(--accent-dark); stroke-width: 2.5; }
+  .table { position: absolute; background: #fff; border: 2.5px solid var(--ink); border-radius: 12px; overflow: hidden; }
+  .head { height: 52px; box-sizing: border-box; padding: 0 18px; display: flex; align-items: center;
+          background: var(--ink); color: #fff; font: 700 21px var(--mono); }
+  .col { height: 30px; box-sizing: border-box; padding: 0 18px; display: flex; justify-content: space-between; align-items: center;
+         font-size: 16px; border-top: 1px solid rgba(17,51,83,0.07); }
+  .col em { font-style: normal; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; color: var(--ink-soft); }
+  .col.pk span { font-weight: 700; }
+  .col.pk em { color: var(--warm); }
+  .col.fk span, .col.fk em { color: var(--accent-dark); font-weight: 700; }
+  .col.ts { color: var(--ink-soft); font-size: 13px; background: #F6F9FB; }
+  .legend { position: absolute; left: 40px; bottom: 40px; right: 40px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .legend div { background: #F6F9FB; border: 2px solid rgba(17,51,83,0.10); border-radius: 12px; padding: 14px 18px; }
+  .legend b { display: block; font-size: 13px; letter-spacing: 0.14em; color: var(--ink-soft); margin-bottom: 6px; }
+  .legend span { font-size: 16px; }
+  .key { position: absolute; left: 40px; bottom: 150px; font-size: 15px; color: var(--ink-soft); }
+  .key i { display: inline-block; width: 26px; height: 3px; background: var(--accent-dark); vertical-align: middle; margin-right: 8px; }
+</style>
+</head>
+<body>
+<div class="canvas">
+<svg width="1240" height="1002">
+  <defs>
+    <marker id="pk" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1F8A86" stroke="none"/></marker>
+    <marker id="fk" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6"><circle cx="5" cy="5" r="4" fill="#fff" stroke="#1F8A86" stroke-width="2"/></marker>
+  </defs>
+<path d="M450,107 C410,107 420,107 380,107" marker-start="url(#fk)" marker-end="url(#pk)"/>
+<path d="M790,137 C830,137 820,107 860,107" marker-start="url(#fk)" marker-end="url(#pk)"/>
+<path d="M450,397 C410,397 420,367 380,367" marker-start="url(#fk)" marker-end="url(#pk)"/>
+<path d="M450,427 C410,427 420,367 380,367" marker-start="url(#fk)" marker-end="url(#pk)"/>
+</svg>
+<div class="table" style="left:40px;top:300px;width:340px"><div class="head">users</div><div class="col pk"><span>ID</span><em>PK</em></div><div class="col "><span>Name</span><em></em></div><div class="col "><span>Email</span><em>UNIQUE</em></div><div class="col "><span>Password</span><em></em></div><div class="col "><span>Age</span><em></em></div><div class="col "><span>Phone</span><em></em></div><div class="col "><span>Role</span><em>CHECK</em></div><div class="col "><span>Specialization</span><em></em></div><div class="col "><span>Location</span><em></em></div><div class="col "><span>Cost</span><em></em></div><div class="col "><span>About</span><em></em></div><div class="col "><span>Img</span><em></em></div><div class="col "><span>Services</span><em></em></div><div class="col "><span>ApprovalStatus</span><em>CHECK</em></div><div class="col ts"><span></span></div></div>
+<div class="table" style="left:40px;top:40px;width:340px"><div class="head">symptoms</div><div class="col pk"><span>ID</span><em>PK</em></div><div class="col "><span>Name</span><em></em></div><div class="col "><span>Description</span><em></em></div><div class="col ts"><span></span></div></div>
+<div class="table" style="left:860px;top:40px;width:340px"><div class="head">diseases</div><div class="col pk"><span>ID</span><em>PK</em></div><div class="col "><span>Name</span><em></em></div><div class="col "><span>Description</span><em></em></div><div class="col "><span>Treatment</span><em></em></div><div class="col ts"><span></span></div></div>
+<div class="table" style="left:450px;top:40px;width:340px"><div class="head">symptomdiseases</div><div class="col fk"><span>SymptomID</span><em>FK</em></div><div class="col fk"><span>DiseaseID</span><em>FK</em></div><div class="col ts"><span>PRIMARY KEY (SymptomID, DiseaseID)</span></div></div>
+<div class="table" style="left:450px;top:300px;width:340px"><div class="head">appointments</div><div class="col pk"><span>ID</span><em>PK</em></div><div class="col fk"><span>UserID</span><em>FK</em></div><div class="col fk"><span>ProviderID</span><em>FK</em></div><div class="col "><span>AppointmentDate</span><em></em></div><div class="col "><span>Status</span><em>CHECK</em></div><div class="col ts"><span></span></div></div>
+<div class="key"><i></i>each line goes from a foreign key (○) to the id it points at (▶)</div>
+<div class="legend">
+  <div><b>USERS.ROLE</b><span>Patient · Doctor · Hospital · Admin</span></div>
+  <div><b>USERS.APPROVALSTATUS</b><span>Pending · Approved · Rejected</span></div>
+  <div><b>APPOINTMENTS.STATUS</b><span>Pending · Confirmed · Cancelled</span></div>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MedMind Page Access</title>
+<link rel="stylesheet" href="../assets/brand.css">
+<style>
+  html, body { margin: 0; background: var(--white); }
+  .canvas { width: 1600px; height: 900px; box-sizing: border-box; padding: 40px; display: grid;
+            grid-template-columns: 500px 1fr; gap: 44px; font-family: var(--sans); color: var(--ink); }
+  .lane { font: 700 14px var(--mono); letter-spacing: 0.16em; color: var(--ink-soft); margin-bottom: 18px; }
+  .steps { display: flex; flex-direction: column; gap: 0; }
+  .step { background: #fff; border: 2.5px solid var(--ink); border-radius: 12px; padding: 18px 22px; }
+  .step.hot { border-color: var(--accent); background: #EAF7F6; }
+  .chip { display: inline-block; font: 700 13px var(--mono); letter-spacing: 0.12em; color: var(--ink-soft);
+          border: 1.5px solid var(--ink-soft); border-radius: 5px; padding: 2px 8px; margin-bottom: 10px; }
+  .step.hot .chip { background: var(--accent-dark); border-color: var(--accent-dark); color: #fff; }
+  .step h3 { margin: 0 0 6px; font-size: 25px; font-weight: 600; }
+  .step p { margin: 0; font: 400 16px/1.45 var(--mono); color: var(--ink-soft); }
+  .arrow { height: 44px; display: flex; justify-content: center; }
+  .arrow svg { display: block; }
+  .note { margin-top: 26px; font: 500 16px/1.5 var(--mono); color: var(--ink-soft); border-left: 4px solid var(--accent); padding-left: 14px; }
+
+  table { width: 100%; border-collapse: separate; border-spacing: 0; background: #F6F9FB;
+          border: 2px solid rgba(17,51,83,0.10); border-radius: 18px; overflow: hidden; }
+  th, td { padding: 0 18px; height: 45px; border-bottom: 1.5px solid rgba(17,51,83,0.08); }
+  th { font: 700 15px var(--mono); letter-spacing: 0.1em; text-align: center; color: #fff; background: var(--ink); height: 66px; }
+  th:first-child { text-align: left; }
+  th small { display: block; font-weight: 400; letter-spacing: 0; opacity: 0.7; margin-top: 2px; }
+  td { text-align: center; font-size: 24px; }
+  td:first-child { text-align: left; font: 600 20px var(--sans); }
+  td:first-child span { display: inline-block; width: 34px; }
+  td code { font: 400 14px var(--mono); color: var(--ink-soft); margin-left: 8px; }
+  tr.group td { height: 30px; background: #fff; font: 700 13px var(--mono); letter-spacing: 0.16em; color: var(--accent-dark); text-align: left; }
+  .yes { color: #16673A; font-weight: 700; }
+  .no { color: rgba(17,51,83,0.22); }
+  tr:last-child td { border-bottom: 0; }
+</style>
+</head>
+<body>
+<div class="canvas">
+  <div>
+    <div class="lane">HOW THE MENU IS BUILT</div>
+    <div class="steps">
+      <div class="step">
+        <span class="chip">EVERY PAGE</span>
+        <h3>loadHeader() runs first</h3>
+        <p>components/Header/header.js<br>draws the same menu on every page.</p>
+      </div>
+      <div class="arrow"><svg width="20" height="44"><line x1="10" y1="0" x2="10" y2="34" stroke="#113353" stroke-width="2.5"/><path d="M2,32 L10,44 L18,32 z" fill="#113353"/></svg></div>
+      <div class="step">
+        <span class="chip">LOCALSTORAGE</span>
+        <h3>Who is signed in?</h3>
+        <p>getCurrentUser()<br>null, or { ID, Name, Role, … }</p>
+      </div>
+      <div class="arrow"><svg width="20" height="44"><line x1="10" y1="0" x2="10" y2="34" stroke="#113353" stroke-width="2.5"/><path d="M2,32 L10,44 L18,32 z" fill="#113353"/></svg></div>
+      <div class="step hot">
+        <span class="chip">HIDE, DON'T REFUSE</span>
+        <h3>Only usable links show</h3>
+        <p>Chat needs a sign-in. Book now<br>shows for patients only (canBook).</p>
+      </div>
+    </div>
+    <div class="note">Chat, booking and profile start with requireSignIn(), which sends a visitor to the sign-in page. Booking also sends anyone who is not a patient back home.</div>
+  </div>
+
+  <div>
+    <div class="lane">WHO SEES WHICH PAGE</div>
+    <table>
+      <tr><th>Page</th><th>Visitor<small>not signed in</small></th><th>Patient</th><th>Doctor / Hospital<small>once approved</small></th><th>Admin</th></tr>
+      <tr class="group"><td colspan="5">EVERYONE</td></tr>
+      <tr><td><span>🏠</span>Home</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+      <tr><td><span>📚</span>Diseases · one disease</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+      <tr><td><span>🩺</span>Symptom checker</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+      <tr><td><span>👨‍⚕️</span>Doctors · <span>🏥</span>Hospitals</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+      <tr><td><span>ℹ️</span>About</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+      <tr class="group"><td colspan="5">VISITORS ONLY</td></tr>
+      <tr><td><span>🔐</span>Sign in · Sign up</td><td class="yes">✓</td><td class="no">—</td><td class="no">—</td><td class="no">—</td></tr>
+      <tr class="group"><td colspan="5">SIGNED IN</td></tr>
+      <tr><td><span>💬</span>Chat with the AI</td><td class="no">—</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+      <tr><td><span>👤</span>My profile · password</td><td class="no">—</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+      <tr class="group"><td colspan="5">ONE ROLE ONLY</td></tr>
+      <tr><td><span>📅</span>Book · my bookings</td><td class="no">—</td><td class="yes">✓</td><td class="no">—</td><td class="no">—</td></tr>
+      <tr><td><span>📝</span>My listing · who booked me</td><td class="no">—</td><td class="no">—</td><td class="yes">✓</td><td class="no">—</td></tr>
+      <tr><td><span>✅</span>Approve · reject accounts</td><td class="no">—</td><td class="no">—</td><td class="no">—</td><td class="yes">✓</td></tr>
+      <tr><td><span>🗂️</span>Edit diseases · symptoms</td><td class="no">—</td><td class="no">—</td><td class="no">—</td><td class="yes">✓</td></tr>
+    </table>
+  </div>
+</div>
+</body>
+</html>

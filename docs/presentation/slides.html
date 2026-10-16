@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MedMind Slides</title>
+<!-- 10 slides, 1280 x 720 each. Build the PDF with: python docs/build.py slides -->
+<!-- Boxes with class="todo" are for the student to write. Replace the whole <span class="todo">…</span> with your words. -->
+<link rel="stylesheet" href="../assets/brand.css">
+<style>
+  @page { size: 1280px 720px; margin: 0; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #555; }
+  body { -webkit-print-color-adjust: exact; print-color-adjust: exact; font-family: var(--sans); color: var(--ink); }
+  .slide { position: relative; width: 1280px; height: 720px; overflow: hidden; padding: 56px 72px; break-after: page;
+           background: var(--paper);
+           background-image: linear-gradient(rgba(17,51,83,0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(17,51,83,0.035) 1px, transparent 1px);
+           background-size: 32px 32px; }
+  .slide.dark { background: var(--ink); color: var(--paper); }
+  .slide.hot { background: linear-gradient(120deg, var(--warm), var(--warm-2)); color: #fff; }
+
+  .kicker { font: 700 15px var(--mono); letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent-dark); margin-bottom: 14px; }
+  .dark .kicker { color: var(--warm-2); }
+  .hot .kicker { color: var(--ink); }
+  .kicker .ar { letter-spacing: 0; margin-left: 10px; font-size: 17px; }
+  h2 { font-size: 46px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 34px; }
+  h2 .todo { font-size: 26px; font-weight: 500; letter-spacing: 0; }
+  .foot { position: absolute; left: 72px; right: 72px; bottom: 30px; display: flex; justify-content: space-between;
+          font: 500 13px var(--mono); color: var(--ink-soft); }
+  .dark .foot { color: rgba(242,246,249,0.6); }
+  .hot .foot { color: rgba(17,51,83,0.7); }
+  .foot b { font-family: var(--display); font-weight: 400; }
+
+  /* the slogan, repeated faintly; every second row starts half a phrase earlier */
+  .texture { position: absolute; inset: 0; padding: 14px 0 0 30px; color: var(--accent); opacity: 0.09;
+             font-family: var(--display); font-weight: 600; font-size: 56px; line-height: 1.4; white-space: nowrap; }
+  .texture div:nth-child(even) { margin-left: -540px; }
+  .glow { position: absolute; width: 560px; height: 560px; border-radius: 50%;
+          background: radial-gradient(circle, rgba(79,191,186,0.40) 0%, rgba(47,95,152,0.14) 52%, rgba(47,95,152,0) 72%); }
+  .tile { position: absolute; background: var(--paper); border-radius: 72px; padding: 22px; box-shadow: 0 0 0 7px rgba(79,191,186,0.35); }
+  .tile img { display: block; width: 100%; height: 100%; }
+
+  .title-text { position: absolute; left: 72px; top: 150px; width: 640px; }
+  .wordmark { font-family: var(--display); font-weight: 700; font-size: 104px; line-height: 1; margin: 18px 0 26px -4px; color: var(--paper); white-space: nowrap; }
+  .wordmark .dot { color: var(--accent); }
+  .tagline { margin-bottom: 18px; font: 600 34px var(--display); color: var(--accent); }
+  .promise { font-size: 21px; line-height: 1.45; color: var(--paper); opacity: 0.92; max-width: 600px; }
+  .todo { font-size: 20px; line-height: 1.5; }
+
+  .cards { display: grid; gap: 22px; }
+  .cards.three { grid-template-columns: repeat(3, 1fr); }
+  .cards.four { grid-template-columns: 1fr 1fr; }
+  .card { background: #fff; border: 1.5px solid var(--line); border-radius: 14px; padding: 26px 28px; min-height: 200px; }
+  .cards.three .card { min-height: 330px; }
+  .cards.three .card h3 { font-size: 28px; margin-bottom: 14px; }
+  .cards.three .card p { font-size: 22px; }
+  .dark .card { background: var(--ink-2); border-color: rgba(242,246,249,0.12); }
+  .card h3 { font-size: 23px; font-weight: 700; margin-bottom: 10px; }
+  .card p { font-size: 18px; line-height: 1.45; color: var(--ink-soft); }
+  .dark .card p { color: rgba(242,246,249,0.75); }
+  .card .num { font: 400 15px var(--display); color: var(--accent-dark); margin-bottom: 12px; display: block; }
+
+  .steps { display: flex; align-items: center; gap: 22px; margin-top: 10px; }
+  .step { flex: 1; background: var(--paper); color: var(--ink); border-radius: 14px; padding: 26px 26px 30px; min-height: 210px; }
+  .step .n { font: 700 54px var(--display); color: var(--accent); line-height: 1; }
+  .step h3 { font-size: 27px; margin: 14px 0 8px; }
+  .step p { font-size: 18px; line-height: 1.45; color: var(--ink-soft); }
+  .steps .arrow { font: 700 40px var(--mono); color: var(--ink); }
+
+  .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+  .shot { border: 1.5px solid rgba(17,51,83,0.25); border-radius: 10px; overflow: hidden; background: #fff; }
+  .shot img { display: block; width: 100%; height: 330px; object-fit: cover; object-position: 30% top; }
+  .cap { font-size: 16px; color: var(--ink-soft); margin-top: 12px; line-height: 1.4; }
+  .dark .cap { color: rgba(242,246,249,0.75); }
+
+  .demo-big { display: grid; grid-template-columns: 380px 1fr; gap: 40px; align-items: start; }
+  .demo-big .shot img { height: 520px; object-position: 25% top; }
+  .points { list-style: none; display: grid; gap: 18px; margin-top: 8px; }
+  .points li { display: flex; gap: 14px; font-size: 19px; line-height: 1.4; }
+  .points li::before { content: ""; flex: none; width: 12px; height: 12px; margin-top: 8px; background: var(--accent); }
+  .points b { display: block; font-size: 21px; }
+  .points span { color: rgba(242,246,249,0.75); }
+
+  .diagram { background: #fff; border: 1.5px solid var(--line); border-radius: 14px; padding: 14px; }
+  .diagram img { display: block; width: 100%; }
+
+  .built { display: grid; grid-template-columns: 790px 1fr; gap: 40px; align-items: start; }
+  .stats { display: grid; gap: 20px; }
+  .stat { display: flex; gap: 18px; align-items: baseline; border-top: 2px solid var(--ink); padding-top: 10px; }
+  .stat b { font: 700 50px var(--display); color: var(--accent); min-width: 74px; }
+  .stat span { font-size: 17px; color: var(--ink-soft); line-height: 1.35; }
+  .under { font-size: 17px; color: var(--ink-soft); margin-top: 20px; }
+
+
+  .thanks { position: absolute; left: 72px; top: 110px; width: 700px; }
+  .thanks h1 { font-size: 92px; font-weight: 700; letter-spacing: -0.03em; line-height: 1; margin-bottom: 26px; }
+  .thanks .line { margin-bottom: 10px; font-size: 20px; }
+  .qrrow { display: flex; gap: 24px; align-items: center; margin-top: 36px; }
+  .qrrow .code { background: #fff; padding: 10px; }
+  .qrrow img { display: block; width: 150px; height: 150px; image-rendering: pixelated; }
+  .qrrow p { font: 500 17px/1.6 var(--mono); }
+  .qrrow b { color: var(--warm-2); }
+  .disclaimer { margin-top: 30px; font: 500 15px var(--mono); color: var(--accent); }
+</style>
+</head>
+<body>
+
+<!-- 1 · Title -->
+<section class="slide dark">
+  <div class="texture">
+    <div>YOUR HEALTH • OUR PRIORITY • YOUR HEALTH • OUR PRIORITY •</div>
+    <div>YOUR HEALTH • OUR PRIORITY • YOUR HEALTH • OUR PRIORITY •</div>
+    <div>YOUR HEALTH • OUR PRIORITY • YOUR HEALTH • OUR PRIORITY •</div>
+    <div>YOUR HEALTH • OUR PRIORITY • YOUR HEALTH • OUR PRIORITY •</div>
+    <div>YOUR HEALTH • OUR PRIORITY • YOUR HEALTH • OUR PRIORITY •</div>
+    <div>YOUR HEALTH • OUR PRIORITY • YOUR HEALTH • OUR PRIORITY •</div>
+    <div>YOUR HEALTH • OUR PRIORITY • YOUR HEALTH • OUR PRIORITY •</div>
+    <div>YOUR HEALTH • OUR PRIORITY • YOUR HEALTH • OUR PRIORITY •</div>
+    <div>YOUR HEALTH • OUR PRIORITY • YOUR HEALTH • OUR PRIORITY •</div>
+  </div>
+  <div class="glow" style="right: 20px; top: 70px;"></div>
+  <div class="tile" style="left: 830px; top: 170px; width: 360px; height: 360px;"><img src="../assets/mark.svg" alt="MedMind mark"></div>
+  <div class="title-text">
+    <div class="kicker">Medical website · Egypt</div>
+    <div class="wordmark">Med<span class="dot">Mind</span></div>
+    <div class="tagline">Your Health • Our Priority</div>
+    <div class="promise">Check on your health with an AI assistant, learn about diseases, and find and book a doctor or hospital, without leaving home.</div>
+  </div>
+  <div class="foot"><span><b>MedMind</b> · Afro-Asian Forum for Innovation and Technology · Aswan Finals 2026</span><span>1</span></div>
+</section>
+
+<!-- 2 · The problem -->
+<section class="slide">
+  <div class="kicker">01 · The problem <span class="ar">المشكلة</span></div>
+  <h2>People get sick and don’t know what to do.</h2>
+  <div class="cards three">
+    <div class="card"><h3>Is it serious?</h3><p>People can’t tell whether their symptoms point to a disease, so they worry, or they wait too long.</p></div>
+    <div class="card"><h3>Which doctor?</h3><p>Even when they decide to go, they don’t know which specialty they need, and lose time and money.</p></div>
+    <div class="card"><h3>Far from home</h3><p>When they travel, they don’t know where the nearest doctor or hospital is.</p></div>
+  </div>
+  <div class="foot"><span><b>MedMind</b> · Medical website</span><span>2</span></div>
+</section>
+
+<!-- 3 · Who it's for -->
+<section class="slide dark">
+  <div class="kicker">Who it's for <span class="ar">لمن هذا التطبيق</span></div>
+  <h2>For anyone who worries about their health.</h2>
+  <div class="cards four">
+    <div class="card"><span class="num">01</span><h3>Adults over 34</h3><p>The main group: a regular health check, and a doctor they can book.</p></div>
+    <div class="card"><span class="num">02</span><h3>Adults 20–30</h3><p>Quick answers about a symptom before deciding to see a doctor.</p></div>
+    <div class="card"><span class="num">03</span><h3>Parents with babies</h3><p>Fast guidance on whether a child needs a doctor or a hospital, and which one.</p></div>
+    <div class="card"><span class="num">04</span><h3>Teens and young adults</h3><p>Easy-to-read information about diseases and their symptoms.</p></div>
+  </div>
+  <div class="foot"><span><b>MedMind</b> · Medical website</span><span>3</span></div>
+</section>
+
+<!-- 4 · Our solution -->
+<section class="slide hot">
+  <div class="kicker">Our solution <span class="ar">الحل</span></div>
+  <h2>Check. Find. Book.</h2>
+  <div class="steps">
+    <div class="step"><div class="n">1</div><h3>Check</h3><p>Tick your symptoms. See which of 20 diseases match best, and read about each one.</p></div>
+    <div class="arrow">→</div>
+    <div class="step"><div class="n">2</div><h3>Find</h3><p>A doctor in one of 15 specialties, or one of 10 hospitals, with place and fee.</p></div>
+    <div class="arrow">→</div>
+    <div class="step"><div class="n">3</div><h3>Book</h3><p>Pick a date and time. The doctor or hospital confirms it on their profile.</p></div>
+  </div>
+  <div class="foot"><span><b>MedMind</b> · Medical website</span><span>4</span></div>
+</section>
+
+<!-- 5 · Demo: diseases -->
+<section class="slide">
+  <div class="kicker">02 · Demo <span class="ar">عرض</span></div>
+  <h2>Read about a disease.</h2>
+  <div class="pair">
+    <div><div class="shot"><img src="../screenshots/diseases.jpg" alt="Diseases screen"></div><p class="cap">Diseases: all 20, A to Z, each with a short overview. Anyone can browse.</p></div>
+    <div><div class="shot"><img src="../screenshots/disease.jpg" alt="One disease screen"></div><p class="cap">One disease: overview, treatment and its symptoms. Seasonal Flu has 7.</p></div>
+  </div>
+  <div class="foot"><span><b>MedMind</b> · Medical website</span><span>5</span></div>
+</section>
+
+<!-- 6 · Demo: symptom checker -->
+<section class="slide dark">
+  <div class="demo-big">
+    <div>
+      <div class="kicker">02 · Demo <span class="ar">عرض</span></div>
+      <h2>Check your symptoms.</h2>
+      <ul class="points">
+        <li><div><b>Tick what you feel</b><span>Any of the 31 symptoms in the list.</span></div></li>
+        <li><div><b>See the best match first</b><span>Each disease shows how many of your symptoms it has.</span></div></li>
+        <li><div><b>Learn more</b><span>One click opens the disease page.</span></div></li>
+        <li><div><b>Ask the assistant</b><span>Signed in? One button sends your symptoms to the chat.</span></div></li>
+      </ul>
+    </div>
+    <div class="shot"><img src="../screenshots/symptom-checker.jpg" alt="Symptom checker screen" style="object-position: center 85%;"></div>
+  </div>
+  <div class="foot"><span><b>MedMind</b> · Medical website</span><span>6</span></div>
+</section>
+
+<!-- 7 · Demo: chat and booking -->
+<section class="slide">
+  <div class="kicker">02 · Demo <span class="ar">عرض</span></div>
+  <h2>Ask, then book.</h2>
+  <div class="pair">
+    <div><div class="shot"><img src="../screenshots/chat.jpg" alt="AI assistant chat screen"></div><p class="cap">Chat: Gemini answers in plain words and says when to see a doctor.</p></div>
+    <div><div class="shot"><img src="../screenshots/booking.jpg" alt="Booking screen"></div><p class="cap">Booking: a patient picks a date and time. It must be in the future.</p></div>
+  </div>
+  <div class="foot"><span><b>MedMind</b> · Medical website</span><span>7</span></div>
+</section>
+
+<!-- 8 · How it works -->
+<section class="slide">
+  <div class="kicker">03 · How it works <span class="ar">كيف يعمل</span></div>
+  <h2 style="margin-bottom: 20px;">Four checks, then one new row.</h2>
+  <div class="built" style="grid-template-columns: 820px 1fr;">
+    <div class="diagram"><img src="../diagrams/flow.png" alt="Booking flow diagram"></div>
+    <div class="stats">
+      <div class="stat"><b>4</b><span>checks before a booking is saved</span></div>
+      <div class="stat"><b>3</b><span>booking statuses: Pending, Confirmed, Cancelled</span></div>
+      <div class="stat"><b>1</b><span>SQL query ranks the symptom matches</span></div>
+    </div>
+  </div>
+  <div class="foot"><span><b>MedMind</b> · Medical website</span><span>8</span></div>
+</section>
+
+<!-- 9 · How it's built -->
+<section class="slide">
+  <div class="kicker">03 · How it's built <span class="ar">كيف بُني</span></div>
+  <h2 style="margin-bottom: 22px;">Built so a beginner can read every line.</h2>
+  <div class="built">
+    <div class="diagram"><img src="../diagrams/page-access.png" alt="Page access by role"></div>
+    <div class="stats">
+      <div class="stat"><b>1</b><span>library for the server: Express</span></div>
+      <div class="stat"><b>0</b><span>classes: plain functions, ifs and loops</span></div>
+      <div class="stat"><b>28</b><span>server routes, one small file per topic</span></div>
+      <div class="stat"><b>5</b><span>SQLite tables, from users to appointments</span></div>
+    </div>
+  </div>
+  <p class="under" style="margin-top: 8px;">Node.js + Express for the server · SQLite built into Node · plain HTML, CSS and JavaScript pages, no build step · Gemini for the chat.</p>
+  <div class="foot"><span><b>MedMind</b> · Medical website</span><span>9</span></div>
+</section>
+
+<!-- 10 · Thank you -->
+<section class="slide dark">
+  <div class="glow" style="right: 20px; top: 70px;"></div>
+  <div class="tile" style="left: 860px; top: 190px; width: 320px; height: 320px;"><img src="../assets/mark.svg" alt="MedMind mark"></div>
+  <div class="thanks">
+    <h1>Thank you.</h1>
+    <div class="line">Mohamed Ahmed Ali Zain · Techno Future KFS</div>
+    <div class="line">Afro-Asian Forum for Innovation and Technology · Aswan Finals 2026</div>
+    <div class="line">
+med.mind.ai.2026@gmail.com</div>
+    <div class="qrrow">
+      <div class="code"><img src="../assets/qr-app.svg" alt="QR code for medmind.example.com"></div>
+      <p>Scan to try the app:<br><b>medmind.example.com</b></p>
+    </div>
+    <p class="disclaimer">A school demo, not medical advice. Passwords are plain text: no real patient data.</p>
+  </div>
+  <div class="foot"><span><b>MedMind</b> · Medical website</span><span>10</span></div>
+</section>
+
+</body>
+</html>

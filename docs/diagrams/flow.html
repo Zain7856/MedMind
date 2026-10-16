@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MedMind Flow</title>
+<link rel="stylesheet" href="../assets/brand.css">
+<style>
+  html, body { margin: 0; background: var(--white); }
+  .canvas { width: 1600px; height: 900px; }
+  svg { display: block; }
+  .chip { font: 700 13px var(--mono); letter-spacing: 0.12em; }
+  .title { font: 600 25px var(--sans); fill: var(--ink); }
+  .sub { font: 400 16px var(--mono); fill: var(--ink-soft); }
+  .lane { font: 700 14px var(--mono); letter-spacing: 0.16em; fill: var(--ink-soft); }
+  .small { font: 500 15px var(--mono); fill: var(--ink-soft); }
+  .row { font: 500 18px var(--sans); fill: var(--ink); }
+  .row-code { font: 500 16px var(--mono); fill: var(--accent-dark); }
+  .state { font: 700 22px var(--mono); }
+</style>
+</head>
+<body>
+<div class="canvas">
+<svg width="1600" height="900" viewBox="0 0 1600 900">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#113353"/>
+    </marker>
+    <marker id="arrow-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1F8A86"/>
+    </marker>
+  </defs>
+
+  <!-- lane 1: the patient's pages -->
+  <rect x="20" y="20" width="1560" height="470" rx="18" fill="#F6F9FB" stroke="rgba(17,51,83,0.10)" stroke-width="2"/>
+  <text x="48" y="58" class="lane">PATIENT · FROM A SYMPTOM TO AN APPOINTMENT</text>
+
+  <g>
+    <rect x="50" y="90" width="260" height="120" rx="12" fill="#fff" stroke="#113353" stroke-width="2.5"/>
+    <rect x="70" y="106" width="68" height="24" rx="5" fill="none" stroke="#3D5873" stroke-width="1.5"/>
+    <text x="104" y="123" class="chip" fill="#3D5873" text-anchor="middle">PAGE</text>
+    <text x="180" y="165" class="title" text-anchor="middle">Symptom checker</text>
+    <text x="180" y="192" class="sub" text-anchor="middle">tick · get matches</text>
+  </g>
+  <g>
+    <rect x="360" y="90" width="260" height="120" rx="12" fill="#fff" stroke="#113353" stroke-width="2.5"/>
+    <rect x="380" y="106" width="68" height="24" rx="5" fill="none" stroke="#3D5873" stroke-width="1.5"/>
+    <text x="414" y="123" class="chip" fill="#3D5873" text-anchor="middle">PAGE</text>
+    <text x="490" y="165" class="title" text-anchor="middle">Disease</text>
+    <text x="490" y="192" class="sub" text-anchor="middle">overview · treatment</text>
+  </g>
+  <g>
+    <rect x="670" y="90" width="260" height="120" rx="12" fill="#fff" stroke="#113353" stroke-width="2.5"/>
+    <rect x="690" y="106" width="68" height="24" rx="5" fill="none" stroke="#3D5873" stroke-width="1.5"/>
+    <text x="724" y="123" class="chip" fill="#3D5873" text-anchor="middle">PAGE</text>
+    <text x="800" y="165" class="title" text-anchor="middle">Doctors · Hospitals</text>
+    <text x="800" y="192" class="sub" text-anchor="middle">place · fee · Book now</text>
+  </g>
+  <g>
+    <rect x="980" y="90" width="260" height="120" rx="12" fill="#EAF7F6" stroke="#4FBFBA" stroke-width="3"/>
+    <rect x="1000" y="106" width="86" height="24" rx="5" fill="#1F8A86"/>
+    <text x="1043" y="123" class="chip" fill="#fff" text-anchor="middle">ACTION</text>
+    <text x="1110" y="165" class="title" text-anchor="middle">Book</text>
+    <text x="1110" y="192" class="sub" text-anchor="middle">pick a date and time</text>
+  </g>
+  <g>
+    <rect x="1290" y="90" width="260" height="120" rx="12" fill="#fff" stroke="#113353" stroke-width="2.5"/>
+    <rect x="1310" y="106" width="68" height="24" rx="5" fill="none" stroke="#3D5873" stroke-width="1.5"/>
+    <text x="1344" y="123" class="chip" fill="#3D5873" text-anchor="middle">PAGE</text>
+    <text x="1420" y="165" class="title" text-anchor="middle">My profile</text>
+    <text x="1420" y="192" class="sub" text-anchor="middle">my bookings · status</text>
+  </g>
+
+  <line x1="312" y1="150" x2="356" y2="150" stroke="#113353" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <line x1="622" y1="150" x2="666" y2="150" stroke="#113353" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <line x1="932" y1="150" x2="976" y2="150" stroke="#113353" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <line x1="1242" y1="150" x2="1286" y2="150" stroke="#113353" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <text x="334" y="80" class="small" text-anchor="middle">Learn more</text>
+  <text x="954" y="80" class="small" text-anchor="middle">signed in</text>
+
+  <!-- how the symptom checker ranks, under it -->
+  <rect x="50" y="260" width="570" height="200" rx="12" fill="#fff" stroke="rgba(17,51,83,0.25)" stroke-width="2" stroke-dasharray="7 6"/>
+  <text x="70" y="292" class="lane">HOW MATCHES ARE RANKED · 4 TICKED</text>
+  <text x="70" y="332" class="row">Seasonal Flu</text>
+  <text x="600" y="332" class="row-code" text-anchor="end">4 of your 4</text>
+  <text x="70" y="367" class="row">COVID-19</text>
+  <text x="600" y="367" class="row-code" text-anchor="end">3 of your 4</text>
+  <text x="70" y="402" class="row">Pneumonia</text>
+  <text x="600" y="402" class="row-code" text-anchor="end">2 of your 4</text>
+  <text x="70" y="440" class="small">one SQL query: COUNT the ticked symptoms per disease</text>
+  <line x1="180" y1="212" x2="180" y2="256" stroke="#3D5873" stroke-width="2" stroke-dasharray="5 5" marker-end="url(#arrow)"/>
+
+  <!-- checks before a booking is saved -->
+  <rect x="980" y="260" width="570" height="200" rx="12" fill="#fff" stroke="#4FBFBA" stroke-width="2" stroke-dasharray="7 6"/>
+  <text x="1000" y="292" class="lane">CHECKED BEFORE IT IS SAVED</text>
+  <text x="1000" y="328" class="row">1  a date and time were picked</text>
+  <text x="1530" y="328" class="row-code" text-anchor="end">if</text>
+  <text x="1000" y="358" class="row">2  the date is in the future</text>
+  <text x="1530" y="358" class="row-code" text-anchor="end">if</text>
+  <text x="1000" y="388" class="row">3  the person booking is a Patient</text>
+  <text x="1530" y="388" class="row-code" text-anchor="end">if</text>
+  <text x="1000" y="418" class="row">4  the doctor or hospital is approved</text>
+  <text x="1530" y="418" class="row-code" text-anchor="end">if</text>
+  <text x="1000" y="448" class="small">all four pass → one new row in appointments</text>
+  <line x1="1110" y1="212" x2="1110" y2="256" stroke="#1F8A86" stroke-width="2.5" marker-end="url(#arrow-teal)"/>
+
+  <!-- lane 2: statuses -->
+  <rect x="20" y="540" width="1560" height="340" rx="18" fill="#F6F9FB" stroke="rgba(17,51,83,0.10)" stroke-width="2"/>
+  <text x="48" y="578" class="lane">APPOINTMENT STATUS</text>
+  <text x="1000" y="578" class="lane">DOCTOR / HOSPITAL ACCOUNT</text>
+  <line x1="960" y1="560" x2="960" y2="860" stroke="rgba(17,51,83,0.12)" stroke-width="2"/>
+
+  <path d="M1265,460 V515 H270 V636" fill="none" stroke="#1F8A86" stroke-width="2.5" stroke-dasharray="8 6" marker-end="url(#arrow-teal)"/>
+  <text x="720" y="507" class="small" text-anchor="middle" fill="#1F8A86">every new booking starts here</text>
+
+  <rect x="90" y="640" width="220" height="70" rx="35" fill="#FFF7E0" stroke="#D99A00" stroke-width="3"/>
+  <text x="200" y="683" class="state" fill="#8A5A00" text-anchor="middle">Pending</text>
+  <rect x="560" y="610" width="240" height="70" rx="35" fill="#E9F7EE" stroke="#1E8E4E" stroke-width="3"/>
+  <text x="680" y="653" class="state" fill="#16673A" text-anchor="middle">Confirmed</text>
+  <rect x="560" y="740" width="240" height="70" rx="35" fill="#F2F6F9" stroke="#3D5873" stroke-width="3"/>
+  <text x="680" y="783" class="state" fill="#3D5873" text-anchor="middle">Cancelled</text>
+
+  <path d="M312,665 H430 V645 H556" fill="none" stroke="#113353" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <path d="M312,685 H430 V775 H556" fill="none" stroke="#3D5873" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <text x="440" y="633" class="small">✅ Confirm</text>
+  <text x="440" y="801" class="small">❌ Cancel</text>
+  <text x="48" y="838" class="small">The doctor or hospital confirms. Either side can cancel.</text>
+  <text x="48" y="862" class="small">The buttons show only while a booking is Pending.</text>
+
+  <!-- account approval -->
+  <text x="1000" y="616" class="small">doctor or hospital signs up</text>
+  <line x1="1110" y1="624" x2="1110" y2="656" stroke="#113353" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <rect x="1000" y="660" width="220" height="70" rx="35" fill="#FFF7E0" stroke="#D99A00" stroke-width="3"/>
+  <text x="1110" y="703" class="state" fill="#8A5A00" text-anchor="middle">Pending</text>
+  <rect x="1320" y="610" width="230" height="70" rx="35" fill="#E9F7EE" stroke="#1E8E4E" stroke-width="3"/>
+  <text x="1435" y="653" class="state" fill="#16673A" text-anchor="middle">Approved</text>
+  <rect x="1320" y="740" width="230" height="70" rx="35" fill="#FDECEC" stroke="#B42318" stroke-width="3"/>
+  <text x="1435" y="783" class="state" fill="#B42318" text-anchor="middle">Rejected</text>
+  <path d="M1222,685 H1270 V645 H1316" fill="none" stroke="#113353" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <path d="M1222,705 H1270 V775 H1316" fill="none" stroke="#3D5873" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <text x="1000" y="838" class="small">The admin approves or rejects. Patients start Approved.</text>
+  <text x="1000" y="862" class="small">Rejected = blocked: no sign-in, hidden from lists.</text>
+</svg>
+</div>
+</body>
+</html>

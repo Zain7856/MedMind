@@ -1,0 +1,42 @@
+/* MedMind brand: colours and fonts shared by the poster, slides, diagrams and documentation.
+   Set the colours from the project's logo and app CSS (see SKILL.md, step 3).
+   Sampled from frontend/imgs/logo.png. Diagrams also use these hex values directly in SVG
+   attributes, so replace the same hex strings in docs/diagrams/*.html when you change them:
+   #113353 ink · #4FBFBA accent · #1F8A86 accent-dark · #2F5F98 warm · #43A6C6 warm-2 · #F2F6F9 paper */
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=IBM+Plex+Sans+Arabic:wght@400;600;700&display=swap');
+
+:root {
+  --ink: #113353;        /* the navy of the "MedMind" lettering: text and the dark hero */
+  --ink-2: #1A4166;
+  --ink-soft: #3D5873;
+  --accent: #4FBFBA;     /* the teal of the logo's heart */
+  --accent-dark: #1F8A86; /* darker teal, readable on the light paper */
+  --warm: #2F5F98;       /* the blue at the bottom of the logo's tube */
+  --warm-2: #43A6C6;     /* the cyan where the tube turns from teal to blue */
+  --paper: #F2F6F9;      /* the banner's pale blue-white: page background */
+  --white: #FFFFFF;
+  --line: rgba(17, 51, 83, 0.14);
+  --todo-bg: #FFF1A8;    /* student placeholder highlight */
+  --todo-line: #D9A400;
+
+  --display: 'Lexend', 'Space Grotesk', sans-serif;   /* round, bold geometric letters like the logo's "MedMind" */
+  --sans: 'Space Grotesk', system-ui, sans-serif;
+  --mono: 'JetBrains Mono', ui-monospace, monospace;
+  --arabic: 'IBM Plex Sans Arabic', sans-serif;
+}
+
+.ar { font-family: var(--arabic); direction: rtl; unicode-bidi: isolate; }
+
+/* Student placeholder: anything in this style still has to be written before printing. */
+.todo {
+  background: var(--todo-bg);
+  color: #4A3B00;
+  border: 0.18em dashed var(--todo-line);
+  border-radius: 0.35em;
+  padding: 0.12em 0.4em;
+  font-style: normal;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+.todo::before { content: "✏️ Student writes: "; font-weight: 700; }
+.todo.block { display: block; padding: 0.5em 0.7em; }

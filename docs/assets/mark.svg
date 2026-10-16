@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 112">
+  <!-- The MedMind mark: a stethoscope whose tube makes a shield around a heart with a heartbeat line. -->
+  <defs>
+    <linearGradient id="tube" gradientUnits="userSpaceOnUse" x1="0" y1="10" x2="0" y2="100">
+      <stop offset="0" stop-color="#5AC6C2"/>
+      <stop offset="0.55" stop-color="#43A6C6"/>
+      <stop offset="1" stop-color="#2F5F98"/>
+    </linearGradient>
+  </defs>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <!-- tube: a black outline under the coloured line, like the logo -->
+    <path id="t" d="M30 13 C 20 17, 17 25, 17 34 L 17 56 C 17 74, 32 86, 50 92 C 68 86, 83 74, 83 56 L 83 34 C 83 25, 80 17, 70 13" stroke="#0B1622" stroke-width="10"/>
+    <path d="M30 13 C 20 17, 17 25, 17 34 L 17 56 C 17 74, 32 86, 50 92 C 68 86, 83 74, 83 56 L 83 34 C 83 25, 80 17, 70 13" stroke="url(#tube)" stroke-width="6"/>
+    <path d="M50 72 L 50 94" stroke="#0B1622" stroke-width="9"/>
+    <path d="M50 72 L 50 94" stroke="url(#tube)" stroke-width="5"/>
+  </g>
+  <!-- the chest piece hanging under the shield -->
+  <path d="M50 92 L 56 99 L 50 108 L 44 99 Z" fill="#2F5F98" stroke="#0B1622" stroke-width="2.5" stroke-linejoin="round"/>
+  <!-- ear pieces -->
+  <circle cx="33" cy="10" r="5" fill="#5AC6C2" stroke="#0B1622" stroke-width="2.5"/>
+  <circle cx="67" cy="10" r="5" fill="#5AC6C2" stroke="#0B1622" stroke-width="2.5"/>
+  <!-- heart: dark inside, teal edge -->
+  <g transform="translate(50 50) scale(0.84) translate(-50 -50)">
+  <path d="M50 74 C 30 62, 26 50, 26 43 C 26 34, 32 28, 39.5 28 C 44.5 28, 48 31, 50 35.5 C 52 31, 55.5 28, 60.5 28 C 68 28, 74 34, 74 43 C 74 50, 70 62, 50 74 Z" fill="#0B1622" stroke="#0B1622" stroke-width="10" stroke-linejoin="round"/>
+  <path d="M50 74 C 30 62, 26 50, 26 43 C 26 34, 32 28, 39.5 28 C 44.5 28, 48 31, 50 35.5 C 52 31, 55.5 28, 60.5 28 C 68 28, 74 34, 74 43 C 74 50, 70 62, 50 74 Z" fill="#0B1622" stroke="url(#tube)" stroke-width="5" stroke-linejoin="round"/>
+  <!-- heartbeat -->
+  <polyline points="29,48 39,48 42.5,42 46.5,56 51,36 55,53 58,46 60,48 71,48" fill="none" stroke="#5AC6C2" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>
