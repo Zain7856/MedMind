@@ -9,7 +9,7 @@
   "scripts": {
     "start": "node server.js",
     "dev": "node --watch server.js",
-    "db:reset": "rm -f database/app.db && sqlite3 database/app.db < database/app.sql"
+    "db:reset": "node database/reset.js"
   },
   "dependencies": {
     "express": "5.3.0"
